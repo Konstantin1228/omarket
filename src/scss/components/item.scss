@@ -1,0 +1,340 @@
+$green:#00953F;
+$red:#ED1B23;
+$orange:#FF6600;
+$white:#fff;
+$gray:#9C9C9C;
+
+.item-tag-new {
+    max-width: 95px;
+    color: $white;
+    font-size: 18px;
+    background: $green;
+    border-radius: 0px 8px 8px 0px;
+    padding: 6px 10px 6px 14px;
+}
+
+.item-tag-stock {
+    max-width: 74px;
+    width: fit-content;
+    color: $white;
+    font-size: 18px;
+    padding: 6px 10px 6px 14px;
+    background: $red;
+    border-radius: 0px 8px 8px 0px;
+}
+
+.item-tag-hit {
+    max-width: 30px;
+    color: $white;
+    font-size: 18px;
+    padding: 6px 10px 6px 14px;
+    background: $orange;
+    border-radius: 0px 8px 8px 0px;
+}
+
+.item-wrapper {
+    position: sticky;
+
+    .item {
+        // max-width: 332px;
+        position: relative;
+        padding: 16px 22px 20px 22px;
+        border: 1px solid #DFDFDF;
+        border-radius: 14px;
+
+        &-tags {
+            left: 0;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        img {
+            margin-bottom: 16px;
+        }
+
+        &-information {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border-bottom: 1px solid #F4F4F4;
+            margin-bottom: 12px;
+            min-height: 96px;
+
+            &-big-title {
+                width: fit-content;
+                font-size: 20px;
+            }
+
+            &-title {
+                max-width: 280px;
+                font-size: 20px;
+            }
+
+            &-description {
+                color: $gray;
+                font-size: 15px;
+            }
+        }
+
+        &-about {
+
+            &-chapter,
+            &-chapter-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 19px;
+
+                &-weight {
+                    min-width: 40px;
+                    font-size: 17px;
+                }
+
+                &-price {
+                    font-size: 17px;
+                    color: $orange;
+                }
+
+                &-block {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    &-crossOut {
+                        position: absolute;
+                        width: 25px;
+                        height: 7px;
+                        border-bottom: 1px solid #9C9C9C;
+                        transform: rotate(25deg);
+                    }
+
+                    &-lastPrice {
+                        color: $gray;
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            &-chapter-bottom {
+                height: 35px;
+            }
+        }
+
+        &-more {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+
+            &-text {
+                font-weight: 600;
+                color: $orange;
+            }
+        }
+    }
+
+    .item-big {
+        position: sticky;
+        background: #FFFFFF;
+        z-index: 1;
+        padding: 24px;
+        border: 1px solid $orange;
+        border-radius: 25px;
+
+        .item-tags {
+            left: 0;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        img {
+            width: 450px;
+            height: 300px;
+            margin-bottom: 16px;
+        }
+
+        &-information {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid #F4F4F4;
+            margin-bottom: 16px;
+
+
+            &-title {
+
+                font-size: 21px;
+            }
+
+            &-description {
+                color: $gray;
+                font-size: 15px;
+            }
+        }
+
+        &-about {
+            &-chapter {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 8px;
+
+
+                &-weight {
+                    white-space: nowrap;
+                    width: 40px;
+                    font-size: 17px;
+                }
+
+                &-amount {
+                    display: flex;
+                    width: 100px;
+
+                    &-minus {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        padding: 5px 9px;
+                        background: #F2F2F2;
+                        border: 1px solid rgba(255, 255, 255, 0.8);
+                        border-radius: 6px 0px 0px 6px;
+                    }
+
+                    &-total {
+                        display: flex;
+                        align-items: center;
+                        padding: 4px 7px 3px 7px;
+                        background: #F2F2F2;
+                        border: 1px solid #FFFFFF;
+                    }
+
+                    &-plus {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        padding: 7px 8px;
+                        background: #F2F2F2;
+                        border: 1px solid #FFFFFF;
+                        border-radius: 6px 0px 0px 6px;
+                        transform: rotate(-180deg);
+                    }
+                }
+
+                &-shareType {
+                    min-width: 12px;
+                    cursor: pointer;
+                    font-weight: 900;
+                    color: $red;
+                }
+
+                &-prompt {
+                    position: absolute;
+                    left: 21%;
+                    bottom: 38px;
+                    z-index: 2;
+                    background: #FFF9F5;
+                    border: 1px solid $orange;
+                    color: #000;
+                    border-radius: 16px;
+                    padding: 8px 16px;
+                    max-width: 280px;
+                    width: 100%;
+                    text-align: center;
+                    font-size: 16px;
+                    transition: all.3s;
+
+                }
+
+                &-bonus {
+                    display: flex;
+                    align-items: center;
+                    gap: 2px;
+                }
+
+                &-price {
+                    width: 40px;
+                    text-align: right;
+                    font-size: 17px;
+                    color: $orange;
+                }
+
+                &-block {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    &-crossOut {
+                        position: absolute;
+                        width: 25px;
+                        height: 7px;
+                        border-bottom: 1px solid #9C9C9C;
+                        transform: rotate(25deg);
+                    }
+
+                    &-lastPrice {
+                        color: $gray;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        &-totalPrice {
+            color: $orange;
+            text-align: right;
+            margin-bottom: 4px;
+
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        &-totalBonus {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            justify-content: right;
+            font-size: 17px;
+            gap: 4px;
+        }
+
+        &-addToCart {
+            cursor: pointer;
+            font-weight: 500;
+            max-width: inherit;
+            width: 100%;
+            color: $orange;
+            font-size: 20px;
+            padding: 13px 21px;
+            border: 2px solid $orange;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 12px;
+            transition: all.3s;
+
+            &:hover {
+                color: #fff;
+                background-color: $orange;
+            }
+        }
+
+        &-grade {
+            &-reviews {
+                cursor: pointer;
+                padding-bottom: 1px;
+                border-bottom: 1px solid #000;
+            }
+
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,0 +1,85 @@
+@import url(./components/header.scss);
+@import url(./components/foooter.scss);
+@import url(./components/chapter.scss);
+@import url(./components/item.scss);
+$green:#00953F;
+$red:#ED1B23;
+$orange:#FF6600;
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+
+}
+
+.active {
+    svg {
+        path {
+            fill: #fff;
+        }
+    }
+
+    background-color: $orange;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    background-color: transparent;
+    border: 0;
+}
+
+svg {
+    cursor: pointer;
+}
+
+.chapter-title-green {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: $green;
+}
+
+.chapter-title-red {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: $red;
+
+}
+
+.chapter-title-orange {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: $orange;
+
+}
+
+.chapter-title-default {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #000;
+
+}
+
+
+.app {
+    color: #000;
+    padding: 20px 200px 0px 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}

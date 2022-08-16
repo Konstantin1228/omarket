@@ -1,0 +1,26 @@
+.chapter {
+    margin-bottom: 20px;
+
+    &-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3px;
+
+        &-pagination {
+            display: flex;
+            gap: 12px;
+
+            svg {
+                padding: 14px 17px;
+                border: 1px solid #DFDFDF;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    &-bottom {
+        display: grid;
+        grid-template-columns:1fr 1fr 1fr 1fr;
+        gap: 40px;
+    }
+}

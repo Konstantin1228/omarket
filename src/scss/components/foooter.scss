@@ -1,0 +1,105 @@
+$green:#00953F;
+$red:#ED1B23;
+$orange:#FF6600;
+
+.footer {
+    margin-top: 76px;
+    padding: 20px 200px 0px 200px;
+    background: $green;
+
+    &__top {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        max-height: 235px;
+        height: 100%;
+        position: relative;
+
+
+        &-component {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &--img {
+                max-width: 242px;
+
+                ul {
+
+                    .footer__top-component--img-bottom {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    display: flex;
+
+                    flex-direction: column;
+                    gap: 13px;
+
+                    .footer__top-component--img-text {
+                        max-width: 190px;
+                        font-weight: 100;
+                    }
+
+                }
+            }
+
+            ul {
+                min-height: 167px;
+                height: 100%;
+
+                max-width: 230px;
+                display: flex;
+
+                flex-direction: column;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                a {
+                    display: flex;
+                }
+            }
+
+            &--big {
+                max-height: 235px;
+                height: 100%;
+                max-width: 300px;
+
+                ul {
+                    max-height: 235px;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                        gap: 21px;
+                    }
+                }
+            }
+
+        }
+
+        .on__top {
+            position: absolute;
+            bottom:100px;
+            right: 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+    }
+    &__bottom{
+        margin-top: 20px;
+        padding-bottom: 24px;
+        &-information{
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+}
