@@ -12,7 +12,7 @@ const Home = () => {
     getRes();
   }, []);
   return (
-    <div className="app">
+    <div>
       {/* databaseName */}
       <Chapter title={"Новинки"} titleTheme={"green"} tagSorting={"Новинка"}  />
       <Chapter title={"Для новогоднего стола"} titleTheme={"default"}    />

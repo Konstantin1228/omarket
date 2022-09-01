@@ -4,23 +4,31 @@
     &-top {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 3px;
+        margin-bottom: 10px;
 
         &-pagination {
             display: flex;
+            align-items: center;
             gap: 12px;
 
-            svg {
-                padding: 14px 17px;
+            &-svg {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: 12px 14px;
                 border: 1px solid #DFDFDF;
                 border-radius: 50%;
+
+                svg {}
+
             }
+
         }
     }
 
     &-bottom {
         display: grid;
-        grid-template-columns:1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 40px;
     }
 }

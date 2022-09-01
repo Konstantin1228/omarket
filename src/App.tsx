@@ -1,16 +1,14 @@
-import Header from "./Components/Header";
-import Chapter from "./Components/Catalog/Chapter";
-import Footer from "./Components/Footer";
-import Home from "./Components/Home";
 import "./scss/index.scss";
-function App() {
+import { Route, Routes } from "react-router-dom";
+import Home from "./Components/Home";
+import Cart from "./Components/Cart/Cart";
+
+const App:React.FC=()=> {
   return (
-    <div>
-      <Header />
-      <div className="slider"></div>
-      <Home />
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/cart" element={<Cart />} />
+    </Routes>
   );
 }
 

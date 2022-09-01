@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-export type itemType = {
+import React, { useState, useCallback } from "react";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { addToCart } from "../../redux/cart/slice";
+export interface itemType {
   title: string;
   description: string;
-  drink: Boolean;
   discounts: number[];
   id: number;
   image: string;
@@ -10,18 +11,20 @@ export type itemType = {
   price: number[];
   tags: string[];
   weight: number[];
-};
+  typeOfUnit: string
+}
 const Item: React.FC<itemType> = ({
   title,
   description,
-  drink,
   discounts,
   image,
   points,
   price,
   tags,
   weight,
+  typeOfUnit
 }) => {
+  const dispatch = useAppDispatch();
   const renderSVG = (shareType: string) => {
     switch (shareType) {
       case "bonus":
@@ -64,24 +67,110 @@ const Item: React.FC<itemType> = ({
   };
   const shareType =
     tags[
-      tags.indexOf(
-        tags.filter((el) => el === "bonus" || el === "discount").toString()
-      )
+    tags.indexOf(
+      tags.filter((el) => el === "bonus" || el === "discount").toString()
+    )
     ];
   const [bigItem, setBigItem] = useState(false);
   const [prompt, setPrompt] = useState(false);
-
-  const [estimatedPrice, setEstimatedPrice] = useState(0);
-  const [items, setItems] = useState([]);
-
+  const [items, setItems] = useState(
+    tags.includes("bonus") || tags.includes("discount")
+      ? tags.includes("discount")
+        ? weight.map((weight, idx) => [
+          {
+            count: 1,
+            weight: weight,
+            points: points[idx],
+            discounts: discounts[idx],
+            price: Math.round(
+              price[idx] - (price[idx] / 100) * discounts[idx]
+            ),
+            totalPrice: Math.round(price[idx] - (price[idx] / 100) * discounts[idx]),
+            totalPoints: points[idx],
+          },
+        ])
+        : weight.map((weight, idx) => [
+          {
+            weight: weight,
+            points: points[idx],
+            discounts: discounts[idx],
+            price: price[idx],
+            count: 1,
+            totalPrice: price[idx],
+            totalPoints: points[idx],
+          },
+        ])
+      : weight.map((weight, idx) => [
+        {
+          weight: weight,
+          points: points[idx],
+          discounts: discounts[idx],
+          price: price[idx],
+          count: 1,
+          totalPrice: price[idx],
+          totalPoints: points[idx],
+        },
+      ])
+  );
+  const [estimatedPrice, setEstimatedPrice] = useState(
+    items.reduce((previous, obj) => previous + obj[0].price * obj[0].count, 0)
+  );
+  const [totalBonus, setTotalBonus] = useState(
+    items.reduce((previous, obj) => previous + obj[0].points * obj[0].count, 0)
+  );
+  const addToItems = (idx: number) => {
+    items[idx][0].count = items[idx][0].count + 1;
+    if (tags.includes("discount")) {
+      items[idx][0].totalPrice =
+        Math.round(price[idx] - (price[idx] / 100) * discounts[idx]) *
+        items[idx][0].count;
+    } else {
+      items[idx][0].totalPrice = price[idx] * items[idx][0].count;
+    }
+    items[idx][0].totalPoints = points[idx] * items[idx][0].count;
+    const itemsToSet = [...items];
+    setItems(itemsToSet);
+    setEstimatedPrice(
+      items.reduce((previous, current) => previous + Math.round(current[0].totalPrice), 0)
+    );
+    setTotalBonus(
+      items.reduce((previous, current) => previous + current[0].totalPoints, 0)
+    );
+  };
+  const minusToItems = (idx: number) => {
+    if (items[idx][0].count !== 0) {
+      items[idx][0].count = items[idx][0].count - 1;
+      if (tags.includes("discount")) {
+        items[idx][0].totalPrice =
+          items[idx][0].totalPrice -
+          Math.round(price[idx] - (price[idx] / 100) * discounts[idx]);
+      } else {
+        items[idx][0].totalPrice = items[idx][0].price - price[idx];
+      }
+      items[idx][0].totalPoints = points[idx] * items[idx][0].count;
+      const itemsToSet = [...items];
+      setItems(itemsToSet);
+      setEstimatedPrice(
+        discounts.length !== 0
+          ? estimatedPrice -
+          Math.round(price[idx] - (price[idx] / 100) * discounts[idx])
+          : estimatedPrice - price[idx]
+      );
+      setTotalBonus(totalBonus - points[idx]);
+    }
+  };
   return (
-    <div className="item-wrapper">
+    <div
+      className="item-wrapper"
+      onMouseEnter={() => setBigItem(true)}
+      onMouseLeave={() => setBigItem(false)}
+    >
       <div className={bigItem ? "item-big" : "item"}>
-        <div className="item-tags">
+        {<div className="item-tags">
           {tags.includes("Новинка") && (
             <div className="item-tag-new">Новинка</div>
           )}
-          {shareType === "discount" || "bonus" ? (
+          {shareType === "discount" || shareType === "bonus" ? (
             <div className="item-tag-stock">Акция</div>
           ) : (
             ""
@@ -90,7 +179,7 @@ const Item: React.FC<itemType> = ({
             <div className="item-tag-stock">-{discounts[0]}%</div>
           )}
           {tags.includes("Хит") && <div className="item-tag-hit">Хит</div>}
-        </div>
+        </div>}
         <img
           src={
             image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"
@@ -108,13 +197,13 @@ const Item: React.FC<itemType> = ({
           <div className={bigItem ? "item-big-about" : "item-about"}>
             <div className="item-about-chapter">
               <div className="item-about-chapter-weight">
-                {drink ? "Литраж" : "Вес"}
+                {typeOfUnit[0] !== 'гр' ? "Литраж" : "Вес"}
               </div>
               <div className="item-about-chapter-price">Цена</div>
             </div>
             <div className="item-about-chapter-bottom">
               <div className="item-about-chapter-weight">
-                {drink ? `${weight[0]} л.` : ` ${weight[0]}гр.`}
+                {`${weight[0]} ${typeOfUnit}.`}
               </div>
               {shareType === "discount" ? (
                 <div className="item-about-chapter-block">
@@ -155,20 +244,24 @@ const Item: React.FC<itemType> = ({
             {weight.map((weight, idx) => (
               <div key={weight} className="item-big-about-chapter">
                 <div className="item-big-about-chapter-weight">
-                  {drink ? `${weight} л.` : ` ${weight}гр.`}
+                  {`${weight} ${typeOfUnit}.`}
                 </div>
                 <div className="item-big-about-chapter-amount">
                   <div
                     className="item-big-about-chapter-amount-minus"
+                    onClick={() => minusToItems(idx)}
                   >
                     -
                   </div>
                   <div className="item-big-about-chapter-amount-total">
-                    {items}шт
+                    {`${items[idx][0].count} шт`}
                   </div>
-                  <div className="item-big-about-chapter-amount-plus" 
-                    onClick={() => setItems(...items,)}
-                    >+</div>
+                  <div
+                    className="item-big-about-chapter-amount-plus"
+                    onClick={() => addToItems(idx)}
+                  >
+                    +
+                  </div>
                 </div>
                 <div className="item-big-about-chapter-shareType">
                   {renderSVG(shareType)}
@@ -180,7 +273,7 @@ const Item: React.FC<itemType> = ({
                   </div>
                 )}
                 <div className="item-big-about-chapter-bonus">
-                  {points[idx]}
+                  {items[idx][0].totalPoints}
                   <svg
                     width="16"
                     height="16"
@@ -196,7 +289,21 @@ const Item: React.FC<itemType> = ({
                 </div>
                 <div className="item-big-about-chapter-block">
                   <div className="item-big-about-chapter-price">
-                    {price[idx]}₽
+                    {items[idx][0].totalPrice !== 0 ? tags.includes("discount") ? (
+                      <div>
+                        <div className="item-about-chapter-block-crossOut"></div>
+                        <div className="item-about-chapter-block-lastPrice">
+                          {price[idx] * items[idx][0].count}₽
+                        </div>
+                        <div className="item-about-chapter-price">
+                          {Math.round(items[idx][0].totalPrice)}₽
+                        </div>
+                      </div>
+                    ) : (
+                      `${items[idx][0].totalPrice}₽`
+                    ) : <div className="item-about-chapter-price">
+                      0₽
+                    </div>}
                   </div>
                 </div>
               </div>
@@ -228,9 +335,11 @@ const Item: React.FC<itemType> = ({
         {bigItem && (
           <div>
             <div className="item-big-total">
-              <div className="item-big-totalPrice">Итого:300₽</div>
+              <div className="item-big-totalPrice">
+                Итого:{`${estimatedPrice}₽`}
+              </div>
               <div className="item-big-totalBonus">
-                Бонус:9
+                Бонус:{totalBonus}
                 <svg
                   style={{ cursor: "default" }}
                   width="16"
@@ -246,7 +355,30 @@ const Item: React.FC<itemType> = ({
                 </svg>
               </div>
             </div>
-            <button className="item-big-addToCart">Добавить в корзину</button>
+            <button
+              className="item-big-addToCart"
+              onClick={() =>
+                price.map((price, idx) =>
+                  dispatch(
+                    addToCart({
+                      title,
+                      count: items[idx][0].count,
+                      price,
+                      weight: weight[idx],
+                      points: points[idx],
+                      image,
+                      discounts: discounts[idx],
+                      tags: shareType,
+                      totalPrice: items[idx][0].totalPrice,
+                      totalPoints: items[idx][0].totalPoints,
+                      typeOfUnit
+                    })
+                  )
+                )
+              }
+            >
+              Добавить в корзину
+            </button>
             <div className="item-big-grade">
               <div className="item-big-grade-reviews">Отзывы:12</div>
               <div className="item-big-grade-stars">

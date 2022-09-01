@@ -5,7 +5,6 @@ $white:#fff;
 $gray:#9C9C9C;
 
 .item-tag-new {
-    max-width: 95px;
     color: $white;
     font-size: 18px;
     background: $green;
@@ -14,7 +13,6 @@ $gray:#9C9C9C;
 }
 
 .item-tag-stock {
-    max-width: 74px;
     width: fit-content;
     color: $white;
     font-size: 18px;
@@ -24,7 +22,7 @@ $gray:#9C9C9C;
 }
 
 .item-tag-hit {
-    max-width: 30px;
+    width: fit-content;
     color: $white;
     font-size: 18px;
     padding: 6px 10px 6px 14px;
@@ -33,10 +31,8 @@ $gray:#9C9C9C;
 }
 
 .item-wrapper {
-    position: sticky;
 
     .item {
-        // max-width: 332px;
         position: relative;
         padding: 16px 22px 20px 22px;
         border: 1px solid #DFDFDF;
@@ -63,7 +59,7 @@ $gray:#9C9C9C;
             min-height: 96px;
 
             &-big-title {
-                width: fit-content;
+                max-width: 300px;
                 font-size: 20px;
             }
 
@@ -138,9 +134,9 @@ $gray:#9C9C9C;
     }
 
     .item-big {
-        position: sticky;
-        background: #FFFFFF;
-        z-index: 1;
+        position: absolute;
+        z-index: 3;
+        background-color: #FFFFFF;
         padding: 24px;
         border: 1px solid $orange;
         border-radius: 25px;
@@ -154,6 +150,7 @@ $gray:#9C9C9C;
         }
 
         img {
+            z-index: 33;
             width: 450px;
             height: 300px;
             margin-bottom: 16px;
@@ -196,9 +193,9 @@ $gray:#9C9C9C;
 
                 &-amount {
                     display: flex;
-                    width: 100px;
 
                     &-minus {
+                        user-select: none;
                         cursor: pointer;
                         display: flex;
                         align-items: center;
@@ -209,14 +206,17 @@ $gray:#9C9C9C;
                     }
 
                     &-total {
+                        width: 60px;
                         display: flex;
                         align-items: center;
+                        justify-content: center;
                         padding: 4px 7px 3px 7px;
                         background: #F2F2F2;
                         border: 1px solid #FFFFFF;
                     }
 
                     &-plus {
+                        user-select: none;
                         cursor: pointer;
                         display: flex;
                         align-items: center;
@@ -256,11 +256,14 @@ $gray:#9C9C9C;
                 &-bonus {
                     display: flex;
                     align-items: center;
+                    justify-content: right;
+                    width: 37px;
                     gap: 2px;
                 }
 
                 &-price {
-                    width: 40px;
+                    position: relative;
+                    width: 60px;
                     text-align: right;
                     font-size: 17px;
                     color: $orange;
@@ -272,13 +275,7 @@ $gray:#9C9C9C;
                     flex-direction: column;
                     align-items: center;
 
-                    &-crossOut {
-                        position: absolute;
-                        width: 25px;
-                        height: 7px;
-                        border-bottom: 1px solid #9C9C9C;
-                        transform: rotate(25deg);
-                    }
+
 
                     &-lastPrice {
                         color: $gray;
@@ -337,4 +334,14 @@ $gray:#9C9C9C;
             justify-content: space-between;
         }
     }
+}
+
+.item-about-chapter-block-crossOut {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    width: 25px;
+    height: 7px;
+    border-bottom: 1px solid #9C9C9C;
+    transform: rotate(25deg);
 }
