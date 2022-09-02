@@ -1,0 +1,79 @@
+.auth {
+    height: 550px;
+    display: flex;
+    justify-content: center;
+
+    .auth__top {
+        margin-top: 60px;
+        min-width: 320px;
+        position: relative;
+
+        .auth__recovery {
+            position: relative;
+            h1 {}
+            :nth-child(1) {
+                    width: 400px;
+                    position: absolute;
+                    left: -12%;
+            }
+                :nth-child(2) {
+                    position: relative;
+                    opacity: 0;
+            }
+        }
+
+        form {
+            width: 320px;
+
+        }
+
+        h1 {
+            padding: 45px 0 50px 0;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        input {
+            min-width: 320px;
+            margin: 2px 0 18px 0;
+        }
+
+
+        .auth__part {
+            height: 15px;
+        }
+
+        .auth__code {
+            position: absolute;
+            top: 23%;
+            left: -5%;
+            width: 400px;
+        }
+
+        .auth__inputBlock {
+            position: relative;
+            .error {
+                position: absolute;
+                bottom: 2px;
+            }
+            .auth__input-code {
+                text-align: center;
+                font-size: 18px;
+            }
+        }
+
+        .auth__eye {
+            cursor: pointer;
+            position: absolute;
+            top: 22px;
+            right: 20px;
+        }
+
+        .form__span {
+            text-align: center;
+            margin-top: 26px;
+            cursor: pointer
+        }
+    }
+}
