@@ -11,12 +11,14 @@ interface IFormAuth {
 }
 
 
-const Registration: React.FC = () => {
+type PropsType = {
+    setStage: (value: number) => void
+}
 
+const Registration: React.FC<PropsType> = ({ setStage }) => {
 
     const isLoggedIn = useAppSelector(state => state)
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
 
     const {
         register,
@@ -31,7 +33,7 @@ const Registration: React.FC = () => {
     const onSubmit: SubmitHandler<IFormAuth> = (data) => {
         console.log(JSON.stringify(data));
 
-        navigate("/code")
+        setStage(3)
     };
 
 
@@ -56,9 +58,9 @@ const Registration: React.FC = () => {
                             <input {...register("phoneNumber", {
                                 required: "Поле обязательно к к заполнению!"
                             })}
-                                   type="text"
-                                   placeholder="Номер телефона"
-                                   className="cart__inner-notEmpty-left-ordering-adress-more-input-adress"
+                                type="text"
+                                placeholder="Номер телефона"
+                                className="cart__inner-notEmpty-left-ordering-adress-more-input-adress"
                             />
                             {errors.phoneNumber && <p className="error">{errors?.phoneNumber?.message || "Ошибка!"}</p>}
                         </div>

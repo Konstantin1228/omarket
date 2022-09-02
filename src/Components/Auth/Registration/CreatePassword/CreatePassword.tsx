@@ -11,8 +11,7 @@ interface IFormAuth {
 }
 
 
-
-const CreateAPassword: React.FC = () => {
+const CreatePassword: React.FC = () => {
 
     const isLoggedIn = useAppSelector(state => state)
     const dispatch = useAppDispatch()
@@ -128,4 +127,4 @@ const CreateAPassword: React.FC = () => {
     )
 }
 
-export default CreateAPassword
+export default CreatePassword

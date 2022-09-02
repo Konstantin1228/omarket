@@ -12,12 +12,14 @@ interface IFormAuth {
 }
 
 
-const Login: React.FC = () => {
+type PropsType = {
+    setStage: (value: number) => void
+}
+
+const Login: React.FC<PropsType> = ({ setStage }) => {
 
     const isLoggedIn = useAppSelector(state => state)
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
-
 
 
     const [passwordShown, setPasswordShown] = useState(false);
@@ -44,7 +46,7 @@ const Login: React.FC = () => {
     const onSubmit: SubmitHandler<IFormAuth> = (data) => {
         console.log(JSON.stringify(data));
 
-        navigate("/code")
+        setStage(3)
     };
 
 
@@ -69,8 +71,8 @@ const Login: React.FC = () => {
                             <input {...register("phoneNumber", {
                                 required: "Поле обязательно к к заполнению!"
                             })}
-                                   type="text" placeholder="Номер телефона"
-                                   className="cart__inner-notEmpty-left-ordering-adress-more-input-adress"
+                                type="text" placeholder="Номер телефона"
+                                className="cart__inner-notEmpty-left-ordering-adress-more-input-adress"
                             />
                             {errors.phoneNumber && <p className="error">{errors?.phoneNumber?.message || "Ошибка!"}</p>}
                         </div>
@@ -105,7 +107,7 @@ const Login: React.FC = () => {
 
                     <div className="form__span" >
 
-                        <span onClick={() => navigate("/password-recovery")} >Забыли пароль?</span>
+                        <span onClick={() => setStage(5)} >Забыли пароль?</span>
 
                     </div>
                 </form>

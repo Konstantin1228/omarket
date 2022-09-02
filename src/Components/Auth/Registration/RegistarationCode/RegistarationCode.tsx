@@ -10,13 +10,14 @@ interface IFormAuth {
 }
 
 
+type PropsType = {
+    setStage: (value: number) => void
+}
 
-const RegistarationCode: React.FC = () => {
-
+const RegistarationCode: React.FC<PropsType> = ({ setStage }) => {
 
     const isLoggedIn = useAppSelector(state => state)
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
 
     const {
         register,
@@ -31,7 +32,7 @@ const RegistarationCode: React.FC = () => {
     const onSubmit: SubmitHandler<IFormAuth> = (data) => {
         console.log(JSON.stringify(data));
 
-        navigate("/create-a-password")
+        setStage(4)
     };
 
 
@@ -50,9 +51,9 @@ const RegistarationCode: React.FC = () => {
                             <input {...register("code", {
                                 required: "Поле обязательно к к заполнению!"
                             })}
-                                   type="string"
-                                   maxLength={4}
-                                   className={"cart__inner-notEmpty-left-ordering-adress-more-input-adress auth__input-code"}
+                                type="string"
+                                maxLength={4}
+                                className={"cart__inner-notEmpty-left-ordering-adress-more-input-adress auth__input-code"}
                             />
                             {errors.code && <p className="error">{errors?.code?.message || "Введен неправильный СМС код!"}</p>}
                         </div>
