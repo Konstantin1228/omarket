@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { ChangeEvent, useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks"
 import "../../../scss/components/auth.scss"
+import 'react-phone-input-2/lib/style.css'
+import lookup from 'country-code-lookup'
+import InputMask from 'react-input-mask';
 
 interface IFormAuth {
     city: string;
@@ -36,7 +39,28 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
         setStage(3)
     };
 
+    const mappedOptions: any[] = lookup.countries.map((c, i) => ( // map options with key
+        <option key={c + '-' + i}>{c.country}</option>
+    ))
 
+    const [value, setValue] = useState('Страна')
+
+    const [code, setCode] = useState('')
+
+
+    const onChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+        setValue(e.currentTarget.value)
+        const countryFound = lookup.countries.find(c => c.country === value)
+        const countryCode = (`+${countryFound?.isoNo}`);
+        setCode(`${countryCode}(`)
+
+    }
+    console.log('code', code.indexOf('('))
+    console.log(code.length - code.indexOf('('))
+
+    const onChangeInputNumber = (e: ChangeEvent<HTMLInputElement>) => {
+        setCode(`${e.currentTarget.value}${code.length - code.indexOf('(') === 3 ? ')' : ''}`)
+    }
 
     return (
         <div className="auth">
@@ -46,10 +70,13 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
                 <form onSubmit={handleSubmit(onSubmit)} >
 
                     <div className={"select-rotate"}>
-                        <select {...register("city")} className="select__inner"  >
-                            <option value="moscow">Москва</option>
-                            <option value="berlin">Берлин</option>
-                            <option value="paris">Париж</option>
+                        <select
+                            {...register("city")}
+                            className="select__inner"
+                            value={value}
+                            onChange={onChangeSelect}
+                        >
+                            {mappedOptions}
                         </select>
                     </div>
 
@@ -58,7 +85,9 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
                             <input {...register("phoneNumber", {
                                 required: "Поле обязательно к к заполнению!"
                             })}
+                                value={code === '+' ? '' : code}
                                 type="text"
+                                onChange={onChangeInputNumber}
                                 placeholder="Номер телефона"
                                 className="cart__inner-notEmpty-left-ordering-adress-more-input-adress"
                             />
@@ -66,7 +95,7 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
                         </div>
                     </div>
 
-                    <button type="submit" className={isValid ? `cart__inner-notEmpty-makeOrder-submitOrder` : `cart__inner-notEmpty-makeOrder-submitOrder-false`}  >
+                    <button type="submit" className={isValid ? `cart__inner - notEmpty - makeOrder - submitOrder` : `cart__inner - notEmpty - makeOrder - submitOrder - false`}  >
                         отправить СМС
                     </button>
                 </form>
