@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks"
 import "../../../scss/components/auth.scss"
-import 'react-phone-input-2/lib/style.css'
 import lookup from 'country-code-lookup'
 import InputMask from 'react-input-mask';
 
