@@ -7,7 +7,7 @@ import Registration from './Registration/Registration'
 
 const Auth: React.FC = () => {
 
-    const [stage, setStage] = useState(2)
+    const [stage, setStage] = useState(1)
 
     return (
         <>

@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks"
 import "../../../../scss/components/auth.scss"
 
@@ -36,6 +35,16 @@ const RegistarationCode: React.FC<PropsType> = ({ setStage }) => {
     };
 
 
+    const [count, setCount] = useState(30)
+
+
+    useEffect(() => {
+        if (count > 0) setTimeout(() => setCount(count - 1), 1000);
+    }, [count]);
+
+    const runCounter = () => {
+        setCount(30)
+    }
 
     return (
         <div className="auth">
@@ -63,9 +72,13 @@ const RegistarationCode: React.FC<PropsType> = ({ setStage }) => {
                         Продолжить
                     </button>
                     <div className="form__span">
-                        <span>Отправить повторно (00:24)</span>
-                        <div>Отправить повторно</div>
-                        <div>Повторите попытку</div>
+                        {
+                            count !== 0 ? <span>Отправить повторно (00:{count})</span>
+                                : <div>
+                                    <div onClick={runCounter} >Отправить повторно</div>
+                                    <div onClick={runCounter} >Повторите попытку</div>
+                                </div>
+                        }
                     </div>
                 </form>
             </div>

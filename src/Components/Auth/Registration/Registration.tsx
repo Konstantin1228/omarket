@@ -1,15 +1,13 @@
-import React, { ChangeEvent, useEffect, useState } from "react"
+import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks"
 import "../../../scss/components/auth.scss"
-import lookup from 'country-code-lookup'
-import InputMask from 'react-input-mask';
+import codes from 'country-calling-code';
+
 
 interface IFormAuth {
     city: string;
     phoneNumber: String;
-
 }
 
 
@@ -21,6 +19,12 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
 
     const isLoggedIn = useAppSelector(state => state)
     const dispatch = useAppDispatch()
+
+
+    const [value, setValue] = useState('Страна')
+
+    const [code, setCode] = useState('')
+    const [phone, setNumber] = useState('')
 
     const {
         register,
@@ -38,27 +42,47 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
         setStage(3)
     };
 
-    const mappedOptions: any[] = lookup.countries.map((c, i) => ( // map options with key
+
+    const mappedOptions: any[] = codes.map((c, i) => (
         <option key={c + '-' + i}>{c.country}</option>
     ))
 
-    const [value, setValue] = useState('Страна')
-
-    const [code, setCode] = useState('')
-
 
     const onChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-        setValue(e.currentTarget.value)
-        const countryFound = lookup.countries.find(c => c.country === value)
-        const countryCode = (`+${countryFound?.isoNo}`);
-        setCode(`${countryCode}(`)
-
+        const countryValue = e.currentTarget.value
+        setValue(countryValue)
+        const countryFound = codes.find(c => c.country === countryValue)
+        const countryCode = (`+${countryFound?.countryCodes}`)
+        setCode(`${countryCode} `)
+        setNumber(`${countryCode} `)
     }
-    console.log('code', code.indexOf('('))
-    console.log(code.length - code.indexOf('('))
 
-    const onChangeInputNumber = (e: ChangeEvent<HTMLInputElement>) => {
-        setCode(`${e.currentTarget.value}${code.length - code.indexOf('(') === 3 ? ')' : ''}`)
+    const onChangeInputNumber = (event: ChangeEvent<HTMLInputElement>) => {
+        const ev = event.currentTarget.value.replace(/[^0-9()\-+\s]/g, '')
+
+        const e = ev.substring(0, code.length + 19)
+
+        const bracket = e.length - code.length === 4 && e.length > phone.length ? ') ' : ''
+        const firstDash = e.length - code.length === 9 && e.length > phone.length ? ' - ' : ''
+        const twoDash = e.length - code.length === 14 && e.length > phone.length ? ' - ' : ''
+
+        setNumber(`${e}${bracket}${firstDash}${twoDash}`)
+    }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === "Backspace") {
+            if (phone.length < code.length + 2) e.preventDefault()
+            if (phone.length - code.length === 17 || phone.length - code.length === 12) setNumber(phone.slice(0, -3))
+            if (phone.length - code.length === 6) setNumber(phone.slice(0, -2))
+            if (phone.length - code.length !== 17
+                && phone.length - code.length !== 12
+                && phone.length - code.length !== 6) setNumber(phone.slice(0, phone.length))
+        }
+    }
+    const onMouseDownHandler = (e: MouseEvent<HTMLInputElement>) => {
+        if (phone.length === code.length) {
+            setNumber(prev => prev + '(')
+        }
     }
 
     return (
@@ -75,6 +99,7 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
                             value={value}
                             onChange={onChangeSelect}
                         >
+                            <option disabled>Страна</option>
                             {mappedOptions}
                         </select>
                     </div>
@@ -84,17 +109,21 @@ const Registration: React.FC<PropsType> = ({ setStage }) => {
                             <input {...register("phoneNumber", {
                                 required: "Поле обязательно к к заполнению!"
                             })}
-                                value={code === '+' ? '' : code}
-                                type="text"
+                                type="tel"
+                                value={phone}
+                                disabled={!code}
+                                onMouseDown={onMouseDownHandler}
+                                onKeyDown={onKeyDownHandler}
                                 onChange={onChangeInputNumber}
                                 placeholder="Номер телефона"
                                 className="cart__inner-notEmpty-left-ordering-adress-more-input-adress"
                             />
                             {errors.phoneNumber && <p className="error">{errors?.phoneNumber?.message || "Ошибка!"}</p>}
+
                         </div>
                     </div>
 
-                    <button type="submit" className={isValid ? `cart__inner - notEmpty - makeOrder - submitOrder` : `cart__inner - notEmpty - makeOrder - submitOrder - false`}  >
+                    <button type="submit" className={isValid ? `cart__inner-notEmpty-makeOrder-submitOrder` : `cart__inner-notEmpty-makeOrder-submitOrder-false`} >
                         отправить СМС
                     </button>
                 </form>

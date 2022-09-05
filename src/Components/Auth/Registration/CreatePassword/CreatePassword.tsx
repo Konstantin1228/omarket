@@ -48,11 +48,8 @@ const CreatePassword: React.FC = () => {
         formState: {
             errors,
             isValid
-
         },
-
         handleSubmit,
-
     } = useForm<IFormAuth>({
         mode: "onChange",
         resolver: yupResolver(validationsSchema),
@@ -113,7 +110,6 @@ const CreatePassword: React.FC = () => {
                                     }
                                 </span>
                             }
-
                             {errors.confirmPassword && <p className="error">{errors?.confirmPassword?.message || "Пароли не совпадают!"}</p>}
                         </div>
                     </div>
