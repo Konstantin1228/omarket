@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Chapter from "./Catalog/Chapter";
 import axios from "axios";
+import Characteristics from "./Cart/Characteristics/Categories";
 
 const Home = () => {
   useEffect(() => {
@@ -14,10 +15,13 @@ const Home = () => {
   return (
     <div>
       {/* databaseName */}
-      <Chapter title={"Новинки"} titleTheme={"green"} tagSorting={"Новинка"}  />
-      <Chapter title={"Для новогоднего стола"} titleTheme={"default"}    />
-      <Chapter title={"Акция"} titleTheme={"red"} tagSorting={"discount|bonus"}  />
-      <Chapter title={"Напитки к новогоднему столу"} titleTheme={"default"}  />
+      <div>
+        <Characteristics />
+      </div>
+      <Chapter title={"Новинки"} titleTheme={"green"} tagSorting={"Новинка"} />
+      <Chapter title={"Для новогоднего стола"} titleTheme={"default"} />
+      <Chapter title={"Акция"} titleTheme={"red"} tagSorting={"discount|bonus"} />
+      <Chapter title={"Напитки к новогоднему столу"} titleTheme={"default"} />
       <Chapter title={"Хиты продаж"} titleTheme={"orange"} tagSorting={"Хит"} />
     </div>
   );

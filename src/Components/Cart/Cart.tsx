@@ -5,6 +5,7 @@ import Cart_Item from "./Cart_Item";
 import CartOrderingStage2 from "./CartOrderingStage2";
 import CartOrderingStage3 from "./CartOrderingStage3";
 import CartRight from "./CartRight";
+import Characteristics from "./Characteristics/Categories";
 const Cart = () => {
   const { itemsInCart } = useAppSelector((state) => state.cartSlice);
 

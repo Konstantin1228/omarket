@@ -59,7 +59,6 @@ const Login: React.FC<PropsType> = ({ setStage }) => {
         <option key={c + '-' + i}>{c.country}</option>
     ))
 
-
     const onChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
         const countryValue = e.currentTarget.value
         setValue(countryValue)
@@ -68,7 +67,6 @@ const Login: React.FC<PropsType> = ({ setStage }) => {
         setCode(`${countryCode} `)
         setNumber(`${countryCode} `)
     }
-
     const onChangeInputNumber = (event: ChangeEvent<HTMLInputElement>) => {
         const ev = event.currentTarget.value.replace(/[^0-9()\-+\s]/g, '')
 
@@ -80,7 +78,6 @@ const Login: React.FC<PropsType> = ({ setStage }) => {
 
         setNumber(`${e}${bracket}${firstDash}${twoDash}`)
     }
-
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === "Backspace") {
             if (phone.length < code.length + 2) e.preventDefault()
@@ -104,7 +101,6 @@ const Login: React.FC<PropsType> = ({ setStage }) => {
                 <h1>Авторизация</h1>
 
                 <form onSubmit={handleSubmit(onSubmit)} >
-
 
                     <div className={"select-rotate"}>
                         <select
@@ -155,7 +151,6 @@ const Login: React.FC<PropsType> = ({ setStage }) => {
                                 </span>
                             }
                             {errors.password && <p className="error">{errors?.password?.message || "Ошибка!"}</p>}
-
                         </div>
                     </div>
 
@@ -164,9 +159,7 @@ const Login: React.FC<PropsType> = ({ setStage }) => {
                     </button>
 
                     <div className="form__span" >
-
                         <span onClick={() => setStage(5)} >Забыли пароль?</span>
-
                     </div>
                 </form>
             </div>
