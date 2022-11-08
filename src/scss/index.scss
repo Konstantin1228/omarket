@@ -1,0 +1,307 @@
+@import url(./components/header.scss);
+@import url(./components/foooter.scss);
+@import url(./components/chapter.scss);
+@import url(./components/item.scss);
+@import url(./components/cart.scss);
+@import url(./components/modalWindow.scss);
+@import url(./components/CartStages/stage4.scss);
+@import url(./components/AuthComponents/auth.scss);
+$green:#00953F;
+$red:#ED1B23;
+$orange:#FF6600;
+$darkGrey:#9C9C9C;
+$gray:#CFCFCF;
+$black:#0D0D0D;
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+
+.app {
+    color: #000;
+    padding: 20px 200px 0px 200px;
+    gap: 25px;
+    margin-bottom: 75px;
+}
+
+.active {
+    svg {
+        path {
+            fill: #fff;
+        }
+    }
+
+    background-color: $orange;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    background-color: transparent;
+    border: 0;
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
+.button-submit,
+.button-submit-false {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    text-align: center;
+    padding: 16px;
+    border: 1px solid $orange;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    color: $orange;
+    transition: all.3s;
+}
+
+.button-submit {
+    &:hover {
+        background-color: $orange;
+        color: #fff;
+
+        path {
+            fill: #fff;
+        }
+    }
+}
+
+.button-submit-false {
+    cursor: not-allowed;
+    background-color: $gray;
+    color: $darkGrey;
+    border: none;
+}
+
+input {
+    background-color: #fff;
+}
+
+.input {
+    transition: all .3s;
+    border: 1px solid #DFDFDF;
+    border-radius: 14px;
+    padding: 16px 24px;
+    font-weight: 500;
+
+    &::placeholder {
+        color: $gray;
+        font-weight: 500;
+        letter-spacing: 0 !important;
+    }
+
+    &-error,
+    &-text {
+        @extend .input;
+        background: #FEF3F4;
+        border: 1px solid #ED1B23;
+    }
+
+    &-text {
+        border: 1px solid #0D0D0D;
+        background-color: #FEF3F4;
+    }
+
+    &-password,
+    &-passwordError {
+        @extend .input;
+        font-family: Verdana;
+        letter-spacing: 0.125em;
+    }
+
+    &-passwordError {
+        border: 1px solid #ED1B23;
+        background: #FEF3F4;
+    }
+
+    &:disabled {
+        background-color: rgba(239, 239, 239, 0.3);
+        border: 1px solid #DFDFDF;
+    }
+}
+
+input {
+    outline: none;
+}
+
+.react-dadata__container {
+    .react-dadata__input {
+        position: relative;
+        padding: 16px 24px;
+        outline: none;
+        border: 1px solid $gray;
+        border-radius: 14px;
+        transition: all.3s;
+
+        &:focus {
+            border: 2px solid $black;
+        }
+
+        &::placeholder {
+            color: #9C9C9C;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            box-sizing: border-box;
+
+        }
+    }
+}
+
+.react-dadata__suggestions {
+    border: 1px solid $gray;
+    padding: 8px;
+    border-radius: 12px;
+    background-color: #fff;
+    position: absolute;
+    margin-top: 5px;
+    display: flex;
+    gap: 7px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: left;
+    z-index: 5;
+
+    &-li {
+        text-align: left;
+        font-size: 19px;
+        cursor: pointer;
+        width: 100%;
+        border-bottom: 1px solid $gray;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &-liHelp {
+        color: $orange;
+        background-color: white;
+    }
+}
+
+svg {
+    cursor: pointer;
+}
+
+dialog {
+    border: none;
+}
+
+.bold {
+    font-weight: 500;
+}
+
+.chapter-title-green,
+.chapter-title-red,
+.chapter-title-orange,
+.chapter-title-default {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: $green;
+}
+
+.chapter-title-red {
+    color: $red !important;
+}
+
+.chapter-title-orange {
+    color: $orange !important;
+}
+
+.chapter-title-default {
+    color: #000 !important;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.error,
+.errorAuth,
+.errorRelative {
+    font-weight: 700;
+    font-size: 14px;
+    color: $red;
+    position: absolute;
+    white-space: nowrap;
+    bottom: -18px;
+}
+
+.errorRelative {
+    position: relative;
+    bottom: 0;
+}
+
+.select,
+.select-rotate {
+    position: relative;
+    cursor: pointer;
+    max-width: 360px;
+    width: 100%;
+    transition: all.3s;
+
+    &__inner {
+        border: none;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.08);
+        color: #9C9C9C;
+        font-weight: 400;
+        appearance: none;
+        outline: none;
+        width: 100%;
+        padding: 16px 24px;
+        border-radius: 14px;
+
+        &::backdrop {
+            background-color: rgb(158, 7, 7);
+        }
+
+        option {
+            color: #000;
+        }
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        top: 40%;
+        right: 6%;
+        width: 7px;
+        height: 7px;
+        border-top: 2px solid #CFCFCF;
+        border-right: 2px solid #CFCFCF;
+        transform: rotate(135deg)
+    }
+
+}
+
+.select-rotate {
+    &__inner {
+        border: 2px solid #0D0D0D;
+    }
+
+    &::before {
+        transform: rotate(-45deg);
+        top: 42%;
+        right: 6%;
+    }
+}

@@ -1,0 +1,35 @@
+.auth {
+    margin: 90px auto;
+
+    &__registration {
+        display: flex;
+        flex-direction: column;
+        gap: 21px;
+
+        .auth__form-parent {
+
+            &:last-child {
+                gap: 0;
+            }
+        }
+
+        &-top {
+            width: fit-content;
+        }
+
+        &-bottom {
+            display: flex;
+            gap: 16px;
+        }
+
+        .css-ahj2mt-MuiTypography-root {
+            color: #9C9C9C;
+            font-weight: 500;
+        }
+    }
+}
+
+.prompt {
+    color: #9C9C9C;
+    font-size: 14px;
+}

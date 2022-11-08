@@ -1,0 +1,141 @@
+$darkGrey: #DFDFDF;
+$orange: #FF6600;
+
+.characteristics {
+
+    padding: 16px 22px 20px 22px;
+    border: 1px solid $darkGrey;
+    border-radius: 14px;
+    width: 330px;
+
+    button {
+        width: 100%;
+        height: 40px;
+        margin: 5px;
+        padding: 10px;
+       
+    }
+    button:nth-child(1) {
+        color: #000;
+    }
+
+    &__price {
+        &__input {
+            display: flex;
+            justify-content: space-between;
+
+            input {
+                outline: none;
+                height: 32px;
+                width: 130px;
+                border-radius: 15px;
+                margin: 10px 0;
+                padding: 11px;
+                border: 1px solid $darkGrey;
+            }
+        }
+
+        &__slider {
+            margin: 10px 0;
+        }
+
+    }
+
+    &__item {
+        margin: 15px 0;
+
+        .custom-checkbox {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .custom-checkbox+label {
+            display: inline-flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        .custom-checkbox+label::before {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            flex-shrink: 0;
+            flex-grow: 0;
+            border: 1px solid #adb5bd;
+            border-radius: 0.25em;
+            margin-right: 0.5em;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50% 50%;
+        }
+
+        :checked+label::before {
+            border-color: $green;
+            background-color: $green;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+        }
+
+        :not(:disabled):not(:checked)+label:hover::before {
+            border-color: $borderGreen;
+        }
+
+        :focus+label::before {
+            box-shadow: 0 0 0 0.2rem rgba(17, 196, 0, 0.25);
+        }
+
+        :disabled+label::before {
+            background-color: #e9efe9;
+        }
+
+        &__angle {
+            cursor: pointer;
+            font-size: 14px;
+            color: $orange;
+            margin-top: 4px;
+
+            i {
+                margin-left: 10px;
+                color: $orange;
+            }
+        }
+
+        input {
+            cursor: pointer;
+            margin: 8px 0;
+        }
+
+        label {
+            cursor: pointer;
+            margin-left: 8px;
+        }
+    }
+
+    h2 {
+        cursor: pointer;
+        padding: 5px 0 8px 0;
+        font-size: 17px;
+        font-weight: 500;
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        .fa-angle-down {
+            font-size: 18px;
+            font-weight: 500;
+            float: right;
+        }
+
+        .fa-angle-up {
+            font-size: 18px;
+            font-weight: 500;
+            float: right;
+        }
+    }
+
+}

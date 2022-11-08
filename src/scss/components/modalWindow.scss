@@ -1,0 +1,190 @@
+.modal,
+.modal-active {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all.3s;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.modal-active {
+    opacity: 1 !important;
+    pointer-events: all;
+}
+
+.modal__content,
+.modal__content-short {
+    max-width: 736px;
+    width: 100%;
+    padding: 24px;
+    border-radius: 14px;
+    background-color: white;
+
+    &-top {
+        display: flex;
+        justify-content: space-between;
+
+        &-title {
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        &-orderInformation {
+            display: flex;
+            flex: 1 1;
+            flex-direction: column;
+            gap: 16px;
+
+            &-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                &-left {
+                    display: flex;
+                    height: 100%;
+                    align-items: center;
+
+                    .element {
+                        display: flex;
+                        height: 100%;
+                        align-items: center;
+                        padding: 0 16px;
+
+                        &:last-child {
+                            border-left: 1px solid #DFDFDF;
+                            padding-right: 0;
+                        }
+
+                        &:first-child {
+                            border-right: 1px solid #DFDFDF;
+                            padding-left: 0;
+                        }
+                    }
+
+                    &-number {
+                        color: #00953F;
+                        font-weight: 700;
+                        font-size: 25px;
+                    }
+
+                    &-time {
+                        display: flex;
+                        gap: 7px;
+                        color: #9C9C9C;
+                    }
+
+                    &-deliviryStatus {
+                        font-weight: 600;
+
+                        .green {
+                            color: #00953F;
+                        }
+
+                        .red {
+                            color: #ED1B23;
+                        }
+                    }
+                }
+
+
+            }
+
+            &-right {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+
+                &-svg {
+                    border: 1px solid #0D0D0D !important;
+                    border-radius: 4px;
+                }
+            }
+
+            &-adress {
+                display: flex;
+            }
+
+            &-orderInformationFrame {
+                display: flex;
+                align-items: center;
+                border: 1px solid #DFDFDF;
+                border-radius: 14px;
+
+                &-element {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    width: 100%;
+                    margin: 8px 0px;
+                    padding: 8px 16px;
+
+                    &:first-child {
+                        border-right: 1px solid #DFDFDF;
+                    }
+
+                    &:last-child {
+                        border-left: 1px solid #DFDFDF;
+
+                    }
+                }
+            }
+
+            &-items {
+                max-height: 550px;
+                border: 1px solid #DFDFDF;
+                border-radius: 14px;
+                overflow-x: hidden;
+
+                &::-webkit-scrollbar {
+                    width: 7px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background-color: transparent;
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: #DFDFDF;
+                    border-radius: 12px;
+                }
+            }
+
+            &-totalSum {
+                display: flex;
+                justify-content: space-between;
+
+                p {
+                    font-size: 19px;
+                }
+            }
+        }
+    }
+
+    &-bottom {
+        padding-bottom: 20px;
+    }
+}
+
+.modalButton {
+    cursor: pointer;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 13px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.modal__content-short {
+    max-width: 480px !important;
+}

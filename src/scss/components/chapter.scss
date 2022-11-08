@@ -1,0 +1,43 @@
+    .chapter {
+        margin-bottom: 20px;
+
+        &-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            &-pagination {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                &-svg,
+                &-svgLast {
+                    transition: all.3s;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border: 1px solid #DFDFDF;
+                    border-radius: 50%;
+
+                    &:active {
+                        transform: scale(0.6);
+                    }
+
+                }
+
+                &-svgLast {
+                    cursor: default;
+                    background-color: #DFDFDF;
+                }
+
+            }
+        }
+
+        &-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+    }

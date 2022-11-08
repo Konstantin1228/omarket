@@ -1,0 +1,108 @@
+.profile__left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &-ul {
+        padding: 20px;
+        padding-bottom: 0;
+        padding-top: 0;
+        border: 1px solid #DFDFDF;
+        border-radius: 14px;
+        width: fit-content;
+        white-space: nowrap;
+        height: fit-content;
+
+        &-li,
+        &-liActive {
+            cursor: pointer;
+            display: flex;
+            gap: 15px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #DFDFDF;
+            transition: all.3s;
+            color: #000;
+
+            &-text {
+                font-size: 17px;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &:hover {
+                color: #00953F;
+
+                path {
+                    fill: #00953F;
+                }
+
+            }
+
+            &-title {
+                margin-bottom: 12px;
+
+                &:first-child {
+                    margin-top: 16px;
+                }
+            }
+        }
+
+        &-liActive {
+            color: #00953F;
+
+            path {
+                fill: #00953F;
+            }
+        }
+
+        &-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 140px;
+
+            &-li {
+                input {
+                    background: #139DEB;
+                    border-radius: 4px;
+                }
+
+                .css-j204z7-MuiFormControlLabel-root {
+                    display: flex;
+                    gap: 16px;
+                    margin-left: 0px !important;
+
+                    .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
+                        padding: 0px;
+                    }
+
+                    .css-j204z7-MuiFormControlLabel-root {
+                        margin-right: 0 !important;
+                        width: 100%;
+                    }
+
+                    .MuiFormControlLabel-label {
+                        white-space: normal;
+                        width: 300px;
+                    }
+                }
+
+                &:last-child {
+                    padding-bottom: 16px;
+                    border-bottom: 1px solid #DFDFDF;
+                    margin-bottom: 10px;
+                }
+            }
+
+            &:last-child {
+                .profile__left-ul-checkboxes-li {
+                    padding-bottom: 0;
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
