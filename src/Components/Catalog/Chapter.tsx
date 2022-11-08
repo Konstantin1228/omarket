@@ -29,20 +29,18 @@ const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagS
   const [totalPages, setTotalPages] = useState(2);
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     if (databaseName) {
       const getRes = async () => {
-        setLoading(true)
         await axios.get(`http://localhost:3001/${databaseName}?_limit=4&_page=${page}`).then((res) => {
           setTotalPages(Math.ceil(Number(res.headers["x-total-count"]) / 4))
           totalPages >= page && setGoods(res.data);
         });
-        setLoading(true)
+        setLoading(false)
       };
-
       getRes();
     } else if (tagSorting) {
       const getRes = async () => {
-        setLoading(true)
         await axios.get(`https://636a3f3db10125b78fd50f7d.mockapi.io/goods/goods/?page=${page}&tags=${tagSorting}`).then((res) => {
           setTotalPages(Math.ceil(res.data.length / 4))
         });
@@ -53,6 +51,7 @@ const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagS
       };
       getRes();
     }
+
   }, [page]);
 
   return (

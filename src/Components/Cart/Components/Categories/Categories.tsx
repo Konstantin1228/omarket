@@ -19,7 +19,6 @@ export type ArrayObjType = { value: string, checked: boolean }
 
 const Categories: React.FC<PropsType> = ({ }) => {
 
-
     const stocks = ['Все', 'Ценовая', 'Скидочная', 'Подарочная']
     const properties = ['0.5л', '1л', '1.5л', '2л', '2,5л', '3л']
     const brands = ['Red Bull', 'Yeti', 'Gorilla', 'Monster']
