@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { AdressInterface, BankCard, NextStage, SetCountryAndTel, UserSlice } from "./types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NextStage, SetCountryAndTel, UserSlice } from "./types";
 
 const initialState: UserSlice = {
     isAuth: localStorage.getItem("isLogged") === "true",
@@ -47,7 +46,5 @@ export const userSlice = createSlice({
 });
 
 export const { clearAuthLoginFields, setNextStage, setContryAndTel, setUserInformation, setCanEditProfile, } = userSlice.actions;
-
-export const selectCart = (state: RootState) => state.userSlice;
 
 export default userSlice.reducer;

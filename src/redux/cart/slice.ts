@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
-import { RootState } from "../store";
 import { CartSliceState, GeneralInformation, getCartFromLS, ItemsInCart, itemsOperationWithCount, UserInformationObj } from "./types";
 
 const { items } = getCartFromLS()
@@ -101,7 +100,5 @@ export const cartSlice = createSlice({
 });
 
 export const { addToCart, countPlus, countMinus, deleteItem, clearCart, setGeneralInformation, setBankCardInformation } = cartSlice.actions;
-
-export const selectCart = (state: RootState) => state.cartSlice;
 
 export default cartSlice.reducer;

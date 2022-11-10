@@ -10,7 +10,9 @@ import { useAppDispatch } from "../../../hooks/hooks";
 import { setUserInformation, setNextStage, setCanEditProfile } from "../../../redux/user/slice";
 import { formattedTelephone } from "../FunctionsAndTypes/functions";
 import { LoginInterface } from "../FunctionsAndTypes/types";
+import { useNavigate } from "react-router-dom";
 const LoginIndex: React.FC = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState(false)
     const [visibilityEye, setVisibilityEye] = useState(false);
@@ -33,6 +35,7 @@ const LoginIndex: React.FC = () => {
             }
             else setError("password", { type: 'custom', message: 'Неправильный пароль!' })
         } else setError("tel", { type: 'custom', message: 'Неправильный телефон/страна!' })
+        navigate("3333")
         setLoading(false)
     }
 

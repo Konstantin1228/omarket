@@ -19,11 +19,6 @@ export interface SetCountryAndTel {
     telephone: string,
     country?: string
 }
-export interface AdressInterface {
-    city?: string,
-    comment?: string
-    isDefault?: boolean
-}
 export interface BankCard {
     bankCard: string
     date: string

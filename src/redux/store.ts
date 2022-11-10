@@ -4,7 +4,7 @@ import userSlice from "./user/slice";
 export const store = configureStore({
   reducer: {
     cartSlice,
-    userSlice
+    userSlice,
   },
 });
 

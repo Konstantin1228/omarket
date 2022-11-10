@@ -1,17 +1,15 @@
 import Skeleton from "../CustomComponents/Skeleton";
 import axios from "axios";
-import { query, collection, where, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase";
 import Item, { itemType } from "./Catalog_item";
 
-type ChapterProps = {
+interface ChapterProps {
   title: string;
   titleTheme: string;
   databaseName?: string;
   tagSorting?: string;
 };
-interface GoodsType {
+export interface GoodsType {
   id: number,
   discounts: number[]
   description: string

@@ -1,7 +1,7 @@
 #### Omarket
 #### Интернет магазин продовольственных товаров(обращаю ваше внимания на то, что на скринах далеко не все страницы!)
 
-![MyCollages.jpg](https://ltdfoto.ru/images/2022/10/27/MyCollages.jpg) 
+![MyCollages.jpg](https://i.ibb.co/P5snZFT/My-Collages-2.jpg) 
 
 #### На данном этапе:
 :star2: Авторизация и регестрация пользователей <br>
