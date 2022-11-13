@@ -1,43 +1,70 @@
-    .chapter {
-        margin-bottom: 20px;
+@import "./defaultVariables.scss";
 
-        &-top {
+.chapter {
+    margin-bottom: 20px;
+
+    &-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        &-pagination {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
+            align-items: center;
+            gap: 12px;
 
-            &-pagination {
+            &-svg {
+                transition: all.3s;
+                cursor: pointer;
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                padding: 12px 14px;
+                border: 1px solid $gray;
+                border-radius: 50%;
 
-                &-svg,
-                &-svgLast {
-                    transition: all.3s;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    padding: 12px 14px;
-                    border: 1px solid #DFDFDF;
-                    border-radius: 50%;
+                &:active {
+                    transform: scale(0.6);
+                }
 
-                    &:active {
-                        transform: scale(0.6);
+                &:hover {
+                    background-color: $orange;
+
+                    path {
+                        fill: white;
                     }
-
                 }
-
-                &-svgLast {
-                    cursor: default;
-                    background-color: #DFDFDF;
-                }
-
             }
         }
-
-        &-bottom {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 40px;
-        }
     }
+
+    &-bottom {
+        display: flex;
+        gap: 4.2em;
+
+    }
+
+    &-title-green,
+    &-title-red,
+    &-title-orange,
+    &-title-default {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: $green;
+    }
+
+    &-title-red {
+        color: $red !important;
+    }
+
+    &-title-orange {
+        color: $orange !important;
+    }
+
+    &-title-default {
+        color: #000 !important;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+}

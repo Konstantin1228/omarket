@@ -12,6 +12,7 @@ const initialState: UserSlice = {
         country: "",
     },
     canEditProfile: false,
+    isUserAuth: false
 };
 
 export const userSlice = createSlice({
@@ -39,12 +40,15 @@ export const userSlice = createSlice({
             })
             state.isAuth = true
         },
+        setIsUserAuth(state, action: PayloadAction<boolean>) {
+            state.isUserAuth = action.payload
+        },
         setCanEditProfile(state, action: PayloadAction<boolean>) {
             state.canEditProfile = action.payload
         },
     },
 });
 
-export const { clearAuthLoginFields, setNextStage, setContryAndTel, setUserInformation, setCanEditProfile, } = userSlice.actions;
+export const { clearAuthLoginFields, setNextStage, setContryAndTel, setUserInformation, setCanEditProfile, setIsUserAuth} = userSlice.actions;
 
 export default userSlice.reducer;

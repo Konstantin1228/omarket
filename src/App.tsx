@@ -17,8 +17,8 @@ const App: React.FC = () => {
   return (
     <Routes>
       <Route element={<MainLayout setSearchValue={setSearchValue} />}>
+        <Route path="/home" element={<Home searchValue={searchValue} />} />
         <Route element={<RequireAuth />}>
-          <Route path="/home" element={<Home searchValue={searchValue} />} />
           <Route path="/cart" element={<Cart />} />
           <Route element={<CanEditProfile />}>
             <Route path="/profile" element={<ProfileIndex />} >

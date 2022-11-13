@@ -1,21 +1,18 @@
-$green:#00953F;
-$red:#ED1B23;
-$orange:#FF6600;
-$white:#fff;
+@import "../../../scss/components/defaultVariables.scss";
 
 .header {
-    margin-bottom: 24px;
+    margin-bottom: 2em;
 
     &__top {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 16px;
+        margin-bottom: 1em;
 
         &-left {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 1.5em;
 
             &-stock,
             &-sets {
@@ -41,29 +38,27 @@ $white:#fff;
         &-right {
             display: flex;
             align-items: center;
+            gap: 0.7em;
+            cursor: pointer;
 
-            &-city {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                cursor: pointer;
-            }
         }
     }
 
     &__center {
         display: flex;
-        gap: 20px;
+        gap: 1.7em;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 1em;
 
         &-left {
             display: flex;
             flex: 1 1;
             align-items: center;
-            gap: 26px;
+            gap: 1.5em;
 
             img {
+                width: 11em;
+                height: 3em;
                 cursor: pointer;
             }
 
@@ -76,10 +71,9 @@ $white:#fff;
                 padding: 12px 16px 12px 18px;
 
                 input {
-                    width: 96%;
+                    width: 100%;
                     background-color: transparent;
                     border: none;
-                    outline: none;
                 }
 
                 button {
@@ -90,47 +84,66 @@ $white:#fff;
             }
         }
 
+
         &-right {
             display: flex;
-            gap: 26px;
             align-items: center;
+            gap: 1.2em;
 
-            .header__center-profile,
-            .header__center-points,
-            .header__center-cart {
+            .header__center-element {
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 padding: 12px 16px;
+                font-weight: 600;
                 background: $orange;
                 border-radius: 14px;
                 cursor: pointer;
-
-                &-text {
-                    font-weight: 500;
-                    color: $white;
-                }
-
-            }
-
-            .header__center-points {
-                background-color: white;
-                border: 1px solid $orange;
-
-                &-text {
-                    font-weight: 600 !important;
-                    color: $orange !important;
-                }
-            }
-
-            .header__center-cart {
-                padding: 14px;
+                border: 1px solid white;
                 transition: all .3s ease;
 
                 &:hover {
-                    background-color: #fff;
+                    background-color: white;
+                }
+            }
 
-                    * {
+            .header__center-element:nth-child(1) {
+
+                span {
+                    font-weight: 500 !important;
+                }
+
+                &:hover {
+                    border: 1px solid $orange;
+
+                    span {
+                        color: $orange;
+                    }
+
+                    path {
+                        fill: $orange;
+                    }
+                }
+            }
+
+            .header__center-element:nth-child(2) {
+                background-color: white;
+                border: 1px solid $orange;
+
+                span {
+                    font-weight: 600 !important;
+                    color: $orange !important;
+                }
+
+            }
+
+            .header__center-element:nth-child(3) {
+                padding: 14px !important;
+
+                &:hover {
+                    border: 1px solid $orange;
+
+                    path {
                         fill: $orange;
                     }
                 }
@@ -138,44 +151,47 @@ $white:#fff;
         }
     }
 
-    &__categories {
+    &__bottom {
         display: flex;
+        flex: 1 1;
         justify-content: space-between;
 
         &-component {
-            &-left {
-                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
-                border-radius: 14px;
-                padding: 12px 15px 12px 19px;
-                cursor: pointer;
-                transition: all .7s;
-                display: flex;
-                align-items: center;
-                gap: 11px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            position: relative;
+            cursor: pointer;
+            padding: 0.8em 1em 0.8em 1em;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            transition: all .7s;
 
-                &:hover {
-                    svg {
-                        path {
-                            fill: #fff;
-                        }
-                    }
-
-                    background-color: $orange;
-                    color: #fff;
+            &:hover {
+                path {
+                    fill: white;
                 }
+
+                background-color: $orange;
+                color: white;
             }
 
-            &-ul {
-                min-width: 300px;
+
+            ul {
+                position: absolute;
+                top: 2.7em;
+                left: 0;
                 border: 1px solid #DFDFDF;
                 box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.08);
                 border-radius: 0px 0px 14px 14px;
-                position: absolute;
-                z-index: 1;
-                background: #FFFFFF;
+                z-index: 5;
+                background: white;
                 cursor: pointer;
+                width: 160%;
+                animation: dropDown .2s ease-in-out;
 
                 li {
+                    color: black;
                     transition: all.3s;
                     padding: 16px 24px;
 
@@ -188,5 +204,42 @@ $white:#fff;
                 }
             }
         }
+
+        @media (max-width:1280px) {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(3, 17em);
+        }
+
+        @media (max-width:1024px) {
+            grid-template-columns: repeat(3, 18em);
+        }
     }
+}
+
+@keyframes dropDown {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.active {
+    border-radius: 14px 14px 0px 0px;
+
+    svg {
+        path {
+            fill: white;
+        }
+    }
+
+    background-color: $orange;
+    color: white;
 }

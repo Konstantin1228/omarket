@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
-import { addToCart } from "../../redux/cart/slice";
+import { addToCart, openPopup } from "../../redux/cart/slice";
+import "./item.scss"
 export interface itemType {
   id: number;
   title: string;
@@ -13,9 +14,9 @@ export interface itemType {
   points: number[];
   price: number[];
 }
-
-const Item: React.FC<itemType> = ({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }) => {
+const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }) => {
   const dispatch = useAppDispatch();
+  const [active, setActive] = useState(false)
   const renderSVG = (shareType: string | undefined) => {
     switch (shareType) {
       case "bonus":
@@ -30,7 +31,6 @@ const Item: React.FC<itemType> = ({ id, title, description, image, tags, typeOfU
         );
     }
   };
-
   const shareType = tags.find((tag) => tag === "bonus" || tag === "discount")
   const [bigItem, setBigItem] = useState(false);
   const [prompt, setPrompt] = useState(false);
@@ -68,9 +68,10 @@ const Item: React.FC<itemType> = ({ id, title, description, image, tags, typeOfU
       setTotalBonus(items.reduce((previous, current) => previous + current.points, 0));
     }
   };
+
   const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
   return (
-    <div className="item-wrapper" onMouseEnter={() => setBigItem(true)} onMouseLeave={() => setBigItem(false)}>
+    <div className="item-wrapper" onMouseEnter={() => setBigItem(true)} onMouseLeave={() => setBigItem(false)} >
       <div className={bigItem ? "item-big" : "item"}>
         <div className="item-tags">
           {tags.includes("Новинка") && <div className="item-tag-new">Новинка</div>}
@@ -104,10 +105,10 @@ const Item: React.FC<itemType> = ({ id, title, description, image, tags, typeOfU
                 <span className="item-about-chapter-price">{price[0]}₽</span>
               }
             </div>
-            <div className="item-more">
-              <button className="item-more-text" onClick={() => setBigItem(!bigItem)}>Подробнее</button>
+            <button className="item-more" onClick={() => setActive(true)}>
+              <span>Подробнее</span>
               <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path d="M0.910093 0.744078C1.23553 0.418641 1.76317 0.418641 2.0886 0.744078L6.49935 5.15482L10.9101 0.744078C11.2355 0.418641 11.7632 0.418641 12.0886 0.744078C12.414 1.06951 12.414 1.59715 12.0886 1.92259L7.08861 6.92259C6.76317 7.24802 6.23553 7.24802 5.91009 6.92259L0.910093 1.92259C0.584656 1.59715 0.584656 1.06951 0.910093 0.744078Z" fill="#FF6600" /> </svg>
-            </div>
+            </button>
           </div>
         )}
         {bigItem && (
@@ -182,7 +183,7 @@ const Item: React.FC<itemType> = ({ id, title, description, image, tags, typeOfU
                 <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg>
                 <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg>
                 <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /> </svg>
-              </div>    
+              </div>
             </div>
           </div>
         )}
@@ -191,4 +192,4 @@ const Item: React.FC<itemType> = ({ id, title, description, image, tags, typeOfU
   );
 };
 
-export default Item;
+export default CatalogItem;

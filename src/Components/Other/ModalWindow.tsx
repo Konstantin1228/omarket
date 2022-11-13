@@ -99,7 +99,7 @@ const ModalWindow: React.FC<ModalWindow> = ({ active, setActive, type, itemName,
     }
 
     const deleteItemFromCart = () => {
-
+        
     }
     return (
         <div className={active ? 'modal-active' : 'modal'} onClick={() => setActive(false)}>

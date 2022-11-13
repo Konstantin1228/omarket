@@ -31,6 +31,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
+    "swiper": "^8.4.4",
     "typescript": "^4.7.4",
     "use-debounce": "^8.0.4",
     "web-vitals": "^2.1.4"
@@ -64,6 +65,7 @@
   "devDependencies": {
     "@types/react-calendar": "^3.5.3",
     "@types/react-datepicker": "^4.4.2",
+    "@types/react-slick": "^0.23.10",
     "concurrently": "^7.3.0"
   }
 }

@@ -9,6 +9,7 @@ export interface UserSlice {
         type: string
     },
     canEditProfile: boolean,
+    isUserAuth: boolean
 }
 
 export interface NextStage {

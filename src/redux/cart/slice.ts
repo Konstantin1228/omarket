@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
+import { itemType } from "../../Components/Catalog/CatalogItem";
 import { CartSliceState, GeneralInformation, getCartFromLS, ItemsInCart, itemsOperationWithCount, UserInformationObj } from "./types";
 
 const { items } = getCartFromLS()
 const initialState: CartSliceState = {
   itemsInCart: items,
   userInformation: UserInformationObj,
+  bigItemInformation: { id: 0, title: "", description: "", image: "", tags: [""], typeOfUnit: "", discounts: [0], weight: [0], points: [0], price: [0] },
+  isActivePopup: false
 };
 
 export const cartSlice = createSlice({
@@ -96,9 +99,16 @@ export const cartSlice = createSlice({
     setBankCardInformation(state, action: PayloadAction<BankCard>) {
       state.userInformation.bankCardInformation = action.payload
     },
+    openPopup(state, action: PayloadAction<itemType>) {
+      state.bigItemInformation = action.payload
+      state.isActivePopup = true
+    },
+    closePopup(state) {
+      state.isActivePopup = false
+    }
   },
 });
 
-export const { addToCart, countPlus, countMinus, deleteItem, clearCart, setGeneralInformation, setBankCardInformation } = cartSlice.actions;
+export const { addToCart, countPlus, countMinus, deleteItem, clearCart, setGeneralInformation, setBankCardInformation, openPopup, closePopup } = cartSlice.actions;
 
 export default cartSlice.reducer;

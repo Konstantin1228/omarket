@@ -1,7 +1,10 @@
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
+import { itemType } from "../../Components/Catalog/CatalogItem";
 export interface CartSliceState {
     itemsInCart: ItemsInCart[];
     userInformation: UserInformation
+    bigItemInformation: itemType 
+    isActivePopup: boolean
 }
 export const UserInformationObj = {
     generalInformation: {
@@ -18,7 +21,8 @@ export const UserInformationObj = {
         date: "",
         CVC: "",
         scheme: ""
-    }
+    },
+    
 }
 
 export interface ItemsInCart {
