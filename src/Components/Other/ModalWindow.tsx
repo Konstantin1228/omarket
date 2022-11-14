@@ -20,7 +20,7 @@ const ModalWindow: React.FC<ModalWindow> = ({ active, setActive, type, itemName,
     const { itemsInCart } = useAppSelector((state) => state.cartSlice)
     const { writeOffBonuses, adress, deliviryCost, flat, floor } = useAppSelector((state) => state.cartSlice.userInformation.generalInformation)
     const { bankCard, scheme } = useAppSelector((state) => state.cartSlice.userInformation.bankCardInformation)
-    const withDiscount = itemsInCart.reduce((previous, current) => previous + current.totalPrice, 0)
+    const withDiscount = itemsInCart.reduce((previous, current) => previous + current.count * current.price, 0)
 
     const deleteItem = async () => {
         if (setLoading) {
@@ -99,7 +99,7 @@ const ModalWindow: React.FC<ModalWindow> = ({ active, setActive, type, itemName,
     }
 
     const deleteItemFromCart = () => {
-        
+
     }
     return (
         <div className={active ? 'modal-active' : 'modal'} onClick={() => setActive(false)}>

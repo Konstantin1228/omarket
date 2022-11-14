@@ -19,8 +19,8 @@ const App: React.FC = () => {
       <Route element={<MainLayout setSearchValue={setSearchValue} />}>
         <Route path="/home" element={<Home searchValue={searchValue} />} />
         <Route element={<RequireAuth />}>
-          <Route path="/cart" element={<Cart />} />
           <Route element={<CanEditProfile />}>
+            <Route path="/cart" element={<Cart />} /> 
             <Route path="/profile" element={<ProfileIndex />} >
               {/* @ts-ignore */}
               <Route path="myOrders" element={<MyOrders />} />

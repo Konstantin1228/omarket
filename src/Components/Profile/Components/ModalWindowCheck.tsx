@@ -75,18 +75,18 @@ const ModalWindowCheck: FC<ModalWindow> = ({ active, setActive, orderDetails }) 
                                 <div className="profile__myOrders-text-left bold">Количество товаров</div>
                                 <div className="profile__myOrders-text-left bold">Цена</div>
                             </div>
-                            {orderDetails.itemsInCart.map(({ title, totalPrice, image, count }, idx) => (
+                            {orderDetails.itemsInCart.map(({ title, price, image, count }, idx) => (
                                 <div className="profile__myOrders-elementFouthColumns" key={idx}>
                                     <img className='profile__myOrders-text-left' src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} width={198} height={160} alt="Картинка товара" />
                                     <div className="profile__myOrders-text-left bold">{title}</div>
                                     <div className="profile__myOrders-text-left bold">{count}</div>
-                                    <div className="profile__myOrders-text-left bold">{totalPrice}₽</div>
+                                    <div className="profile__myOrders-text-left bold">{price * count}₽</div>
                                 </div>
                             ))}
                         </div>
                         <div className="modal__content-top-orderInformation-totalSum">
                             <p className="bold">Сумма</p>
-                            <p className="bold">{orderDetails.itemsInCart.reduce((previous, current) => previous + current.totalPrice, 0)}₽</p>
+                            <p className="bold">{orderDetails.itemsInCart.reduce((previous, current) => previous + current.price * current.count, 0)}₽</p>
 
                         </div>
                     </div>

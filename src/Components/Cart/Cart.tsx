@@ -8,9 +8,9 @@ import CartRight from "./Components/CartRight";
 import CartOrderingStage4 from "./Components/Stages/CartOrderingStage4";
 const Cart = () => {
   const { itemsInCart } = useAppSelector((state) => state.cartSlice);
-  const withoutDiscount = itemsInCart.reduce((previous, current) => previous + (current.price * current.count), 0)
-  const withDiscount = itemsInCart.reduce((previous, current) => previous + current.totalPrice, 0)
-  const totalPoints = itemsInCart.reduce((previous, current) => previous + current.totalPoints, 0)
+  const withoutDiscount = itemsInCart.reduce((previous, current) => previous + (current.count * (current.defaultPrice || 0)), 0)
+  const withDiscount = itemsInCart.reduce((previous, current) => previous + (current.price * current.count), 0)
+  const totalPoints = itemsInCart.reduce((previous, current) => previous + current.points * current.count, 0)
   const [stage, setStage] = useState(1)
   return (
     <div className="cart">

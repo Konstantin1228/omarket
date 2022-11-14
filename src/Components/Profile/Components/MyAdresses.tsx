@@ -3,12 +3,10 @@ import { getDocs, query, collection, where, doc, getDoc, setDoc } from 'firebase
 import { DaDataSuggestion, DaDataAddress, AddressSuggestions } from 'react-dadata'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { db } from '../../../firebase'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import { calcCrow } from '../../Cart/FunctionsAndTypes/functionHelpers'
+import { calcCrow } from '../../Cart/FunctionsAndTypes/functions'
 import { DeliviryAddress, AddAdress, DeliviryAddress1 } from '../FunctionsAndTypes/types'
 import ModalWindow from '../../Other/ModalWindow'
 const MyAdresses = () => {
-  const dispatch = useAppDispatch()
   const [loading, setLoading] = useState(true)
   const [addAdress, setAddAdress] = useState(false)
   const [active, setActive] = useState(false)

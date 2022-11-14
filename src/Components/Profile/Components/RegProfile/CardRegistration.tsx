@@ -47,7 +47,7 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
     const dispatch = useAppDispatch()
     const [withoutBankCard, setWhithoutBankCard] = useState(false)
     const [loading, setLoading] = useState(false)
-    const { formState: { isValid, errors }, setValue, handleSubmit, control, trigger, setError, unregister, clearErrors } = useForm<BankCard>({ mode: "onChange" })
+    const { formState: { isValid }, setValue, handleSubmit, control, trigger, setError, unregister, clearErrors } = useForm<BankCard>({ mode: "onChange" })
     const onSubmit: SubmitHandler<BankCard> = async (data) => {
         const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
         const userRef = doc(db, 'users', q.docs[0].id);
@@ -70,6 +70,7 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                 },
                             }
                         }, { merge: true });
+                        console.log("");
                     } else if (withoutBankCard) {
                         await setDoc(userRef, {
                             profileInformation: {
@@ -83,7 +84,6 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                     }
                     localStorage.setItem("CanEditProfile", "true")
                     dispatch(setCanEditProfile(true))
-
                 }
             } else {
                 setError("bankCard", { type: "custom", message: "Проверьте правильность ввода" })
@@ -97,6 +97,26 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
     const noBankCard = async () => {
         setWhithoutBankCard(!withoutBankCard)
         !withoutBankCard ? clearErrors(["date", "bankCard", "CVC"]) : trigger(["CVC", "bankCard", "date"])
+    }
+
+    const registerWithoutBankCard = async () => {
+        console.log(333)
+        const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
+        const userRef = doc(db, 'users', q.docs[0].id);
+        if (userData) {
+            const { deliviryAddress, nameSurname, userEmail } = userData
+            await setDoc(userRef, {
+                profileInformation: {
+                    aboutUser: { userEmail, nameSurname },
+                    otherInformation: {
+                        deliviryAdresses: [{ city: deliviryAddress, comment: "", isDefault: true }],
+                        bankCards: []
+                    }
+                }
+            }, { merge: true });
+            localStorage.setItem("CanEditProfile", "true")
+            dispatch(setCanEditProfile(true))
+        }
     }
 
     return (
@@ -123,7 +143,7 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                                 setValue("bankCard", e.value)
                                                 trigger("bankCard")
                                             }} placeholder='0000 0000 0000 0000'
-                                                style={{ width: 340 }} className='input' format="#### #### #### ####" />
+                                                style={{ width: 320 }} className='input' format="#### #### #### ####" />
                                             {error && <p className="error">{error.message || "Ошибка!"}</p>}
                                         </div>
                                     )}
@@ -139,7 +159,7 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                             <div className="auth__registration-bottom">
                                 <Controller
                                     render={({ fieldState: { error } }) => (
-                                        <div className='auth__form-parent'>
+                                        <div className='auth__form-parent' style={{ width: 180 }}  >
                                             <CardExpiry
                                                 onValueChange={(values: any) => {
                                                     setValue("date", values.formattedValue)
@@ -164,7 +184,7 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                     control={control}
                                     name="CVC"
                                     render={({ fieldState: { error } }) => (
-                                        <div className='auth__form-parent'>
+                                        <div className='auth__form-parent' style={{ width: 180 }}>
                                             <PatternFormat disabled={withoutBankCard} onValueChange={(e) => {
                                                 setValue("CVC", e.value)
                                                 trigger("CVC")
@@ -184,12 +204,9 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                             </div>
                             <FormControlLabel control={<Checkbox size='small' color='success' onClick={() => noBankCard()} />} label="Продолжить без карты" />
                             {withoutBankCard ?
-                                <button style={{ marginTop: -15, width: 340 }} className={`button-submit`} onClick={() => {
-                                    unregister(["CVC", "bankCard", "date"])
-                                    handleSubmit(onSubmit)()
-                                }}>Продолжить</button>
+                                <button type='submit' style={{ marginTop: -15, width: 370 }} className={`button-submit`} onClick={() => registerWithoutBankCard} >Продолжить</button>
                                 :
-                                <button type="submit" style={{ marginTop: -15 }} className={isValid ? `button-submit` : "button-submit-false"}>Продолжить</button>
+                                <button type="submit" style={{ marginTop: -15, width: 370 }} className={isValid ? `button-submit` : "button-submit-false"}>Продолжить</button>
                             }
                         </form >
                     </div >

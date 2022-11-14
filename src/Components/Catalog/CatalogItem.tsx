@@ -16,24 +16,7 @@ export interface itemType {
 }
 const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }) => {
   const dispatch = useAppDispatch();
-  const [active, setActive] = useState(false)
-  const renderSVG = (shareType: string | undefined) => {
-    switch (shareType) {
-      case "bonus":
-        return (
-          <svg onMouseEnter={() => setPrompt(true)} onMouseLeave={() => setPrompt(false)} width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path fillRule="evenodd" clipRule="evenodd" d="M4.5767 1.35409C3.78893 1.44424 3.06153 1.94908 2.69272 2.66171C2.46959 3.09285 2.42397 3.29736 2.42384 3.8679C2.42378 4.14297 2.43399 4.43482 2.44653 4.51649L2.46934 4.66497H2.09372C1.62493 4.66497 1.48056 4.70019 1.30127 4.85832C1.06453 5.06706 1.06641 5.04993 1.06641 7.00111C1.06641 8.19911 1.07723 8.74377 1.10307 8.84654C1.1534 9.04681 1.37263 9.26642 1.57254 9.31684C1.65258 9.33703 1.87334 9.35357 2.06311 9.35357H2.40812V11.7458C2.40812 14.3603 2.4015 14.2611 2.58919 14.4592C2.63546 14.508 2.72545 14.5749 2.7891 14.6077C2.90171 14.6657 3.05376 14.6673 8.38317 14.6673C13.2653 14.6673 13.8741 14.662 13.9775 14.6188C14.1313 14.5544 14.26 14.4298 14.3308 14.2766C14.3854 14.1584 14.3886 14.021 14.3892 11.7526L14.3899 9.35357H14.7431C15.2095 9.35357 15.3749 9.30468 15.5386 9.11829C15.6111 9.03581 15.6763 8.92081 15.6968 8.83935C15.7452 8.6469 15.7452 5.37163 15.6968 5.17918C15.6763 5.09772 15.6111 4.98273 15.5386 4.90024C15.3717 4.71023 15.2122 4.66497 14.71 4.66497H14.3237L14.349 4.51649C14.3629 4.43482 14.3743 4.14297 14.3742 3.8679C14.3741 3.43149 14.3648 3.33793 14.3011 3.13336C14.0304 2.26393 13.3867 1.63816 12.5296 1.41108C12.1864 1.32018 11.5474 1.32127 11.1917 1.41339C10.6452 1.55489 10.1343 1.88516 9.55261 2.47292C9.20614 2.82303 8.72265 3.43186 8.51522 3.77926C8.46046 3.871 8.40816 3.94605 8.39902 3.94605C8.38988 3.94605 8.33758 3.871 8.28282 3.77926C7.89469 3.12926 7.03253 2.18169 6.51744 1.83902C5.90506 1.43167 5.27486 1.2742 4.5767 1.35409ZM5.43917 2.75824C5.76493 2.88323 6.16363 3.21462 6.55881 3.68886C6.78697 3.96264 7.24452 4.60201 7.24452 4.64702C7.24452 4.68044 4.80064 4.66547 4.51442 4.6303C4.16504 4.58738 3.93215 4.50215 3.82915 4.37949C3.75723 4.29391 3.74983 4.25918 3.74983 4.00769C3.74983 3.53401 3.85236 3.22025 4.08254 2.98967C4.37547 2.69625 4.99996 2.58973 5.43917 2.75824ZM12.0397 2.69785C12.7316 2.79234 13.0482 3.2035 13.0482 4.00769C13.0482 4.25918 13.0408 4.29391 12.9689 4.37949C12.8659 4.50215 12.633 4.58738 12.2836 4.6303C11.9974 4.66547 9.55351 4.68044 9.55351 4.64702C9.55351 4.63718 9.65202 4.48411 9.77243 4.30691C10.3593 3.44321 11.0048 2.84413 11.4881 2.7146C11.7008 2.65759 11.737 2.65649 12.0397 2.69785ZM7.74376 7.00927V8.0095H5.07594H2.40812V7.00927V6.00903H5.07594H7.74376V7.00927ZM14.3899 7.00927V8.0095H11.7221H9.05427V7.00927V6.00903H11.7221H14.3899V7.00927ZM7.73618 11.3462L7.72816 13.3389L5.739 13.3469L3.74983 13.355V11.3543V9.35357H5.74702H7.74423L7.73618 11.3462ZM13.0482 11.3543V13.355L11.059 13.3469L9.06987 13.3389L9.06185 11.3462L9.0538 9.35357H11.051H13.0482V11.3543Z" fill="#F83C3C" /> </svg>
-        );
-      case "discount":
-        return "%";
-      default:
-        return (
-          <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"  >    <path d="M12.2229 4.18354C11.9863 3.94691 11.604 3.94691 11.3674 4.18354L8.40039 7.14448L5.43338 4.17747C5.19675 3.94084 4.8145 3.94084 4.57787 4.17747C4.34123 4.41411 4.34123 4.79636 4.57787 5.03299L7.54487 8L4.57787 10.967C4.34123 11.2036 4.34123 11.5859 4.57787 11.8225C4.8145 12.0592 5.19675 12.0592 5.43338 11.8225L8.40039 8.85552L11.3674 11.8225C11.604 12.0592 11.9863 12.0592 12.2229 11.8225C12.4595 11.5859 12.4595 11.2036 12.2229 10.967L9.25591 8L12.2229 5.03299C12.4535 4.80243 12.4535 4.41411 12.2229 4.18354Z" fill="#F83C3C" />  </svg>
-        );
-    }
-  };
   const shareType = tags.find((tag) => tag === "bonus" || tag === "discount")
-  const [bigItem, setBigItem] = useState(false);
-  const [prompt, setPrompt] = useState(false);
   const [items, setItems] = useState(
     tags.includes("bonus") || tags.includes("discount")
       ? tags.includes("discount")
@@ -45,73 +28,47 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
       : weight.map((weight, idx) => ({ weight: weight, points: points[idx], discounts: discounts[idx], price: price[idx], count: 1, totalPrice: price[idx] }))
 
   );
-
-  const [estimatedPrice, setEstimatedPrice] = useState(items.reduce((previous, current) => previous + current.totalPrice, 0));
-  const [totalBonus, setTotalBonus] = useState(items.reduce((previous, obj) => previous + obj.points * obj.count, 0));
-
-  const addItem = (idx: number) => {
-    const item = items[idx]
-    item.count += 1;
-    tags.includes("discount") ? item.totalPrice = item.price * item.count : item.totalPrice = price[idx] * item.count;
-    item.points = points[idx] * item.count;
-    setEstimatedPrice(items.reduce((previous, current) => previous + current.totalPrice, 0))
-    setTotalBonus(items.reduce((previous, current) => previous + current.points, 0));
-  };
-
-  const minusItem = (idx: number) => {
-    const item = items[idx]
-    if (item.count !== 0) {
-      item.count -= 1;
-      tags.includes("discount") ? item.totalPrice = item.price * item.count : item.totalPrice = price[idx] * item.count;
-      item.points = points[idx] * item.count
-      setEstimatedPrice(items.reduce((previous, current) => previous + current.totalPrice, 0))
-      setTotalBonus(items.reduce((previous, current) => previous + current.points, 0));
-    }
-  };
-
   const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
   return (
-    <div className="item-wrapper" onMouseEnter={() => setBigItem(true)} onMouseLeave={() => setBigItem(false)} >
-      <div className={bigItem ? "item-big" : "item"}>
+    // onMouseEnter={() => setBigItem(true)} onMouseLeave={() => setBigItem(false)}
+    <div className="item-wrapper"  >
+      <div className="item">
         <div className="item-tags">
           {tags.includes("Новинка") && <div className="item-tag-new">Новинка</div>}
           {(shareType === "discount" || shareType === "bonus") && <div className="item-tag-stock">Акция</div>}
           {shareType === "discount" && <div className="item-tag-stock">-{discounts[0]}%</div>}
           {tags.includes("Хит") && <div className="item-tag-hit">Хит</div>}
         </div>
-        <figure className={bigItem ? "item-big-information" : "item-information"}>
+        <figure className="item-information">
           <img src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} alt={title} width={280} height={280} />
-          {bigItem && <h1 className="item-big-information-title">{title}</h1>}
-          {!bigItem && <h1 className="item-information-title">{title}</h1>}
+          <h1 className="item-information-title">{title}</h1>
           <figcaption className="item-information-description">{description}</figcaption>
         </figure>
-        {!bigItem && (
-          <div className="item-about">
-            <div className="item-about-chapter">
-              <div className="item-about-chapter-weight">
-                {typeOfUnit === 'л' ? "Литраж" : "Вес"}
-              </div>
-              <span className="item-about-chapter-price">Цена</span>
+        <div className="item-about">
+          <div className="item-about-chapter">
+            <div className="item-about-chapter-weight">
+              {typeOfUnit === 'л' ? "Литраж" : "Вес"}
             </div>
-            <div className="item-about-chapter-bottom">
-              <span className="item-about-chapter-weight">  {`${weight[0]} ${typeOfUnit}`}.</span>
-              {shareType === "discount" ?
-                <div className="item-about-chapter-block">
-                  <div className="item-about-chapter-block-crossOut"></div>
-                  <span className="item-about-chapter-block-lastPrice">{price[0]}₽</span>
-                  <span className="item-about-chapter-price">{price[0] - (price[0] / 100) * discounts[0]}₽</span>
-                </div>
-                :
-                <span className="item-about-chapter-price">{price[0]}₽</span>
-              }
-            </div>
-            <button className="item-more" onClick={() => setActive(true)}>
-              <span>Подробнее</span>
-              <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path d="M0.910093 0.744078C1.23553 0.418641 1.76317 0.418641 2.0886 0.744078L6.49935 5.15482L10.9101 0.744078C11.2355 0.418641 11.7632 0.418641 12.0886 0.744078C12.414 1.06951 12.414 1.59715 12.0886 1.92259L7.08861 6.92259C6.76317 7.24802 6.23553 7.24802 5.91009 6.92259L0.910093 1.92259C0.584656 1.59715 0.584656 1.06951 0.910093 0.744078Z" fill="#FF6600" /> </svg>
-            </button>
+            <span className="item-about-chapter-price">Цена</span>
           </div>
-        )}
-        {bigItem && (
+          <div className="item-about-chapter-bottom">
+            <span className="item-about-chapter-weight">  {`${weight[0]} ${typeOfUnit}`}.</span>
+            {shareType === "discount" ?
+              <div className="item-about-chapter-block">
+                <div className="item-about-chapter-block-crossOut"></div>
+                <span className="item-about-chapter-block-lastPrice">{price[0]}₽</span>
+                <span className="item-about-chapter-price">{price[0] - (price[0] / 100) * discounts[0]}₽</span>
+              </div>
+              :
+              <span className="item-about-chapter-price">{price[0]}₽</span>
+            }
+          </div>
+          <button className="item-more" onClick={() => dispatch(openPopup({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }))}>
+            <span>Подробнее</span>
+            <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path d="M0.910093 0.744078C1.23553 0.418641 1.76317 0.418641 2.0886 0.744078L6.49935 5.15482L10.9101 0.744078C11.2355 0.418641 11.7632 0.418641 12.0886 0.744078C12.414 1.06951 12.414 1.59715 12.0886 1.92259L7.08861 6.92259C6.76317 7.24802 6.23553 7.24802 5.91009 6.92259L0.910093 1.92259C0.584656 1.59715 0.584656 1.06951 0.910093 0.744078Z" fill="#FF6600" /> </svg>
+          </button>
+        </div>
+        {/* {bigItem && (
           <div className={"item-big-about"}>
             <div className="item-big-about-chapter" >
               <span className="item-about-chapter-weight">Вес</span>
@@ -186,7 +143,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div >
   );

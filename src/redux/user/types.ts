@@ -28,4 +28,5 @@ export interface BankCard {
 }
 export interface BankCards {
     bankCards: BankCard[]
+    haveBankCards: boolean
 }

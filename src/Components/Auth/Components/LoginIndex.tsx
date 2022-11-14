@@ -35,7 +35,7 @@ const LoginIndex: React.FC = () => {
             }
             else setError("password", { type: 'custom', message: 'Неправильный пароль!' })
         } else setError("tel", { type: 'custom', message: 'Неправильный телефон/страна!' })
-        navigate("3333")
+        navigate("/home")
         setLoading(false)
     }
 

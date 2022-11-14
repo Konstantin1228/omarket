@@ -2,7 +2,7 @@ import React from "react";
 import { countPlus, countMinus, deleteItem } from "../../../redux/cart/slice";
 import { ItemsInCart } from "../../../redux/cart/types";
 import { useAppDispatch } from "../../../hooks/hooks";
-const Cart_Item: React.FC<ItemsInCart> = ({ title, count, discounts, image, points, price, tags, totalPoints, typeOfUnit, totalPrice, weight, canDeleteAndAdd }) => {
+const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultPrice, tags, typeOfUnit, weight, canDeleteAndAdd }) => {
   const renderSVG = (tags: string) => {
     switch (tags) {
       case "bonus":
@@ -111,20 +111,20 @@ const Cart_Item: React.FC<ItemsInCart> = ({ title, count, discounts, image, poin
           }
         </div>
         <div className="itemCart-right-totalPrice">
-          {tags == 'discount' ?
+          {tags == 'discount' && defaultPrice ?
             <div className="itemCart-right-totalPrice-withDiscount">
               <div className="item-about-chapter-block-crossOut"></div>
               <div className="itemCart-right-totalPrice-withDiscount-lastPrice">
-                {price * count}₽
+                {count * defaultPrice }₽
               </div>
               <div className="itemCart-right-totalPrice-withDiscount-currentPrice">
-                {totalPrice}₽
+                {count * price}₽
               </div>
               <div className="itemCart-right-totalPrice-withDiscount-currentPrice"></div>
             </div>
             :
             <div className="itemCart-right-totalPrice-noDiscount">
-              {totalPrice}₽
+              {price * count}₽
             </div>
           }
         </div>

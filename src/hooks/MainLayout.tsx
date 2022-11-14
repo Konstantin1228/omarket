@@ -4,13 +4,15 @@ import Footer from '../Components/Other/Footer/Footer'
 import { Outlet } from 'react-router-dom'
 import { getDocs, query, collection, where, doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import { useAppDispatch } from './hooks'
+import { useAppDispatch, useAppSelector } from './hooks'
 import { setCanEditProfile, setIsUserAuth } from '../redux/user/slice'
+import CatalogItemBig from '../Components/Catalog/CatalogItemBig'
 export interface setSearchValue {
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
     const dispatch = useAppDispatch()
+    const { isActivePopup } = useAppSelector(state => state.cartSlice)
     useEffect(() => {
         const getData = async () => {
             try {
@@ -22,8 +24,6 @@ const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
                     dispatch(setIsUserAuth(true))
                     //@ts-ignore
                     dispatch(setCanEditProfile(!!docSnap.data().profileInformation.otherInformation.deliviryAdresses !== undefined))
-                    console.log("helloF")
-                    return q.empty
                 }
             } catch (error) {
                 console.log(error);
@@ -31,10 +31,15 @@ const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
         }
         getData()
     }, []);
+
     return (
         <>
             <div className="app">
                 <Header setSearchValue={setSearchValue} />
+                {
+                    isActivePopup &&
+                    <CatalogItemBig />
+                }
                 <Outlet />
             </div>
             <Footer />

@@ -3,7 +3,7 @@ import { itemType } from "../../Components/Catalog/CatalogItem";
 export interface CartSliceState {
     itemsInCart: ItemsInCart[];
     userInformation: UserInformation
-    bigItemInformation: itemType 
+    bigItemInformation: itemType
     isActivePopup: boolean
 }
 export const UserInformationObj = {
@@ -22,7 +22,6 @@ export const UserInformationObj = {
         CVC: "",
         scheme: ""
     },
-    
 }
 
 export interface ItemsInCart {
@@ -32,12 +31,10 @@ export interface ItemsInCart {
     weight: number;
     points: number;
     image: string;
-    discounts: number;
     tags: string;
-    totalPrice: number;
-    totalPoints: number;
     typeOfUnit: string
     canDeleteAndAdd?: boolean
+    defaultPrice?: number
 };
 export const getCartFromLS = () => {
     const data = localStorage.getItem("items");

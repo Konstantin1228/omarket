@@ -7,7 +7,8 @@ const { items } = getCartFromLS()
 const initialState: CartSliceState = {
   itemsInCart: items,
   userInformation: UserInformationObj,
-  bigItemInformation: { id: 0, title: "", description: "", image: "", tags: [""], typeOfUnit: "", discounts: [0], weight: [0], points: [0], price: [0] },
+  //@ts-ignore
+  bigItemInformation: undefined,
   isActivePopup: false
 };
 
@@ -16,22 +17,9 @@ export const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addToCart(state, action: PayloadAction<ItemsInCart>) {
-      const { price, discounts } = action.payload
       if (action.payload.count !== 0) {
-        const findItem = state.itemsInCart.find(
-          (el) =>
-            el.title === action.payload.title &&
-            el.weight === action.payload.weight
-        );
-        if (findItem) {
-          findItem.count++;
-          findItem.totalPoints = findItem.totalPoints + action.payload.totalPoints
-          findItem.tags == 'discount' ?
-            findItem.totalPrice = findItem.totalPrice + Math.round(price - (price / 100) * discounts)
-            : findItem.totalPrice = findItem.totalPrice + action.payload.price;
-        } else {
-          state.itemsInCart.push(action.payload);
-        }
+        const findItem = state.itemsInCart.find((el) => el.title === action.payload.title && el.weight === action.payload.weight);
+        findItem ? findItem.count++ : state.itemsInCart.push(action.payload)
         const json = JSON.stringify(state.itemsInCart)
         localStorage.setItem("items", json)
       }
@@ -44,32 +32,15 @@ export const cartSlice = createSlice({
       );
       if (findItem) {
         findItem.count++
-        if (findItem.tags == 'discount') {
-          findItem.totalPrice = findItem.totalPrice + Math.round(findItem.price - (findItem.price / 100) * findItem.discounts);
-        } else {
-          findItem.totalPrice = findItem.totalPrice + findItem.price;
-        }
-        findItem.totalPoints += findItem.points
       }
       const json = JSON.stringify(state.itemsInCart)
       localStorage.setItem("items", json)
     },
     countMinus(state, action: PayloadAction<itemsOperationWithCount>) {
-      const findItem = state.itemsInCart.find(
-        (el) =>
-          el.title === action.payload.title &&
-          el.weight === action.payload.weight
-      );
+      const findItem = state.itemsInCart.find((el) => el.title === action.payload.title && el.weight === action.payload.weight);
       if (findItem) {
         findItem.count--
-        if (findItem.count !== 0) {
-          if (findItem.tags == 'discount') {
-            findItem.totalPrice = findItem.totalPrice - Math.round(findItem.price - (findItem.price / 100) * findItem.discounts);
-          } else {
-            findItem.totalPrice = findItem.totalPrice - findItem.price;
-          }
-          findItem.totalPoints -= findItem.points
-        } else {
+        if (findItem.count == 0) {
           state.itemsInCart.splice(state.itemsInCart.indexOf(findItem), 1)
         }
       }
@@ -77,11 +48,7 @@ export const cartSlice = createSlice({
       localStorage.setItem("items", json)
     },
     deleteItem(state, action: PayloadAction<itemsOperationWithCount>) {
-      const findItem = state.itemsInCart.find(
-        (el) =>
-          el.title === action.payload.title &&
-          el.weight === action.payload.weight
-      );
+      const findItem = state.itemsInCart.find((el) => el.title === action.payload.title && el.weight === action.payload.weight);
       if (findItem) {
         state.itemsInCart.splice(state.itemsInCart.indexOf(findItem), 1)
       }

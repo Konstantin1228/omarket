@@ -9,6 +9,7 @@ export interface cities {
 }
 export interface DeliviryAddress {
     cities: cities[]
+    haveDeliviryAdresses: boolean
 }
 export interface DeliviryAddress1 {
     city: string,

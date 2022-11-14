@@ -1,7 +1,7 @@
 import React from 'react'
 import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from 'react-dadata'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { calcCrow } from '../../../Cart/FunctionsAndTypes/functionHelpers'
+import { calcCrow } from '../../../Cart/FunctionsAndTypes/functions'
 import { userData } from './RegistrationIndex'
 interface RegProfile {
     nameSurname: string

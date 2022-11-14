@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller, SubmitHandler, } from 'react-hook-form'
 import { NumberFormatBase, PatternFormat } from 'react-number-format'
 import { BankCard, stageType3 } from '../../FunctionsAndTypes/types'
@@ -46,29 +46,26 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
     const [loading, setLoading] = useState(true)
     const [activeModal, setAciveModal] = useState(false)
     const [userBankCard, setUserBankCard] = useState<BankCard>({ bankCard: "", CVC: "", date: "", scheme: "" })
-    const [bankCardData, setBankCardData] = useState<BankCards>({ bankCards: [{ CVC: "", bankCard: "", date: "", scheme: "" }] })
+    const [bankCardData, setBankCardData] = useState<BankCards>({ bankCards: [{ CVC: "", bankCard: "", date: "", scheme: "" }], haveBankCards: false })
     const { formState: { isValid }, setValue, control, handleSubmit, trigger, setError } = useForm<BankCard>({ mode: "onChange", shouldFocusError: true })
     const { writeOffBonuses, adress, floor, flat, deliviryCost } = useAppSelector(state => state.cartSlice.userInformation.generalInformation)
 
     useEffect(() => {
-        try {
-            const getData = async () => {
+        const getData = async () => {
+            try {
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
                 //@ts-ignore
-                // setDeliviryAdresses({ cities: docSnap.data().profileInformation.otherInformation.deliviryAdresses })
-                //@ts-ignore
-                setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards })
-                //@ts-ignore
+                docSnap.data().profileInformation?.otherInformation?.bankCards ? setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: true }) : setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: false })
                 // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
-                setLoading(false)
             }
-            getData()
+            catch (error) {
+                console.log(error);
+            }
         }
-        catch (error) {
-            console.log(error);
-        }
+        setLoading(false)
+        getData()
     }, [])
 
     const onSubmit: SubmitHandler<BankCard> = async (data) => {
@@ -125,25 +122,27 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
     }))
 
     return (
-        <>
-            {loading ?
-                <div className="container__loader-absolute">
-                    <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
-                </div>
+
+        <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)}>
+            {loading ? <div className="container__loader-absolute">
+                <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
+            </div>
                 :
-                <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)}>
+                <>
                     <div className="cart__inner-notEmpty-left" >
                         <ModalWindow active={activeModal} setActive={setAciveModal} type={'items'} />
                         <div className="cart__inner-notEmpty-left-ordering-adress">
-                            <div className="cart__inner-notEmpty-left-ordering-adress-text">Выбрать карту:</div>
-                            {typeof bankCardData.bankCards === "object" &&
-                                <div className="select-rotate">
-                                    <Select value={userBankCard ? bankCardsOptions.find((el) => el.value === userBankCard.bankCard) : ""}
-                                        classNamePrefix="reactSelect" maxMenuHeight={150}
-                                        onChange={(newValue: any) => selectBankCard(newValue)}
-                                        isSearchable={false} options={bankCardsOptions} placeholder="Оплата" components={makeAnimated()}
-                                    />
-                                </div>
+                            {bankCardData.haveBankCards &&
+                                <>
+                                    <div className="cart__inner-notEmpty-left-ordering-adress-text">Выбрать карту:</div>
+                                    <div className="select-rotate">
+                                        <Select value={userBankCard ? bankCardsOptions.find((el) => el.value === userBankCard.bankCard) : ""}
+                                            classNamePrefix="reactSelect" maxMenuHeight={150}
+                                            onChange={(newValue: any) => selectBankCard(newValue)}
+                                            isSearchable={false} options={bankCardsOptions} placeholder="Оплата" components={makeAnimated()}
+                                        />
+                                    </div>
+                                </>
                             }
                             <div className="cart__inner-notEmpty-left-ordering-adress-text">Ввести вручную:</div>
                             <div className="cart__inner-notEmpty-left-ordering-adress-more">
@@ -282,9 +281,9 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                         }
                         <button type='submit' className={`button-submit${isValid || userBankCard.bankCard.length > 1 ? "" : "-false"}`} >Оплатить</button>
                     </div>
-                </form>
+                </>
             }
-        </>
+        </form>
     )
 }
 

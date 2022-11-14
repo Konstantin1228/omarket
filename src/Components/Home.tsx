@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Item from "./Catalog/CatalogItem";
+import CatalogItem from "./Catalog/CatalogItem";
 import { itemType } from "./Catalog/CatalogItem";
 import CatalogItemBig from "./Catalog/CatalogItemBig";
 import Chapter, { GoodsType } from "./Catalog/Chapter";
@@ -27,11 +27,8 @@ const Home: React.FC<Home> = ({ searchValue }) => {
     }
     getSearchedValue()
   }, [searchValue])
-
-
   return (
     <>
-      <CatalogItemBig />
       {searchValue.length !== 0 ?
         loading ?
           [...new Array(4)].map((el, idx) => <Skeleton key={idx} />)
@@ -40,7 +37,7 @@ const Home: React.FC<Home> = ({ searchValue }) => {
             {
               searchedProducts?.length !== 0 && searchedProducts ?
                 searchedProducts.map((obj: itemType) =>
-                  <Item key={obj.id + obj.title} {...obj} />
+                  <CatalogItem key={obj.id + obj.title} {...obj} />
                 )
                 :
                 < p className="prompt" style={{ minHeight: 430, fontSize: 30 }}>По вашим параметрам не найдено товаров!</p>

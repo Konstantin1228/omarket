@@ -13,12 +13,12 @@ import { db } from '../../../../firebase';
 import { DeliviryAddress } from '../../../Profile/FunctionsAndTypes/types';
 import { AntSwitch } from '../../../CustomComponents/AntSwtich';
 import axios from 'axios';
-import { calcCrow, onlyNumberInput } from '../../FunctionsAndTypes/functionHelpers';
+import { calcCrow, onlyNumberInput } from '../../FunctionsAndTypes/functions';
 const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscount, totalPoints, itemsInCart }) => {
     const dispatch = useAppDispatch()
     const [activeBonus, setActiveBonus] = useState(false)
     const [loading, setLoading] = useState(true)
-    const [deliviryAdresses, setDeliviryAdresses] = useState<DeliviryAddress>({ cities: [{ city: "321312", isDefault: false }] })
+    const [deliviryAdresses, setDeliviryAdresses] = useState<DeliviryAddress>({ cities: [{ city: "", isDefault: false }], haveDeliviryAdresses: false })
     const [activeModal, setAciveModal] = useState(false)
     const { register, formState: { errors, isValid }, setValue, watch, handleSubmit, control, trigger, setError, clearErrors } = useForm<IFormInputStage2>({ mode: "onChange" })
     const watchWriteOffBonuses = watch("writeOffBonuses")
@@ -26,22 +26,21 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
     const [userAdress, setUserAdress] = useState("")
 
     useEffect(() => {
-        try {
-            const getData = async () => {
+        const getData = async () => {
+            try {
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
                 //@ts-ignore
-                setDeliviryAdresses({ cities: docSnap.data().profileInformation.otherInformation.deliviryAdresses })
-                //@ts-ignore
+                docSnap.data().profileInformation?.otherInformation?.deliviryAdresses ? setDeliviryAdresses({ cities: docSnap.data().profileInformation.otherInformation.deliviryAdresses, haveDeliviryAdresses: true })
+                    : setDeliviryAdresses((previous) => ({ ...previous, haveDeliviryAdresses: false }))
                 // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
                 setLoading(false)
+            } catch (error) {
+                console.log(error)
             }
-            getData()
         }
-        catch (error) {
-            console.log(error);
-        }
+        getData()
     }, [])
 
     const onSubmit: SubmitHandler<IFormInputStage2> = async (data) => {
@@ -63,7 +62,6 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
             if (region === "Санкт-Петербург" || region === "Москва") {
                 if ((city_with_type && street_with_type && house_type_full && house) !== null) {
                     const lengthBetweenPoints = calcCrow(59.93578, 30.3078, geo_lat, geo_lon)
-                    console.log(lengthBetweenPoints, geo_lat, geo_lon);
                     if (lengthBetweenPoints < 13) {
                         withDiscount >= 1000 ? setValue("deliviryCost", 0) : setValue("deliviryCost", 300)
                         clearErrors("adress")
@@ -121,7 +119,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                 </div>
                             </div>
                             <div className="cart__inner-notEmpty-left-ordering-adress">
-                                {deliviryAdresses.cities.length > 0 &&
+                                {deliviryAdresses.haveDeliviryAdresses &&
                                     <>
                                         <div className="cart__inner-notEmpty-left-ordering-adress-text">Выбрать существующий адрес доставки:</div>
                                         <div className="select-rotate">
