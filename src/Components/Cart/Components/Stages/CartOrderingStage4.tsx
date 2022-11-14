@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { getDocs, query, collection, where, doc, getDoc, setDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -22,34 +21,48 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
     const userScheme = scheme.charAt(0).toUpperCase() + scheme.slice(1, scheme.length)
     useEffect(() => {
         const getData = async () => {
-            const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
-            const userRef = doc(db, 'users', q.docs[0].id);
-            const ordersData = await getDoc(userRef)
-            //@ts-ignore  
-            const previousData = ordersData.data().profileInformation.userOrders
-            previousData ?
-                await setDoc(userRef, {
-                    profileInformation: {
-                        userOrders: [...previousData, {
-                            itemsInCart,
-                            orderInformation: { orderNumber: "313", status: "Не доставлен", comment, adress, orderDate, deliviryCost },
-                            bankCardInformation: { bankCard, scheme: userScheme, }
-                        }]
+            try {
+                const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
+                const userRef = doc(db, 'users', q.docs[0].id);
+                const ordersData = await getDoc(userRef)
+                //@ts-ignore  
+                const previousData = ordersData.data().profileInformation?.userOrders
+                let uniqueOrderNumber = 0
+                const generateOrderNumber = () => {
+                    const newOrderNumber = Math.floor(Math.random() * 1000)
+                    if (previousData.map((el: any) => el.orderInformation.orderNumber).find((orderNumber: any) => orderNumber === newOrderNumber)) {
+                        generateOrderNumber()
+                    } else {
+                        uniqueOrderNumber = newOrderNumber
                     }
-                }, { merge: true })
-                :
-                await setDoc(userRef, {
-                    profileInformation: {
-                        userOrders: [{
-                            itemsInCart,
-                            orderInformation: { orderNumber: "313", status: "Не доставлен", comment, adress, orderDate, deliviryCost },
-                            bankCardInformation: { bankCard, scheme: userScheme }
-                        }]
-                    }
-                }, { merge: true });
-            setLoading(false)
+                }
+                generateOrderNumber()
+                previousData ?
+                    await setDoc(userRef, {
+                        profileInformation: {
+                            userOrders: [...previousData, {
+                                itemsInCart,
+                                orderInformation: { orderNumber: uniqueOrderNumber, status: "Не доставлен", comment, adress, orderDate, deliviryCost },
+                                bankCardInformation: { bankCard, scheme: userScheme, }
+                            }]
+                        }
+                    }, { merge: true })
+                    :
+                    await setDoc(userRef, {
+                        profileInformation: {
+                            userOrders: [{
+                                itemsInCart,
+                                orderInformation: { orderNumber: uniqueOrderNumber, status: "Не доставлен", comment, adress, orderDate, deliviryCost },
+                                bankCardInformation: { bankCard, scheme: userScheme }
+                            }]
+                        }
+                    }, { merge: true });
+            } catch (error) {
+                console.log(error);
+            }
         }
         getData()
+        setLoading(false)
 
         return () => {
             dispatch(clearCart())

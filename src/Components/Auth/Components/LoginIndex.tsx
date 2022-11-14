@@ -4,10 +4,10 @@ import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import "../../../scss/components/AuthComponents/auth.scss"
 import ReactCountryFlag from "react-country-flag";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useAppDispatch } from "../../../hooks/hooks";
-import { setUserInformation, setNextStage, setCanEditProfile } from "../../../redux/user/slice";
+import { setUserInformation, setNextStage, setCanEditProfile, setIsUserAuth } from "../../../redux/user/slice";
 import { formattedTelephone } from "../FunctionsAndTypes/functions";
 import { LoginInterface } from "../FunctionsAndTypes/types";
 import { useNavigate } from "react-router-dom";
@@ -25,17 +25,21 @@ const LoginIndex: React.FC = () => {
         setLoading(true)
         const q = await getDocs(query(collection(db, "users"), where("country", '==', country), where("telephone", '==', tel)))
         if (q.size !== 0) {
+            const userRef = doc(db, 'users', q.docs[0].id);
+            const docSnap = await getDoc(userRef);
             //@ts-ignore
-            const userPassword = q.docs[0]["_document"].data.value.mapValue.fields.password.stringValue
+            const userPassword = docSnap.data().password
             if (userPassword === password) {
-                localStorage.setItem("isLogged", "true")
                 localStorage.setItem("telephone", data.tel)
                 //@ts-ignore
                 dispatch(setUserInformation(q.docs[0]["_document"].data.value.mapValue.fields))
+                dispatch(setIsUserAuth(true))
+                navigate("/home")
             }
             else setError("password", { type: 'custom', message: 'Неправильный пароль!' })
-        } else setError("tel", { type: 'custom', message: 'Неправильный телефон/страна!' })
-        navigate("/home")
+        } else {
+            setError("tel", { type: 'custom', message: 'Неправильный телефон/страна!' })
+        }
         setLoading(false)
     }
 
@@ -47,13 +51,13 @@ const LoginIndex: React.FC = () => {
     ]
 
     return (
-        <>
+        <div className="auth">
             {loading ?
                 <div className="container__loader-absolute">
                     <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
                 </div>
                 :
-                <div className="auth">
+                <>
                     <div className="auth__title">
                         <h1 className="auth__title-text">Авторизация </h1>
                     </div>
@@ -106,9 +110,9 @@ const LoginIndex: React.FC = () => {
                         <div className="auth__form-help bold" onClick={() => dispatch(setNextStage({ stage: 1, type: "recoveryPass" }))}>Забыли пароль?</div>
                         <div className="auth__form-help bold" onClick={() => dispatch(setNextStage({ stage: 1, type: "registration" }))} style={{ marginTop: -13 }}>У вас нет аккаунта?</div>
                     </form >
-                </div >
+                </>
             }
-        </>
+        </div >
     )
 }
 

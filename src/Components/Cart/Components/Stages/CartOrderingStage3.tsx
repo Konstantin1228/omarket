@@ -57,14 +57,14 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
                 //@ts-ignore
-                docSnap.data().profileInformation?.otherInformation?.bankCards ? setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: true }) : setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: false })
+                docSnap.data().profileInformation?.otherInformation?.bankCards[0] !== undefined ? setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: true }) : setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: false })
                 // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
             }
             catch (error) {
                 console.log(error);
             }
+            setLoading(false)
         }
-        setLoading(false)
         getData()
     }, [])
 

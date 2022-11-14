@@ -41,13 +41,12 @@ const RegIndex: React.FC = () => {
         setError("country", { type: 'custom', message: 'Выберите страну, в которой вы находитесь!' })
     }, [])
     return (
-        <>
+        <div className="auth">
             {loading ?
                 <div className="container__loader-absolute">
                     <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
-                </div>
-                :
-                <div className="auth">
+                </div> :
+                <>
                     <div className="auth__title">
                         <div className="auth__title-arrow" onClick={() => dispach(setNextStage({ stage: 0, type: "" }))}>❮</div>
                         <h1 className="auth__title-text"> Регестрация</h1>
@@ -81,9 +80,9 @@ const RegIndex: React.FC = () => {
                         </div>
                         <button type='submit' className={`button-submit${!errors.tel?.message && !errors.country?.message ? "" : "-false"}`}>Отправить СМС</button>
                     </form >
-                </div >
+                </>
             }
-        </>
+        </div >
     )
 }
 export default RegIndex

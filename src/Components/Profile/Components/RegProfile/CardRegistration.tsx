@@ -48,6 +48,7 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
     const [withoutBankCard, setWhithoutBankCard] = useState(false)
     const [loading, setLoading] = useState(false)
     const { formState: { isValid }, setValue, handleSubmit, control, trigger, setError, unregister, clearErrors } = useForm<BankCard>({ mode: "onChange" })
+
     const onSubmit: SubmitHandler<BankCard> = async (data) => {
         const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
         const userRef = doc(db, 'users', q.docs[0].id);
@@ -100,39 +101,44 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
     }
 
     const registerWithoutBankCard = async () => {
-        console.log(333)
-        const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
-        const userRef = doc(db, 'users', q.docs[0].id);
-        if (userData) {
-            const { deliviryAddress, nameSurname, userEmail } = userData
-            await setDoc(userRef, {
-                profileInformation: {
-                    aboutUser: { userEmail, nameSurname },
-                    otherInformation: {
-                        deliviryAdresses: [{ city: deliviryAddress, comment: "", isDefault: true }],
-                        bankCards: []
+        setLoading(true)
+        try {
+            const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
+            const userRef = doc(db, 'users', q.docs[0].id);
+            if (userData) {
+                const { deliviryAddress, nameSurname, userEmail } = userData
+                await setDoc(userRef, {
+                    profileInformation: {
+                        aboutUser: { userEmail, nameSurname },
+                        otherInformation: {
+                            deliviryAdresses: [{ city: deliviryAddress, comment: "", isDefault: true }],
+                            bankCards: []
+                        }
                     }
-                }
-            }, { merge: true });
-            localStorage.setItem("CanEditProfile", "true")
-            dispatch(setCanEditProfile(true))
+                }, { merge: true });
+                localStorage.setItem("CanEditProfile", "true")
+                dispatch(setCanEditProfile(true))
+            }
+        } catch (error) {
+            console.log(error);
         }
+        setLoading(false)
     }
 
     return (
-        <>
+        <form className="auth" onSubmit={handleSubmit(onSubmit)}>
             {
                 loading ?
                     <div className="container__loader-absolute">
                         <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
                     </div>
                     :
-                    < div className="auth" >
+                    <>
                         <div className="auth__title">
                             <div className="auth__title-arrow" onClick={() => setStage(1)}>❮</div>
                             <h1 className="auth__title-text">Карта</h1>
                         </div>
-                        <form className="auth__registration" onSubmit={handleSubmit(onSubmit)}>
+                        <div className="auth__registration">
                             <div className="auth__registration-top">
                                 <Controller
                                     control={control}
@@ -204,15 +210,14 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                             </div>
                             <FormControlLabel control={<Checkbox size='small' color='success' onClick={() => noBankCard()} />} label="Продолжить без карты" />
                             {withoutBankCard ?
-                                <button type='submit' style={{ marginTop: -15, width: 370 }} className={`button-submit`} onClick={() => registerWithoutBankCard} >Продолжить</button>
+                                <button type='submit' style={{ marginTop: -15, width: 370 }} className={`button-submit`} onClick={() => registerWithoutBankCard()} >Продолжить</button>
                                 :
                                 <button type="submit" style={{ marginTop: -15, width: 370 }} className={isValid ? `button-submit` : "button-submit-false"}>Продолжить</button>
                             }
-                        </form >
-                    </div >
+                        </div >
+                    </>
             }
-        </>
+        </form>
     )
 }
-
 export default CardRegistration

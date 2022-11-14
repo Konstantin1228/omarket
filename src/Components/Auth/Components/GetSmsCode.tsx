@@ -91,9 +91,9 @@ const GetSmsCode: React.FC = () => {
         <div className="auth" >
             <div className="auth__title">
                 {time === 0 && <div className="auth__title-arrow" onClick={() => dispatch(setNextStage({ stage: stage - 1, type }))}>❮</div>}
-                <h1 className="auth__title-text">Придумайте пароль</h1>
+                <h1 className="auth__title-text">Введите СМС код</h1>
             </div>
-            <p className='bold' style={{ marginBottom: 10 }}>На ваш номер был отправлен 4х значный код</p>
+            <p className='bold' style={{ marginBottom: 10 }}>На ваш номер был отправлен 6х значный код</p>
             <form className="auth__form" onSubmit={handleSubmit(onSubmit)} >
                 <div className="auth__form-parent" >
                     <Controller

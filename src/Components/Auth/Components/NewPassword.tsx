@@ -32,13 +32,14 @@ const NewPassword = () => {
     const [firstInput, setFirstInput] = useState({ visibilityEye: false, passwordShown: false });
     const [secondInput, setSecondInput] = useState({ visibilityEye: false, passwordShown: false });
     return (
-        <>
+
+        <div className="auth">
             {loading ?
                 <div className="container__loader-absolute">
                     <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
                 </div>
                 :
-                <div className="auth">
+                <>
                     <div className="auth__title">
                         <div className="auth__title-arrow" onClick={() => dispatch(setNextStage({ stage: 1, type }))}>❮</div>
                         <h1 className="auth__title-text">Придумайте пароль</h1>
@@ -82,9 +83,9 @@ const NewPassword = () => {
                         </div>
                         <button type='submit' className={`button-submit${isValid ? "" : "-false"}`}>{type === "registration" ? "Зарегистрироваться" : "Готово"}</button>
                     </form >
-                </div >
+                </>
             }
-        </>
+        </div >
     )
 }
 export default NewPassword

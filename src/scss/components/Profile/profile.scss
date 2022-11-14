@@ -45,13 +45,14 @@
 
             &-child {
                 display: flex;
-                gap: 100px;
+                gap: 3rem;
 
                 &-element {
                     position: relative;
                     display: flex;
                     flex-direction: column;
-                    gap: 8px;
+                    gap: 0.4rem;
+                    min-width: 25rem;
 
                     &-input,
                     &-inputSmall {
