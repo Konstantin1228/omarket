@@ -2,11 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import Footer from "./Components/Other/Footer/Footer";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import "./firebase"
-import Header from "./Components/Other/Header/Header";
 const rootElement = document.getElementById("root");
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);

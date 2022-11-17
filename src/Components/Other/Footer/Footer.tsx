@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from 'react-responsive'
 import "./footer.scss"
 const Footer: React.FC = () => {
   return (
@@ -118,7 +119,7 @@ const Footer: React.FC = () => {
             </svg>
           </a>
         </ul>
-        <div className="on__top" onClick={() => window.scrollTo(0, 0)}>
+        {/* <div className="on__top" onClick={() => window.scrollTo(0, 0)}>
           <svg
             width="16"
             height="16"
@@ -131,7 +132,7 @@ const Footer: React.FC = () => {
               fill="white"
             />
           </svg>
-        </div >
+        </div > */}
       </div>
       <div className="footer__bottom">
         <p className="footer__bottom-information">Все права защищены 2021</p>

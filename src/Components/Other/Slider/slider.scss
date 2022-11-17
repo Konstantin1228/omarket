@@ -5,10 +5,9 @@
 
     &__left {
         display: flex;
-        height: 100%;
-        width: 100%;
         position: relative;
-        
+        width: 100%;
+
         img {
             height: 30rem;
             width: 99%;
@@ -68,7 +67,16 @@
             cursor: pointer;
             height: 14rem;
             width: 32rem;
+
+            @media (max-width:768px) {
+                width: 100%;
+            }
         }
+    }
+
+    @media (max-width:768px) {
+        flex-direction: column;
+        padding: 1.5rem;
     }
 }
 

@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { addToCart, closePopup } from '../../redux/cart/slice'
-import { itemType } from './CatalogItem'
+import { addItemToasts } from '../../redux/toasts/slice'
 import "./item.scss"
 const CatalogItemBig: FC = () => {
     const dispatch = useAppDispatch()
     const { isActivePopup } = useAppSelector(state => state.cartSlice)
-    const { id, title, description, image, tags, typeOfUnit, discounts, weight, points, price } = useAppSelector(state => state.cartSlice.bigItemInformation)
+    const { id, title, description, image, tags, typeOfUnit, discounts, weight, points, price, } = useAppSelector(state => state.cartSlice.bigItemInformation)
     const renderSVG = (shareType: string | undefined) => {
         switch (shareType) {
             case "bonus":
@@ -52,6 +52,29 @@ const CatalogItemBig: FC = () => {
             setTotalBonus(items.reduce((previous, current) => previous + current.points, 0));
         }
     };
+
+    const addItemsToCart = () => {
+        items.map(({ weight, points, price, count }, idx) => {
+            if (count !== 0) {
+                dispatch(
+                    addToCart(
+                        discounts[0] !== undefined ?
+                            {
+                                //@ts-ignore
+                                title, count, price, weight, points, image, defaultPrice: items[idx].defaultPrice,
+                                tags: shareType || "", typeOfUnit
+                            }
+                            :
+                            {
+                                title, count, price, weight, points, image,
+                                tags: shareType || "", typeOfUnit
+                            }
+                    ))
+                dispatch(addItemToasts({ title, img: image, type: "ToastItem", id, typeOfUnit, weight }))
+            }
+        })
+
+    }
     // console.log()
     const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
     return (
@@ -119,23 +142,7 @@ const CatalogItemBig: FC = () => {
                                         </span>
                                     </div>
                                     {totalCount ?
-                                        < button className="item-big-addToCart" onClick={() =>
-                                            items.map(({ weight, points, price, count }, idx) =>
-                                                dispatch(
-                                                    addToCart(
-                                                        discounts[0] !== undefined ?
-                                                            {
-                                                                //@ts-ignore
-                                                                title, count, price, weight, points, image, defaultPrice: items[idx].defaultPrice,
-                                                                tags: shareType || "", typeOfUnit
-                                                            }
-                                                            :
-                                                            {
-                                                                title, count, price, weight, points, image,
-                                                                tags: shareType || "", typeOfUnit
-                                                            }
-                                                    )))}
-                                        > Добавить в корзину</button>
+                                        <button className="item-big-addToCart" onClick={addItemsToCart}> Добавить в корзину</button>
                                         :
                                         <button className="item-big-addToCart-false">Выберите хотя бы одну позицию!</button>
                                     }

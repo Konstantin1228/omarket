@@ -16,7 +16,7 @@ const initialState: UserSlice = {
 };
 
 export const userSlice = createSlice({
-    name: "cart",
+    name: "user",
     initialState: initialState,
     reducers: {
         clearAuthLoginFields(state) {
@@ -49,6 +49,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { clearAuthLoginFields, setNextStage, setContryAndTel, setUserInformation, setCanEditProfile, setIsUserAuth} = userSlice.actions;
+export const { clearAuthLoginFields, setNextStage, setContryAndTel, setUserInformation, setCanEditProfile, setIsUserAuth } = userSlice.actions;
 
 export default userSlice.reducer;

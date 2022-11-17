@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 import { setSearchValue } from "../../../hooks/MainLayout";
@@ -13,6 +14,8 @@ const Header: React.FC<setSearchValue> = ({ setSearchValue }) => {
     setSearchValue(e.nativeEvent.target.value)
     if (location !== "/home") navigate("/home")
   }, 500);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+
   return (
     <header className="header">
       <div className="header__top">
@@ -30,95 +33,155 @@ const Header: React.FC<setSearchValue> = ({ setSearchValue }) => {
           </div>
         </div>
       </div>
-      <div className="header__center">
-        <div className="header__center-left">
-          <Link to="/home">
-            <img
-              className="header__center-img "
-              src={require("../images/logo.jpg")}
-              alt="Логотип компании"
-            />
-          </Link>
-          <div className="header__center-input">
-            <input
-              onChange={(e: ChangeEvent<HTMLInputElement>) => debounced(e)}
-              ref={inputRef}
-              type="text"
-              className="header__center-input-input"
-              placeholder="Какой товар вы ищете?"
-            />
-            <button>
+      {isMobile ?
+        <div className="header__center">
+          <div className="header__center-left">
+            <Link to="/home">
+              <img
+                className="header__center-img "
+                src={require("../images/logo.jpg")}
+                alt="Логотип компании"
+              />
+            </Link>
+            <div className="header__center-element">
+              <span>2600</span>
               <svg
-                onClick={() => inputRef.current?.focus()}
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2ZM0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.84871 15.3729 11.551 14.3199 12.9056L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0976 18.6834 20.0976 18.2929 19.7071L12.9056 14.3199C11.551 15.3729 9.84871 16 8 16C3.58172 16 0 12.4183 0 8Z"
+                  d="M12 4C18.075 4 23 6.686 23 10V14C23 17.314 18.075 20 12 20C6.033 20 1.176 17.409 1.005 14.177L1 14V10C1 6.686 5.925 4 12 4ZM12 16C8.28 16 4.99 14.993 3 13.45V14C3 15.882 6.883 18 12 18C17.01 18 20.838 15.97 20.995 14.118L21 14L21.001 13.45C19.011 14.992 15.721 16 12 16ZM12 6C6.883 6 3 8.118 3 10C3 11.882 6.883 14 12 14C17.117 14 21 11.882 21 10C21 8.118 17.117 6 12 6Z"
                   fill="#FF6600"
                 />
               </svg>
-            </button>
+            </div>
+          </div>
+          <div className="header__center-right">
+            <div className="header__center-right-burgerMenu">
+              <span className="burgerLine"></span>
+              <span className="burgerLine"></span>
+              <span className="burgerLine"></span>
+            </div>
+            <div className="header-input">
+              <input
+                onChange={(e: ChangeEvent<HTMLInputElement>) => debounced(e)}
+                ref={inputRef}
+                type="text"
+                className="header-input"
+                placeholder="Какой товар вы ищете?"
+              />
+              <button>
+                <svg
+                  onClick={() => inputRef.current?.focus()}
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2ZM0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.84871 15.3729 11.551 14.3199 12.9056L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0976 18.6834 20.0976 18.2929 19.7071L12.9056 14.3199C11.551 15.3729 9.84871 16 8 16C3.58172 16 0 12.4183 0 8Z"
+                    fill="#FF6600"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-        <div className="header__center-right">
-          <Link to="/profile" className="header__center-element">
-            <span className="header__center-profile-text">Профиль</span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4ZM6 8C6 4.68629 8.68629 2 12 2C15.3137 2 18 4.68629 18 8C18 11.3137 15.3137 14 12 14C8.68629 14 6 11.3137 6 8ZM8 18C6.34315 18 5 19.3431 5 21C5 21.5523 4.55228 22 4 22C3.44772 22 3 21.5523 3 21C3 18.2386 5.23858 16 8 16H16C18.7614 16 21 18.2386 21 21C21 21.5523 20.5523 22 20 22C19.4477 22 19 21.5523 19 21C19 19.3431 17.6569 18 16 18H8Z"
-                fill="white"
+        :
+        <div className="header__center">
+          <div className="header__center-left">
+            <Link to="/home">
+              <img
+                className="header__center-img "
+                src={require("../images/logo.jpg")}
+                alt="Логотип компании"
               />
-            </svg>
-          </Link>
-          <div className="header__center-element">
-            <span>2600</span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 4C18.075 4 23 6.686 23 10V14C23 17.314 18.075 20 12 20C6.033 20 1.176 17.409 1.005 14.177L1 14V10C1 6.686 5.925 4 12 4ZM12 16C8.28 16 4.99 14.993 3 13.45V14C3 15.882 6.883 18 12 18C17.01 18 20.838 15.97 20.995 14.118L21 14L21.001 13.45C19.011 14.992 15.721 16 12 16ZM12 6C6.883 6 3 8.118 3 10C3 11.882 6.883 14 12 14C17.117 14 21 11.882 21 10C21 8.118 17.117 6 12 6Z"
-                fill="#FF6600"
+            </Link>
+            <div className="header-input">
+              <input
+                onChange={(e: ChangeEvent<HTMLInputElement>) => debounced(e)}
+                ref={inputRef}
+                type="text"
+                className="header__center-input-input"
+                placeholder="Какой товар вы ищете?"
               />
-            </svg>
+              <button>
+                <svg
+                  onClick={() => inputRef.current?.focus()}
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2ZM0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.84871 15.3729 11.551 14.3199 12.9056L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0976 18.6834 20.0976 18.2929 19.7071L12.9056 14.3199C11.551 15.3729 9.84871 16 8 16C3.58172 16 0 12.4183 0 8Z"
+                    fill="#FF6600"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-          <Link to="/cart" className="header__center-element" >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.1421 4.00014L6.00913 16.1358C6.02271 16.236 6.05113 16.3314 6.0921 16.4199C6.21543 16.6862 6.45246 16.8891 6.74088 16.9662C6.82899 16.9899 6.92133 17.0017 7.01578 17.0001H18C18.4416 17.0001 18.8309 16.7105 18.9578 16.2875L21.9578 6.28749C22.0487 5.98471 21.991 5.65682 21.8023 5.40321C21.6136 5.1496 21.3161 5.00014 21 5.00014H6.31948L5.99058 2.86233C5.97826 2.77295 5.95413 2.68733 5.91981 2.60712C5.85751 2.46104 5.76213 2.33451 5.64429 2.23533C5.53497 2.14314 5.40561 2.07396 5.26367 2.03526C5.17434 2.0108 5.0806 1.99855 4.9847 2.00014H3C2.44772 2.00014 2 2.44785 2 3.00014C2 3.55242 2.44772 4.00014 3 4.00014H4.1421ZM7.85794 15.0001L6.62717 7.00014H19.656L17.256 15.0001H7.85794Z"
-                fill="white"
-              />
-              <path
-                d="M10 20.0001C10 21.1047 9.10457 22.0001 8 22.0001C6.89543 22.0001 6 21.1047 6 20.0001C6 18.8956 6.89543 18.0001 8 18.0001C9.10457 18.0001 10 18.8956 10 20.0001Z"
-                fill="white"
-              />
-              <path
-                d="M19 20.0001C19 21.1047 18.1046 22.0001 17 22.0001C15.8954 22.0001 15 21.1047 15 20.0001C15 18.8956 15.8954 18.0001 17 18.0001C18.1046 18.0001 19 18.8956 19 20.0001Z"
-                fill="white"
-              />
-            </svg>
-          </Link>
+          <div className="header__center-right">
+            <Link to="/profile" className="header__center-element">
+              <span className="header__center-profile-text">Профиль</span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4ZM6 8C6 4.68629 8.68629 2 12 2C15.3137 2 18 4.68629 18 8C18 11.3137 15.3137 14 12 14C8.68629 14 6 11.3137 6 8ZM8 18C6.34315 18 5 19.3431 5 21C5 21.5523 4.55228 22 4 22C3.44772 22 3 21.5523 3 21C3 18.2386 5.23858 16 8 16H16C18.7614 16 21 18.2386 21 21C21 21.5523 20.5523 22 20 22C19.4477 22 19 21.5523 19 21C19 19.3431 17.6569 18 16 18H8Z"
+                  fill="white"
+                />
+              </svg>
+            </Link>
+            <div className="header__center-element">
+              <span>2600</span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 4C18.075 4 23 6.686 23 10V14C23 17.314 18.075 20 12 20C6.033 20 1.176 17.409 1.005 14.177L1 14V10C1 6.686 5.925 4 12 4ZM12 16C8.28 16 4.99 14.993 3 13.45V14C3 15.882 6.883 18 12 18C17.01 18 20.838 15.97 20.995 14.118L21 14L21.001 13.45C19.011 14.992 15.721 16 12 16ZM12 6C6.883 6 3 8.118 3 10C3 11.882 6.883 14 12 14C17.117 14 21 11.882 21 10C21 8.118 17.117 6 12 6Z"
+                  fill="#FF6600"
+                />
+              </svg>
+            </div>
+            <Link to="/cart" className="header__center-element" >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.1421 4.00014L6.00913 16.1358C6.02271 16.236 6.05113 16.3314 6.0921 16.4199C6.21543 16.6862 6.45246 16.8891 6.74088 16.9662C6.82899 16.9899 6.92133 17.0017 7.01578 17.0001H18C18.4416 17.0001 18.8309 16.7105 18.9578 16.2875L21.9578 6.28749C22.0487 5.98471 21.991 5.65682 21.8023 5.40321C21.6136 5.1496 21.3161 5.00014 21 5.00014H6.31948L5.99058 2.86233C5.97826 2.77295 5.95413 2.68733 5.91981 2.60712C5.85751 2.46104 5.76213 2.33451 5.64429 2.23533C5.53497 2.14314 5.40561 2.07396 5.26367 2.03526C5.17434 2.0108 5.0806 1.99855 4.9847 2.00014H3C2.44772 2.00014 2 2.44785 2 3.00014C2 3.55242 2.44772 4.00014 3 4.00014H4.1421ZM7.85794 15.0001L6.62717 7.00014H19.656L17.256 15.0001H7.85794Z"
+                  fill="white"
+                />
+                <path
+                  d="M10 20.0001C10 21.1047 9.10457 22.0001 8 22.0001C6.89543 22.0001 6 21.1047 6 20.0001C6 18.8956 6.89543 18.0001 8 18.0001C9.10457 18.0001 10 18.8956 10 20.0001Z"
+                  fill="white"
+                />
+                <path
+                  d="M19 20.0001C19 21.1047 18.1046 22.0001 17 22.0001C15.8954 22.0001 15 21.1047 15 20.0001C15 18.8956 15.8954 18.0001 17 18.0001C18.1046 18.0001 19 18.8956 19 20.0001Z"
+                  fill="white"
+                />
+              </svg>
+            </Link>
+          </div>
         </div>
-      </div>
+      }
       <ul className="header__bottom">
         <li className={dropDown ? "header__bottom-component active" : "header__bottom-component"}
           onMouseLeave={() => setDropDown(false)} onMouseEnter={() => setDropDown(true)}>

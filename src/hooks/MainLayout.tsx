@@ -7,6 +7,7 @@ import { db } from '../firebase'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { setCanEditProfile, setIsUserAuth } from '../redux/user/slice'
 import CatalogItemBig from '../Components/Catalog/CatalogItemBig'
+import Toasts from '../Components/CustomComponents/Toasts/Toasts'
 export interface setSearchValue {
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
@@ -35,6 +36,7 @@ const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
     return (
         <>
             <div className="app">
+                <Toasts />
                 <Header setSearchValue={setSearchValue} />
                 {
                     isActivePopup &&

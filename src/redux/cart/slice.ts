@@ -17,12 +17,10 @@ export const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addToCart(state, action: PayloadAction<ItemsInCart>) {
-      if (action.payload.count !== 0) {
-        const findItem = state.itemsInCart.find((el) => el.title === action.payload.title && el.weight === action.payload.weight);
-        findItem ? findItem.count++ : state.itemsInCart.push(action.payload)
-        const json = JSON.stringify(state.itemsInCart)
-        localStorage.setItem("items", json)
-      }
+      const findItem = state.itemsInCart.find((el) => el.title === action.payload.title && el.weight === action.payload.weight);
+      findItem ? findItem.count++ : state.itemsInCart.push(action.payload)
+      const json = JSON.stringify(state.itemsInCart)
+      localStorage.setItem("items", json)
     },
     countPlus(state, action: PayloadAction<itemsOperationWithCount>) {
       const findItem = state.itemsInCart.find(

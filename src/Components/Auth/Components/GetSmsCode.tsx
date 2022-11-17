@@ -87,11 +87,13 @@ const GetSmsCode: React.FC = () => {
             dispatch(setNextStage({ stage: 3, type: "recoveryPass" }))
         }
     };
+
     return (
         <div className="auth" >
             <div className="auth__title">
                 {time === 0 && <div className="auth__title-arrow" onClick={() => dispatch(setNextStage({ stage: stage - 1, type }))}>❮</div>}
-                <h1 className="auth__title-text">Введите СМС код</h1>
+                {/* <h1 className="auth__title-text">Введите СМС код</h1> */}
+                <h1 className="auth__title-text">Введите СМС код(на данный момент код не приходит, введите любые 6 цифр)</h1>
             </div>
             <p className='bold' style={{ marginBottom: 10 }}>На ваш номер был отправлен 6х значный код</p>
             <form className="auth__form" onSubmit={handleSubmit(onSubmit)} >

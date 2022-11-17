@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import CatalogItem from "./Catalog/CatalogItem";
 import { itemType } from "./Catalog/CatalogItem";
 import CatalogItemBig from "./Catalog/CatalogItemBig";
+import Slider from "./Other/Slider/Slider";
 import Chapter, { GoodsType } from "./Catalog/Chapter";
 import Skeleton from "./CustomComponents/Skeleton";
-import Slider from "./Other/Slider/Slider";
-// import Slider from "./Other/Slider/Slider";
 interface Home {
   searchValue: string
 }
@@ -17,7 +16,6 @@ const Home: React.FC<Home> = ({ searchValue }) => {
   useEffect(() => {
     const getSearchedValue = async () => {
       setLoading(true)
-      // https://636a3f3db10125b78fd50f7d.mockapi.io/goods/goods/?title=
       await axios.get(`https://636a3f3db10125b78fd50f7d.mockapi.io/goods/goods/?title=${searchValue}`)
         .then((res) => {
           setSearchedProducts(res.data)

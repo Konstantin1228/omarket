@@ -30,7 +30,7 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
                 let uniqueOrderNumber = 0
                 const generateOrderNumber = () => {
                     const newOrderNumber = Math.floor(Math.random() * 1000)
-                    if (previousData.map((el: any) => el.orderInformation.orderNumber).find((orderNumber: any) => orderNumber === newOrderNumber)) {
+                    if (previousData && previousData.map((el: any) => el.orderInformation.orderNumber).find((orderNumber: any) => orderNumber === newOrderNumber)) {
                         generateOrderNumber()
                     } else {
                         uniqueOrderNumber = newOrderNumber

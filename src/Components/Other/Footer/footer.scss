@@ -5,11 +5,10 @@ footer {
     background: $green;
 
     .footer__top {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-bottom: 16px;
+        padding-bottom: 1rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         height: 100%;
         position: relative;
@@ -25,13 +24,18 @@ footer {
                 display: flex;
                 align-items: center;
                 gap: 1.7em;
+
+                svg {
+                    height: 1.5rem;
+                    width: 1.5rem;
+                }
             }
 
             &--img {
                 max-width: 242px;
 
                 .img-big {
-                    width: 11em;
+                    width: 13em;
                     height: 3.6em;
                 }
 
@@ -41,17 +45,18 @@ footer {
                 }
 
                 ul {
-                    .footer__top-component--img-bottom {
-                        display: flex;
-                        justify-content: space-between;
-                    }
-
                     display: flex;
                     flex-direction: column;
                     gap: 13px;
 
+                    .footer__top-component--img-bottom {
+                        display: flex;
+                        gap: 1rem;
+                    }
+
+
                     .footer__top-component--img-text {
-                        max-width: 190px;
+                        word-break: normal;
                         font-weight: 100;
                     }
 
@@ -62,12 +67,35 @@ footer {
         .on__top {
             position: absolute;
             cursor: pointer;
-            bottom: 100px;
-            right: 0;
+            bottom: 7rem;
+            right: -3rem;
             padding: 10px 10px 7px 10px;
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 50%;
+        }
+
+        @media (max-width:1000px) {
+            padding: 1.2rem 2rem 1rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-row-gap: 25px;
+        }
+
+        @media (max-width:750px) {
+            display: block;
+
+            &-component--img {
+                margin-bottom: 0.7rem;
+            }
+
+            &-component:nth-child(2) {
+                display: none;
+            }
+
+            &-component:nth-child(3) {
+                display: none;
+            }
         }
     }
 
@@ -79,4 +107,11 @@ footer {
             color: rgba(255, 255, 255, 0.5);
         }
     }
+
+    @media (max-width:1280px) {
+        padding: 1.2rem 2rem 0px 2rem;
+    }
+
+
+
 }
