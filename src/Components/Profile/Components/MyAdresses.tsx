@@ -5,7 +5,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { db } from '../../../firebase'
 import { calcCrow } from '../../Cart/FunctionsAndTypes/functions'
 import { DeliviryAddress, AddAdress, DeliviryAddress1 } from '../FunctionsAndTypes/types'
-import ModalWindow from '../../Other/ModalWindow'
+import ModalWindow from '../../Other/ModalWindow/ModalWindow'
 const MyAdresses = () => {
   const [loading, setLoading] = useState(true)
   const [addAdress, setAddAdress] = useState(false)
@@ -21,8 +21,7 @@ const MyAdresses = () => {
         const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
         const userRef = doc(db, 'users', q.docs[0].id);
         const docSnap = await getDoc(userRef);
-        //@ts-ignore
-        setDeliviryAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses)
+        setDeliviryAdresses(docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses)
         setLoading(false)
       }
       getAdresses()
@@ -77,7 +76,7 @@ const MyAdresses = () => {
       }, { merge: true });
       const docSnap = await getDoc(userRef);
       //@ts-ignore
-      const newData = docSnap.data().profileInformation.otherInformation.deliviryAdresses.map((el) => el)
+      const newData = docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses?.map((el) => el)
       setDeliviryAdresses([...newData])
     } catch (error) {
       console.log(error)

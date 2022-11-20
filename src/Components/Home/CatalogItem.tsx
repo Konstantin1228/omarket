@@ -16,7 +16,6 @@ export interface itemType {
 }
 const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }) => {
   const dispatch = useAppDispatch();
-  const shareType = tags.find((tag) => tag === "bonus" || tag === "discount")
   const [items, setItems] = useState(
     tags.includes("bonus") || tags.includes("discount")
       ? tags.includes("discount")
@@ -28,15 +27,13 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
       : weight.map((weight, idx) => ({ weight: weight, points: points[idx], discounts: discounts[idx], price: price[idx], count: 1, totalPrice: price[idx] }))
 
   );
-  const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
   return (
-    // onMouseEnter={() => setBigItem(true)} onMouseLeave={() => setBigItem(false)}
     <div className="item-wrapper"  >
       <div className="item">
         <div className="item-tags">
           {tags.includes("Новинка") && <div className="item-tag-new">Новинка</div>}
-          {(shareType === "discount" || shareType === "bonus") && <div className="item-tag-stock">Акция</div>}
-          {shareType === "discount" && <div className="item-tag-stock">-{discounts[0]}%</div>}
+          {(tags.includes("discount") || tags.includes("bonus")) && <div className="item-tag-stock">Акция</div>}
+          {tags.includes("discount") && <div className="item-tag-stock">-{discounts[0]}%</div>}
           {tags.includes("Хит") && <div className="item-tag-hit">Хит</div>}
         </div>
         <figure className="item-information">
@@ -53,7 +50,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
           </div>
           <div className="item-about-chapter-bottom">
             <span className="item-about-chapter-weight">  {`${weight[0]} ${typeOfUnit}`}.</span>
-            {shareType === "discount" ?
+            {tags.includes("discount") ?
               <div className="item-about-chapter-block">
                 <div className="item-about-chapter-block-crossOut"></div>
                 <span className="item-about-chapter-block-lastPrice">{price[0]}₽</span>

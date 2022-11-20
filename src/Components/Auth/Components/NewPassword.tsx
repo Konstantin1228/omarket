@@ -1,38 +1,44 @@
-import { collection, doc, Firestore, setDoc } from 'firebase/firestore';
+import { collection, doc,  setDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { db } from '../../../firebase';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { setNextStage } from '../../../redux/user/slice';
+import { setIsUserAuth, setNextStage } from '../../../redux/user/slice';
+import { addStatusToasts } from '../../../redux/toasts/slice';
+import { useNavigate } from 'react-router-dom';
 interface NewPassword {
     firstInput: string
     secondInput: string
 }
 const NewPassword = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const { type } = useAppSelector(state => state.userSlice.authorizationOrLogin)
     const { telephone, country } = useAppSelector(state => state.userSlice.mainInformation)
     const { register, formState: { errors, isValid }, handleSubmit, setError } = useForm<NewPassword>({ mode: "onChange" })
     const [loading, setLoading] = useState(false)
     const onSubmit: SubmitHandler<NewPassword> = async (data) => {
-        setLoading(true)
         if (data.firstInput === data.secondInput) {
+            setLoading(true)
+
             const newUserRef = doc(collection(db, "users"));
             await setDoc(newUserRef, {
                 telephone,
                 country,
                 password: data.firstInput
             });
-            dispatch((setNextStage({ stage: 0, type: "" })))
+            localStorage.setItem("telephone", telephone)
+            dispatch(setIsUserAuth(true))
+            dispatch(addStatusToasts({ message: "Аккаунт успешно зарегестрирован!", isComplete: true }))
+            navigate("/home")
+            setLoading(false)
         } else {
             setError("secondInput", { type: "custom", message: "Пароли не совпадают!" })
         }
-        setLoading(false)
     }
     const [firstInput, setFirstInput] = useState({ visibilityEye: false, passwordShown: false });
     const [secondInput, setSecondInput] = useState({ visibilityEye: false, passwordShown: false });
     return (
-
         <div className="auth">
             {loading ?
                 <div className="container__loader-absolute">
@@ -41,7 +47,7 @@ const NewPassword = () => {
                 :
                 <>
                     <div className="auth__title">
-                        <div className="auth__title-arrow" onClick={() => dispatch(setNextStage({ stage: 1, type }))}>❮</div>
+                        <button className="auth__title-arrow" onClick={() => dispatch(setNextStage({ stage: 1, type }))}>❮</button>
                         <h1 className="auth__title-text">Придумайте пароль</h1>
                     </div>
                     <form className="auth__form" onSubmit={handleSubmit(onSubmit)} >
@@ -69,7 +75,7 @@ const NewPassword = () => {
                         </div>
                         <div className="auth__form-parentPassword" onMouseEnter={() => setSecondInput(prevState => ({ ...prevState, visibilityEye: true }))}
                             onMouseLeave={() => setSecondInput(prevState => ({ ...prevState, visibilityEye: false }))} >
-                            <input  {...register("secondInput", {
+                            <input style={{ width: 210 }} {...register("secondInput", {
                                 required: "Введите ваш новый пароль!",
                             })}
                                 className={`${errors.secondInput ? secondInput.passwordShown ? "input-error" : "input-passwordError" : secondInput.passwordShown ? "input" : "input-password"}`}

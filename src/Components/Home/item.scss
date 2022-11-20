@@ -1,13 +1,9 @@
-$green:#00953F;
-$red:#ED1B23;
-$orange:#FF6600;
-$white:#fff;
-$gray:#9C9C9C;
+@import "../../scss/defaultVariables.scss";
 
 .item-tag-new,
 .item-tag-stock,
 .item-tag-hit {
-    color: $white;
+    color: white;
     font-size: 18px;
     background: $green;
     border-radius: 0px 8px 8px 0px;
@@ -37,6 +33,7 @@ $gray:#9C9C9C;
             gap: 6px;
             position: absolute;
             left: 0;
+            top: 1rem;
             z-index: 0;
         }
 
@@ -131,7 +128,7 @@ $gray:#9C9C9C;
             position: absolute;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 0.4rem;
             z-index: 3;
         }
 
@@ -140,26 +137,26 @@ $gray:#9C9C9C;
             align-items: center;
             width: 100%;
             height: 25rem;
-            margin-bottom: 16px;
+            margin-bottom: 1rem;
         }
 
         &-information {
             display: flex;
             flex-direction: column;
             flex: 1 1;
-            gap: 5px;
-            padding-bottom: 12px;
+            gap: 0.4rem;
+            padding-bottom: 0.4rem;
             border-bottom: 1px solid #F4F4F4;
-            margin-bottom: 16px;
+            margin-bottom: 1rem;
 
             &-title {
                 width: 400px;
-                font-size: 21px;
+                font-size: 1.4rem;
             }
 
             &-description {
                 color: $gray;
-                font-size: 15px;
+                font-size: 1rem;
             }
         }
 
@@ -169,12 +166,12 @@ $gray:#9C9C9C;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin-bottom: 8px;
+                margin-bottom: 0.5rem;
 
                 &-weight {
                     white-space: nowrap;
-                    width: 40px;
-                    font-size: 17px;
+                    width: 2rem;
+                    font-size: 1rem;
                 }
 
                 &-amount {
@@ -185,30 +182,29 @@ $gray:#9C9C9C;
                         cursor: pointer;
                         display: flex;
                         align-items: center;
-                        padding: 5px 9px;
+                        width: 1.6rem;
+                        padding: 0.4rem 0.5rem;
                         background: #F2F2F2;
                         border: 1px solid rgba(255, 255, 255, 0.8);
                         border-radius: 6px 0px 0px 6px;
                     }
 
                     &-total {
-                        width: 60px;
+                        width: 3rem;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        padding: 4px 7px 3px 7px;
+                        padding: 0.3rem;
                         background: #F2F2F2;
                         border: 1px solid #FFFFFF;
                     }
 
                     &-plus {
                         border-radius: 0 6px 6px 0px;
-                        padding: 7px 8px !important;
                     }
                 }
 
                 &-shareType {
-                    min-width: 12px;
                     cursor: pointer;
                     font-weight: 900;
                     color: $red;
@@ -229,20 +225,19 @@ $gray:#9C9C9C;
                     text-align: center;
                     font-size: 16px;
                     transition: all.3s;
-
                 }
 
                 &-bonus {
                     display: flex;
                     align-items: center;
                     justify-content: right;
-                    width: 37px;
-                    gap: 2px;
+                    width: 3rem;
+                    gap: 0.1rem;
                 }
 
                 &-price {
-                    width: 60px;
-                    text-align: right;
+                    width: 3rem;
+                    text-align: center;
                     font-size: 17px;
                     color: $orange;
                 }
@@ -252,17 +247,13 @@ $gray:#9C9C9C;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    justify-content: center;
-                    width: 2.5em;
+                    width: 2.5rem;
 
                     &-lastPrice {
                         color: $gray;
-                        font-size: 13px;
                     }
                 }
             }
-
-
         }
 
         &-total {
@@ -272,22 +263,22 @@ $gray:#9C9C9C;
         &-total {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 0.5rem;
 
             &Price {
                 color: $orange;
                 text-align: right;
-                font-size: 17px;
+                font-size: 1.1rem;
                 font-weight: 600;
             }
 
             &Bonus {
                 display: flex;
                 align-items: center;
-                margin-bottom: 16px;
+                margin-bottom: 0.6rem;
                 justify-content: right;
-                font-size: 17px;
-                gap: 4px;
+                font-size: 1rem;
+                gap: 0.1rem;
             }
         }
 
@@ -295,15 +286,13 @@ $gray:#9C9C9C;
         &-addToCart-false {
             cursor: pointer;
             font-weight: 500;
-            max-width: inherit;
             width: 100%;
             color: $orange;
-            font-size: 20px;
-            padding: 13px 21px;
+            font-size: 1.3rem;
+            padding: 0.85rem;
             border: 2px solid $orange;
             border-radius: 16px;
-            text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 0.9rem;
             transition: all.3s;
 
             &:hover {
@@ -328,14 +317,13 @@ $gray:#9C9C9C;
         }
 
         &-grade {
-            &-reviews {
-                cursor: pointer;
-                padding-bottom: 1px;
-                border-bottom: 1px solid #000;
-            }
-
             display: flex;
             justify-content: space-between;
+
+            &-reviews {
+                cursor: pointer;
+                border-bottom: 1px solid #000;
+            }
         }
     }
 

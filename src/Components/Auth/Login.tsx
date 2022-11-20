@@ -6,6 +6,7 @@ import NewPassword from './Components/NewPassword'
 import RegIndex from './Components/RegIndex'
 import PasswordRecovery from './Components/PasswordRecovery'
 import LoginIndex from './Components/LoginIndex'
+import "./auth.scss"
 const Login = () => {
     const dispach = useAppDispatch()
     useEffect(() => {

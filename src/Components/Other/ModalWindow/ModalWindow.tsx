@@ -1,11 +1,11 @@
 import { getDocs, query, collection, where, doc, setDoc } from 'firebase/firestore'
 import React from 'react'
-import { db } from '../../firebase'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import Cart_Item from '../Cart/Components/Cart_Item'
-import { BankCard } from '../Cart/FunctionsAndTypes/types'
-import MyOrders from '../Profile/Components/MyOrders'
-import { DeliviryAddress1 } from '../Profile/FunctionsAndTypes/types'
+import { db } from '../../../firebase'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import Cart_Item from '../../Cart/Components/Cart_Item'
+import { BankCard } from '../../Cart/FunctionsAndTypes/types'
+import { DeliviryAddress1 } from '../../Profile/FunctionsAndTypes/types'
+import "./modalWindow.scss"
 interface ModalWindow {
     active: boolean
     setActive: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,7 +16,6 @@ interface ModalWindow {
     bankCards?: BankCard[]
 }
 const ModalWindow: React.FC<ModalWindow> = ({ active, setActive, type, itemName, setLoading, deliviryAdresses, bankCards }) => {
-    const dispatch = useAppDispatch()
     const { itemsInCart } = useAppSelector((state) => state.cartSlice)
     const { writeOffBonuses, adress, deliviryCost, flat, floor } = useAppSelector((state) => state.cartSlice.userInformation.generalInformation)
     const { bankCard, scheme } = useAppSelector((state) => state.cartSlice.userInformation.bankCardInformation)
@@ -101,6 +100,7 @@ const ModalWindow: React.FC<ModalWindow> = ({ active, setActive, type, itemName,
     const deleteItemFromCart = () => {
 
     }
+
     return (
         <div className={active ? 'modal-active' : 'modal'} onClick={() => setActive(false)}>
             {/* e.stopPropagation()-прекращает передачу текущего события   */}

@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CatalogItem from "./Catalog/CatalogItem";
-import { itemType } from "./Catalog/CatalogItem";
-import CatalogItemBig from "./Catalog/CatalogItemBig";
-import Slider from "./Other/Slider/Slider";
-import Chapter, { GoodsType } from "./Catalog/Chapter";
-import Skeleton from "./CustomComponents/Skeleton";
+import CatalogItem from "./CatalogItem";
+import { itemType } from "./CatalogItem";
+import Slider from "../Other/Slider/Slider";
+import Skeleton from "../CustomComponents/Skeleton";
+import Chapter, { GoodsType } from "./Chapter";
 interface Home {
   searchValue: string
 }

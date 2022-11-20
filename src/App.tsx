@@ -1,6 +1,6 @@
 import "./scss/index.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./Components/Home";
+import Home from "./Components/Home/Home";
 import Cart from "./Components/Cart/Cart";
 import ProfileIndex from "./Components/Profile/ProfileIndex";
 import MyOrders from "./Components/Profile/Components/MyOrders";
@@ -11,6 +11,7 @@ import RequireAuth from "./hooks/RequireAuth";
 import CanEditProfile from "./hooks/CanEditProfile";
 import MainLayout from "./hooks/MainLayout";
 import { useState } from "react";
+import Catalog from "./Components/Catalog/Catalog";
 
 const App: React.FC = () => {
   const [searchValue, setSearchValue] = useState("")
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/home" element={<Home searchValue={searchValue} />} />
         <Route element={<RequireAuth />}>
           <Route path="/cart" element={<Cart />} />
+          <Route path="/catalog" element={<Catalog />} />
           <Route element={<CanEditProfile />}>
             <Route path="/profile" element={<ProfileIndex />} >
               {/* @ts-ignore */}

@@ -84,17 +84,13 @@ const UserInformation: React.FC = () => {
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef)
                 const data = docSnap.data()
-                //@ts-ignore
-                const telephone = data.telephone
-                //@ts-ignore
-                if (data.profileInformation.aboutUser) {
-                    //@ts-ignore
+                const telephone = data?.telephone
+                if (data?.profileInformation?.aboutUser) {
                     const { childCount, dateOfBirth, email, familyStatus, isHaveChild, nameSurname, sex } = data.profileInformation.aboutUser
                     setUserInformation({ telephone, childCount, dateOfBirth, email, familyStatus, isHaveChild, nameSurname, sex })
-                    //@ts-ignore
-                    Object.keys(data.profileInformation.aboutUser).map((el, idx) => {
+                    Object.keys(data?.profileInformation?.aboutUser).map((el, idx) => {
                         //@ts-ignore
-                        setValue(el, Object.values(data.profileInformation.aboutUser)[idx])
+                        setValue(el, Object.values(data?.profileInformation?.aboutUser)[idx])
                     })
                 } else {
                     setUserInformation({ telephone, childCount: 0, dateOfBirth: "", email: "", familyStatus: "", isHaveChild: false, nameSurname: "", sex: "" })

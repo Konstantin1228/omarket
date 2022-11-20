@@ -6,6 +6,7 @@ import CartOrderingStage2 from "./Components/Stages/CartOrderingStage2";
 import CartOrderingStage3 from "./Components/Stages/CartOrderingStage3";
 import CartRight from "./Components/CartRight";
 import CartOrderingStage4 from "./Components/Stages/CartOrderingStage4";
+import "./cart.scss"
 const Cart = () => {
   const { itemsInCart } = useAppSelector((state) => state.cartSlice);
   const withoutDiscount = itemsInCart.reduce((previous, current) => previous + (current.count * (current.defaultPrice || 0)), 0)

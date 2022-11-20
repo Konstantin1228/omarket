@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
@@ -8,38 +8,40 @@ import { db } from '../../../firebase';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { setContryAndTel, setNextStage } from '../../../redux/user/slice';
 import { formattedTelephone } from '../FunctionsAndTypes/functions';
+import { addStatusToasts } from '../../../redux/toasts/slice';
 interface RegIndex {
     tel: string,
     country: string
 }
 
 const RegIndex: React.FC = () => {
-    const dispach = useAppDispatch()
+    const { register, formState: { errors, isValid }, control, trigger, setError, handleSubmit, setValue, clearErrors, watch } = useForm<RegIndex>({ mode: "onChange" })
+
+    const dispatch = useAppDispatch()
+    const watchInputTel = watch("tel")
+    const [country, setCountry] = useState("");
+    const [loading, setLoading] = useState(false)
+
     const options = [
         { value: 'rus', label: <div className="select-option"> <ReactCountryFlag countryCode="RU" svg /> Россия</div> },
         { value: 'kaz', label: <div className="select-option"> <ReactCountryFlag countryCode="KZ" svg /> Казахстан</div> },
         { value: 'uzb', label: <div className="select-option"> <ReactCountryFlag countryCode="UZ" svg /> Узбекистан</div> },
         { value: 'bel', label: <div className="select-option"> <ReactCountryFlag countryCode="BY" svg /> Беларусь</div> },
     ]
-    const [country, setCountry] = useState("");
-    const [loading, setLoading] = useState(false)
-    const { register, formState: { errors, isValid }, control, trigger, setError, handleSubmit, setValue, clearErrors } = useForm<RegIndex>({ mode: "onChange" })
+
+
     const onSubmit: SubmitHandler<RegIndex> = async (data) => {
         const { tel, country } = data
         setLoading(true)
         const queryTotal = await getDocs(query(collection(db, "users"), where("telephone", '==', tel)))
         if (queryTotal.size === 0) {
-            dispach(setNextStage({ stage: 2, type: "registration" }))
-            dispach(setContryAndTel({ telephone: tel, country }))
+            dispatch(setNextStage({ stage: 2, type: "registration" }))
+            dispatch(setContryAndTel({ telephone: tel, country }))
         } else {
             setError("tel", { type: "custom", message: "Данный номер телефона занят!" })
         }
         setLoading(false)
     }
-    useEffect(() => {
-        setError("tel", { type: 'custom', message: 'Поле обязательно к заполнению!' })
-        setError("country", { type: 'custom', message: 'Выберите страну, в которой вы находитесь!' })
-    }, [])
     return (
         <div className="auth">
             {loading ?
@@ -48,8 +50,8 @@ const RegIndex: React.FC = () => {
                 </div> :
                 <>
                     <div className="auth__title">
-                        <div className="auth__title-arrow" onClick={() => dispach(setNextStage({ stage: 0, type: "" }))}>❮</div>
-                        <h1 className="auth__title-text"> Регестрация</h1>
+                        <div className="auth__title-arrow" onClick={() => dispatch(setNextStage({ stage: 0, type: "" }))}>❮</div>
+                        <h1 className="auth__title-text">Регестрация</h1>
                     </div>
                     <form className="auth__form" onSubmit={handleSubmit(onSubmit)} >
                         <Controller
@@ -78,7 +80,7 @@ const RegIndex: React.FC = () => {
                             })} className={`${errors.tel ? "input-error" : "input"}`} placeholder="Номер телефона" />
                             {errors.tel && <p className="errorAuth">{errors?.tel?.message || "Ошибка!"}</p>}
                         </div>
-                        <button type='submit' className={`button-submit${!errors.tel?.message && !errors.country?.message ? "" : "-false"}`}>Отправить СМС</button>
+                        <button type='submit' className={`button-submit${isValid && watchInputTel.length ? "" : "-false"}`}>Отправить СМС</button>
                     </form >
                 </>
             }

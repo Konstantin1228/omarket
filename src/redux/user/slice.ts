@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NextStage, SetCountryAndTel, UserSlice } from "./types";
 
 const initialState: UserSlice = {
-    isAuth: localStorage.getItem("isLogged") === "true",
     authorizationOrLogin: {
         stage: 0,
         type: ""
@@ -38,7 +37,6 @@ export const userSlice = createSlice({
                     state.mainInformation[el] = Object.values(action.payload)[idx].stringValue
                 }
             })
-            state.isAuth = true
         },
         setIsUserAuth(state, action: PayloadAction<boolean>) {
             state.isUserAuth = action.payload

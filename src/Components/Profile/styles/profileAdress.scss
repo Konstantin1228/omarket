@@ -10,11 +10,12 @@
         flex: 1;
 
         &-element {
-            display: grid;
-            grid: 1;
-            grid-template-columns: repeat(3, 1fr);
-            // display: flex;
-            // justify-content: space-between;
+            // display: grid;
+            // grid: 1;
+            // grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding-bottom: 20px;
             margin-top: 10px;
             border-bottom: 1px solid #DFDFDF;
@@ -74,6 +75,11 @@
 
                 input {
                     width: 80%;
+                }
+
+                img {
+                    height: 2rem;
+                    width: 2.5rem;
                 }
             }
 

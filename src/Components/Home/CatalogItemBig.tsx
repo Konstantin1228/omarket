@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { addToCart, closePopup } from '../../redux/cart/slice'
 import { addItemToasts } from '../../redux/toasts/slice'
+import { useTransition, animated } from '@react-spring/web'
 import "./item.scss"
 const CatalogItemBig: FC = () => {
     const dispatch = useAppDispatch()
@@ -53,35 +54,50 @@ const CatalogItemBig: FC = () => {
         }
     };
 
+    const transition = useTransition(isActivePopup, {
+        from: { scale: 0, opacity: 0, },
+        enter: { scale: 1, opacity: 1, },
+        leave: { scale: 0, opacity: 0, },
+        config: { duration: 250 }
+    })
+
+    const containerTransition = useTransition(isActivePopup, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 }
+    });
+
     const addItemsToCart = () => {
         items.map(({ weight, points, price, count }, idx) => {
             if (count !== 0) {
                 dispatch(
                     addToCart(
                         discounts[0] !== undefined ?
-                            {
-                                //@ts-ignore
-                                title, count, price, weight, points, image, defaultPrice: items[idx].defaultPrice,
-                                tags: shareType || "", typeOfUnit
-                            }
+                            //@ts-ignore
+                            { title, count, price, weight, points, image, defaultPrice: items[idx].defaultPrice, tags: shareType || "", typeOfUnit }
                             :
-                            {
-                                title, count, price, weight, points, image,
-                                tags: shareType || "", typeOfUnit
-                            }
+                            { title, count, price, weight, points, image, tags: shareType || "", typeOfUnit }
                     ))
-                dispatch(addItemToasts({ title, img: image, type: "ToastItem", id, typeOfUnit, weight }))
+                dispatch(addItemToasts({ title, img: image, id, typeOfUnit, weight, count }))
             }
         })
-
     }
-    // console.log()
+
     const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
+
     return (
-        <>
-            {isActivePopup &&
-                <div className={isActivePopup ? 'modal-active' : 'modal'} onClick={() => dispatch(closePopup())} >
-                    <div className="modal__content" onClick={(e) => e.stopPropagation()} style={{ width: 500 }}>
+        <div className='modal-active' onClick={() => dispatch(closePopup())} >
+            {transition((style, isActivePopup) => (
+                isActivePopup ?
+                    <animated.div style={{ ...style, width: 500 }} className="modal__content" onClick={(e) => e.stopPropagation()} >
+                        <div className="modal__content-top">
+                            <div></div>
+                            <div className="modal__content-top-svg" onClick={() => dispatch(closePopup())}>
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L8.41421 7L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7 8.41421L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="#0D0D0D" />
+                                </svg>
+                            </div>
+                        </div>
                         <div className="item-wrapper">
                             <div className="item-big" >
                                 <div className="item-tags">
@@ -91,7 +107,7 @@ const CatalogItemBig: FC = () => {
                                     {tags.includes("Хит") && <div className="item-tag-hit">Хит</div>}
                                 </div>
                                 <figure className="item-big-information">
-                                    <img src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} alt={title} width={280} height={280} />
+                                    <img src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} alt={title} />
                                     <h1 className="item-big-information-title">{title}</h1>
                                     <figcaption className="item-information-description">{description}</figcaption>
                                 </figure>
@@ -159,10 +175,10 @@ const CatalogItemBig: FC = () => {
                                 </div>
                             </div>
                         </div >
-                    </div>
-                </div>
-            }
-        </>
+                    </animated.div>
+                    : null
+            ))}
+        </div>
     )
 }
 

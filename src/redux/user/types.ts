@@ -1,5 +1,4 @@
 export interface UserSlice {
-    isAuth: boolean
     mainInformation: {
         telephone: string
         country: string,

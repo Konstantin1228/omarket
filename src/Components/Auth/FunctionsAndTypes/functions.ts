@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from "react"
 import { UseFormClearErrors, UseFormSetError, UseFormTrigger, UseFormWatch } from "react-hook-form"
-export const formattedTelephone = (e: ChangeEvent<HTMLInputElement>,
-    setError: UseFormSetError<any>, clearErrors: UseFormClearErrors<any>) => {
+
+export const formattedTelephone = (e: ChangeEvent<HTMLInputElement>, setError: UseFormSetError<any>, clearErrors: UseFormClearErrors<any>) => {
     let inputValue = e.target.value.replace(/\D/g, "")
     let formattedInputValue = ""
     const { selectionStart } = e.target

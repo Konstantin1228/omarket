@@ -1,10 +1,8 @@
-$darkGrey: #DFDFDF;
-$orange: #FF6600;
 
 .characteristics {
 
     padding: 16px 22px 20px 22px;
-    border: 1px solid $darkGrey;
+    border: 1px solid $gray;
     border-radius: 14px;
     width: 330px;
 
@@ -13,8 +11,9 @@ $orange: #FF6600;
         height: 40px;
         margin: 5px;
         padding: 10px;
-       
+
     }
+
     button:nth-child(1) {
         color: #000;
     }
@@ -31,7 +30,7 @@ $orange: #FF6600;
                 border-radius: 15px;
                 margin: 10px 0;
                 padding: 11px;
-                border: 1px solid $darkGrey;
+                border: 1px solid $gray;
             }
         }
 

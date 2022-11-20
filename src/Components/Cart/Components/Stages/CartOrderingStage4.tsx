@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { db } from '../../../../firebase'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { clearCart } from '../../../../redux/cart/slice'
-import ModalWindow from '../../../Other/ModalWindow'
+import ModalWindow from '../../../Other/ModalWindow/ModalWindow'
 interface SetStage {
     setStage: React.Dispatch<React.SetStateAction<number>>
 }
@@ -19,14 +19,14 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
     let orderDate = `${newDate.toLocaleDateString().replace("/", ".")}  
     ${newDate.getHours()}:${newDate.getMinutes().toString().length === 2 ? newDate.getMinutes() : `0${newDate.getMinutes()}`}`
     const userScheme = scheme.charAt(0).toUpperCase() + scheme.slice(1, scheme.length)
+
     useEffect(() => {
         const getData = async () => {
             try {
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const ordersData = await getDoc(userRef)
-                //@ts-ignore  
-                const previousData = ordersData.data().profileInformation?.userOrders
+                const previousData = ordersData.data()?.profileInformation?.userOrders
                 let uniqueOrderNumber = 0
                 const generateOrderNumber = () => {
                     const newOrderNumber = Math.floor(Math.random() * 1000)

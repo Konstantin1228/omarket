@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, Controller, SubmitHandler, } from 'react-hook-form'
 import { NumberFormatBase, PatternFormat } from 'react-number-format'
 import { BankCard, stageType3 } from '../../FunctionsAndTypes/types'
-import ModalWindow from '../../../Other/ModalWindow'
+import ModalWindow from '../../../Other/ModalWindow/ModalWindow'
 import Select from "react-select";
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import makeAnimated from 'react-select/animated';
@@ -56,8 +56,9 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
-                //@ts-ignore
-                docSnap.data().profileInformation?.otherInformation?.bankCards[0] !== undefined ? setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: true }) : setBankCardData({ bankCards: docSnap.data().profileInformation.otherInformation.bankCards, haveBankCards: false })
+                console.log(docSnap.data()?.profileInformation?.otherInformation?.bankCards.length)
+                docSnap.data()?.profileInformation?.otherInformation?.bankCards.length ? setBankCardData({ bankCards: docSnap.data()?.profileInformation?.otherInformation?.bankCards, haveBankCards: true })
+                    : setBankCardData({ bankCards: docSnap.data()?.profileInformation?.otherInformation?.bankCards, haveBankCards: false })
                 // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
             }
             catch (error) {
@@ -92,15 +93,16 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
         setValue("scheme", scheme)
     }
 
-    const bankCardsOptions = bankCardData.bankCards.map((el, idx) => ({
-        value: el.bankCard,
-        date: el.date,
-        scheme: el.scheme,
-        CVC: el.CVC,
+    const bankCardsOptions = bankCardData.bankCards.map(({ bankCard, date, scheme, CVC }, idx) => ({
+        value: bankCard,
+        date,
+        scheme,
+        CVC,
         label:
             <>
-                {/* {el.scheme} */}
-                <img src="https://cdn-icons-png.flaticon.com/512/349/349221.png" width={38} alt="" />
+                {(scheme === "Visa" || scheme === "Mastercard" || scheme === "Jcb" || scheme === "Amex")
+                    ? <img src={require(`../../../../images/cards/${scheme}.png`)} alt={scheme} /> :
+                    <img src={require(`../../../../images/cards/unkownCard.png`)} alt={scheme} />}
                 <div className="profile__adress__inner-bottom-bankCardElement-center">
                     <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="2" cy="2" r="2" fill="#0D0D0D" />
@@ -116,7 +118,7 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                     </svg>
                 </div>
                 <div className="profile__adress__inner-bottom-bankCardElement-left">
-                    <p className='text bold'>{el.bankCard.slice(-4)}</p>
+                    <p className='text bold'>{bankCard.slice(-4)}</p>
                 </div>
             </>
     }))

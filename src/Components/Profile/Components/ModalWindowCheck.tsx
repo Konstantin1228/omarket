@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { useAppDispatch } from '../../../hooks/hooks';
 import { addToCart } from '../../../redux/cart/slice';
+import { addStatusToasts } from '../../../redux/toasts/slice';
 import MyOrders from './MyOrders';
 interface ModalWindow {
     active: {
@@ -11,10 +12,15 @@ interface ModalWindow {
     orderDetails: MyOrders
 }
 const ModalWindowCheck: FC<ModalWindow> = ({ active, setActive, orderDetails }) => {
-
     const dispatch = useAppDispatch()
     const { adress, orderDate, orderNumber, status, comment } = orderDetails.orderInformation
     const { bankCard, scheme } = orderDetails.bankCardInformation
+
+    const addItemsToCart = () => {
+        setActive({ condition: false, itemIdx: active.itemIdx })
+        orderDetails.itemsInCart.map((order) => dispatch(addToCart(order)))
+        dispatch(addStatusToasts({ message: "Товары добавлены в корзину!", isComplete: true }))
+    }
     return (
         <div className={active.condition ? 'modal-active' : "modal"} onClick={() => setActive({ condition: false, itemIdx: active.itemIdx })}>
             <div className="modal__content" onClick={(e) => e.stopPropagation()}>
@@ -30,14 +36,11 @@ const ModalWindowCheck: FC<ModalWindow> = ({ active, setActive, orderDetails }) 
                                     <p>{orderDate}</p>
                                 </div>
                                 <div className="modal__content-top-orderInformation-top-left-deliviryStatus element">Статус:&nbsp;
-                                    <span className={`bold ${status ? "green" : "red"}`}>{"Доставлен"}</span>
+                                    <span className={`bold ${status === "Доставлен" ? "green" : "red"}`}>{status}</span>
                                 </div>
                             </div>
                             <div className="modal__content-top-orderInformation-right">
-                                <div className="cart__inner-notEmpty-left-ordering-orderNumber-right-svg" onClick={() => {
-                                    setActive({ condition: false, itemIdx: active.itemIdx })
-                                    orderDetails.itemsInCart.map((order) => dispatch(addToCart(order)))
-                                }}>
+                                <div className="cart__inner-notEmpty-left-ordering-orderNumber-right-svg" onClick={addItemsToCart}>
                                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1.76205 1.66643L3.00674 9.75688C3.01579 9.82366 3.03474 9.8873 3.06205 9.94628C3.14427 10.1238 3.30229 10.2591 3.49457 10.3105C3.55331 10.3263 3.61487 10.3342 3.67784 10.3331H11.0007C11.2951 10.3331 11.5546 10.14 11.6392 9.858L13.6392 3.19133C13.6998 2.98948 13.6613 2.77089 13.5355 2.60181C13.4097 2.43274 13.2114 2.3331 13.0007 2.3331H3.21363L2.99437 0.907894C2.98616 0.848306 2.97007 0.791231 2.94719 0.737753C2.90566 0.640369 2.84207 0.556014 2.76351 0.489894C2.69063 0.428433 2.60439 0.382315 2.50976 0.356518C2.45021 0.340208 2.38772 0.332039 2.32378 0.333099H1.00065C0.632461 0.333099 0.333984 0.631576 0.333984 0.999766C0.333984 1.36796 0.632461 1.66643 1.00065 1.66643H1.76205ZM4.23928 8.99977L3.41876 3.66643H12.1046L10.5046 8.99977H4.23928Z" fill="#FF6600" />
                                         <path d="M5.66732 12.3331C5.66732 13.0695 5.07036 13.6664 4.33398 13.6664C3.5976 13.6664 3.00065 13.0695 3.00065 12.3331C3.00065 11.5967 3.5976 10.9998 4.33398 10.9998C5.07036 10.9998 5.66732 11.5967 5.66732 12.3331Z" fill="#FF6600" />

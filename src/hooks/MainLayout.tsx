@@ -6,8 +6,8 @@ import { getDocs, query, collection, where, doc, getDoc } from 'firebase/firesto
 import { db } from '../firebase'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { setCanEditProfile, setIsUserAuth } from '../redux/user/slice'
-import CatalogItemBig from '../Components/Catalog/CatalogItemBig'
 import Toasts from '../Components/CustomComponents/Toasts/Toasts'
+import CatalogItemBig from '../Components/Home/CatalogItemBig'
 export interface setSearchValue {
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
@@ -21,10 +21,8 @@ const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
                 if (q.docs.length >= 1) {
                     const userRef = doc(db, 'users', q.docs[0].id);
                     const docSnap = await getDoc(userRef)
-                    //@ts-ignore
                     dispatch(setIsUserAuth(true))
-                    //@ts-ignore
-                    dispatch(setCanEditProfile(!!docSnap.data().profileInformation.otherInformation.deliviryAdresses !== undefined))
+                    dispatch(setCanEditProfile(docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses))
                 }
             } catch (error) {
                 console.log(error);
@@ -38,10 +36,7 @@ const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
             <div className="app">
                 <Toasts />
                 <Header setSearchValue={setSearchValue} />
-                {
-                    isActivePopup &&
-                    <CatalogItemBig />
-                }
+                {isActivePopup && <CatalogItemBig />}
                 <Outlet />
             </div>
             <Footer />

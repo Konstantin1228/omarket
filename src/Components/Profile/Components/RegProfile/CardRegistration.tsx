@@ -6,6 +6,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { NumberFormatBase, PatternFormat } from 'react-number-format'
 import { db } from '../../../../firebase'
 import { useAppDispatch } from '../../../../hooks/hooks'
+import { addStatusToasts } from '../../../../redux/toasts/slice'
 import { setCanEditProfile } from '../../../../redux/user/slice'
 import { RegStage } from './RegProfile'
 interface BankCard {
@@ -71,7 +72,6 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                 },
                             }
                         }, { merge: true });
-                        console.log("");
                     } else if (withoutBankCard) {
                         await setDoc(userRef, {
                             profileInformation: {
@@ -83,8 +83,8 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                             }
                         }, { merge: true });
                     }
-                    localStorage.setItem("CanEditProfile", "true")
                     dispatch(setCanEditProfile(true))
+                    dispatch(addStatusToasts({ message: "Ваш профиль теперь зарегестрирован!", isComplete: true }))
                 }
             } else {
                 setError("bankCard", { type: "custom", message: "Проверьте правильность ввода" })
@@ -116,13 +116,13 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                         }
                     }
                 }, { merge: true });
-                localStorage.setItem("CanEditProfile", "true")
                 dispatch(setCanEditProfile(true))
             }
         } catch (error) {
             console.log(error);
         }
         setLoading(false)
+        dispatch(addStatusToasts({ message: "Ваш профиль зарегестрирован!", isComplete: true }))
     }
 
     return (

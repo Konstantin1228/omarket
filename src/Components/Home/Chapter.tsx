@@ -5,9 +5,10 @@ import CatalogItem from "./CatalogItem";
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';
-import 'swiper/css';
 import { query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
+import './chapter.scss';
+import 'swiper/css';
 interface ChapterProps {
   title: string;
   titleTheme: string;
@@ -52,7 +53,6 @@ const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagS
       getRes();
     }
   }, []);
-
   return (
     <div className="chapter">
       <div className="chapter-top">

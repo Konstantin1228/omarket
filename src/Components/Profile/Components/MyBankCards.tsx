@@ -5,7 +5,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { NumberFormatBase, PatternFormat } from 'react-number-format';
 import { db } from '../../../firebase';
 import { BankCard, } from '../../../redux/user/types';
-import ModalWindow from '../../Other/ModalWindow';
+import ModalWindow from '../../Other/ModalWindow/ModalWindow';
 
 function CardExpiry(props: any) {
   const format = (val: string) => {
@@ -58,10 +58,8 @@ const MyBankCards = () => {
         const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
         const userRef = doc(db, 'users', q.docs[0].id);
         const docSnap = await getDoc(userRef);
-        //@ts-ignore
-        if (docSnap.data().profileInformation.otherInformation.bankCards) {
-          //@ts-ignore
-          setBankCardData(docSnap.data().profileInformation.otherInformation.bankCards)
+        if (docSnap.data()?.profileInformation?.otherInformation?.bankCards) {
+          setBankCardData(docSnap.data()?.profileInformation?.otherInformation?.bankCards)
         } else {
           setBankCardData([])
         }
@@ -79,8 +77,7 @@ const MyBankCards = () => {
         const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
         const userRef = doc(db, 'users', q.docs[0].id);
         const docSnap = await getDoc(userRef);
-        //@ts-ignore
-        setBankCardData(docSnap.data().profileInformation.otherInformation.bankCards)
+        setBankCardData(docSnap.data()?.profileInformation?.otherInformation?.bankCards)
         setLoading(false)
       }
       getAdresses()
@@ -122,7 +119,7 @@ const MyBankCards = () => {
           }
           const docSnap = await getDoc(userRef);
           //@ts-ignore
-          const newData = docSnap.data().profileInformation.otherInformation.bankCards.map((el) => el)
+          const newData = docSnap.data()?.profileInformation?.otherInformation?.bankCards?.map((el) => el)
           setBankCardData([...newData])
           setCanAddBankCard(false)
         } else {
@@ -139,7 +136,7 @@ const MyBankCards = () => {
       setError("bankCard", { type: "custom", message: "Вы уже зарегестрировали эту банковскую карточку" })
     }
   };
-
+  bankCardData.map((el) => console.log(el.scheme))
   return (
     <>
       {loading ?
@@ -236,7 +233,11 @@ const MyBankCards = () => {
                   bankCardData.map((el, idx) =>
                     <div className="profile__adress__inner-bottom-bankCardElement" key={idx} onClick={() => deleteBankCard(idx)}>
                       {/* {el.scheme} */}
-                      <img src="https://cdn-icons-png.flaticon.com/512/349/349221.png" width={38} alt={el.scheme} />
+
+                      {(el.scheme === "Visa" || el.scheme === "Mastercard" || el.scheme === "Jcb" || el.scheme === "Amex")
+                        ? <img src={require(`../../../images/cards/${el.scheme}.png`)} alt={el.scheme} /> :
+                        <img src={require(`../../../images/cards/unkownCard.png`)} alt={el.scheme} />}
+
                       <div className="profile__adress__inner-bottom-bankCardElement-center">
                         <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="2" cy="2" r="2" fill="#0D0D0D" />

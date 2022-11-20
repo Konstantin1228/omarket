@@ -32,6 +32,7 @@
     &-top {
         display: flex;
         justify-content: space-between;
+        width: 100%;
 
         &-title {
             font-weight: 700;
@@ -170,11 +171,16 @@
                 }
             }
         }
+
+        &-svg {
+            cursor: pointer;
+        }
     }
 
     &-bottom {
         padding-bottom: 20px;
     }
+
 }
 
 .modalButton {

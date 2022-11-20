@@ -4,7 +4,7 @@ import { useAppDispatch, } from '../../../../hooks/hooks';
 import makeAnimated from 'react-select/animated';
 import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { IFormInputStage2, stageType3 } from '../../FunctionsAndTypes/types';
-import ModalWindow from '../../../Other/ModalWindow';
+import ModalWindow from '../../../Other/ModalWindow/ModalWindow';
 import { PatternFormat } from 'react-number-format';
 import { setGeneralInformation } from '../../../../redux/cart/slice';
 import Select from "react-select";
@@ -12,27 +12,24 @@ import { getDocs, query, collection, where, getDoc, doc } from 'firebase/firesto
 import { db } from '../../../../firebase';
 import { DeliviryAddress } from '../../../Profile/FunctionsAndTypes/types';
 import { AntSwitch } from '../../../CustomComponents/AntSwtich';
-import axios from 'axios';
 import { calcCrow, onlyNumberInput } from '../../FunctionsAndTypes/functions';
 const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscount, totalPoints, itemsInCart }) => {
     const dispatch = useAppDispatch()
     const [activeBonus, setActiveBonus] = useState(false)
     const [loading, setLoading] = useState(true)
-    const [deliviryAdresses, setDeliviryAdresses] = useState<DeliviryAddress>({ cities: [{ city: "", isDefault: false }], haveDeliviryAdresses: false })
     const [activeModal, setAciveModal] = useState(false)
+    const [deliviryAdresses, setDeliviryAdresses] = useState<DeliviryAddress>({ cities: [{ city: "", isDefault: false }], haveDeliviryAdresses: false })
     const { register, formState: { errors, isValid }, setValue, watch, handleSubmit, control, trigger, setError, clearErrors } = useForm<IFormInputStage2>({ mode: "onChange" })
     const watchWriteOffBonuses = watch("writeOffBonuses")
     const watchDeliviryCost = watch("deliviryCost")
     const [userAdress, setUserAdress] = useState("")
-
     useEffect(() => {
         const getData = async () => {
             try {
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
-                //@ts-ignore
-                docSnap.data().profileInformation?.otherInformation?.deliviryAdresses ? setDeliviryAdresses({ cities: docSnap.data().profileInformation.otherInformation.deliviryAdresses, haveDeliviryAdresses: true })
+                docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses ? setDeliviryAdresses({ cities: docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses, haveDeliviryAdresses: true })
                     : setDeliviryAdresses((previous) => ({ ...previous, haveDeliviryAdresses: false }))
                 // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
                 setLoading(false)

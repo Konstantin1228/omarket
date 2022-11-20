@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
-import { itemType } from "../../Components/Catalog/CatalogItem";
+import { itemType } from "../../Components/Home/CatalogItem";
 import { CartSliceState, GeneralInformation, getCartFromLS, ItemsInCart, itemsOperationWithCount, UserInformationObj } from "./types";
 
 const { items } = getCartFromLS()

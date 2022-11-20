@@ -1,5 +1,5 @@
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
-import { itemType } from "../../Components/Catalog/CatalogItem";
+import { itemType } from "../../Components/Home/CatalogItem";
 export interface CartSliceState {
     itemsInCart: ItemsInCart[];
     userInformation: UserInformation

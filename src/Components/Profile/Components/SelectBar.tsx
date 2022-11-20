@@ -2,7 +2,7 @@ import { FormControlLabel } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox/Checkbox'
 import React, { memo, useEffect, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { FilterOrders } from './ProfileIndex'
+import { FilterOrders } from '../ProfileIndex'
 export interface SearchAdressOrCard {
     filterOrders: FilterOrders
     setFilterOrders: React.Dispatch<React.SetStateAction<FilterOrders>>
@@ -95,7 +95,7 @@ const SelectBar: React.FC<SearchAdressOrCard> = ({ filterOrders, setFilterOrders
                     <div className="profile__left-ul-li-title bold">Способ оплаты</div>
                     <ul className="profile__left-ul-checkboxes">
                         {filterOrders.payment.map((typeOfPayment, idx) =>
-                            <li className="profile__left-ul-checkboxes-li" key={`${typeOfPayment.paymentType}`}>
+                            <li className="profile__left-ul-checkboxes-li" key={typeOfPayment.paymentType}>
                                 <FormControlLabel
                                     control={
                                         <Checkbox

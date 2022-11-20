@@ -2,15 +2,15 @@ import React, { ChangeEvent, useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
-import "../../../scss/components/AuthComponents/auth.scss"
 import ReactCountryFlag from "react-country-flag";
 import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useAppDispatch } from "../../../hooks/hooks";
-import { setUserInformation, setNextStage, setCanEditProfile, setIsUserAuth } from "../../../redux/user/slice";
+import { setUserInformation, setNextStage,  setIsUserAuth } from "../../../redux/user/slice";
 import { formattedTelephone } from "../FunctionsAndTypes/functions";
 import { LoginInterface } from "../FunctionsAndTypes/types";
 import { useNavigate } from "react-router-dom";
+import { addStatusToasts } from "../../../redux/toasts/slice";
 const LoginIndex: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -27,14 +27,14 @@ const LoginIndex: React.FC = () => {
         if (q.size !== 0) {
             const userRef = doc(db, 'users', q.docs[0].id);
             const docSnap = await getDoc(userRef);
-            //@ts-ignore
-            const userPassword = docSnap.data().password
+            const userPassword = docSnap.data()?.password
             if (userPassword === password) {
                 localStorage.setItem("telephone", data.tel)
                 //@ts-ignore
                 dispatch(setUserInformation(q.docs[0]["_document"].data.value.mapValue.fields))
                 dispatch(setIsUserAuth(true))
                 navigate("/home")
+                dispatch(addStatusToasts({ message: "Вы успешно вошли в аккаунт!", isComplete: true }))
             }
             else setError("password", { type: 'custom', message: 'Неправильный пароль!' })
         } else {
@@ -90,7 +90,7 @@ const LoginIndex: React.FC = () => {
                             {errors.tel && <p className="errorAuth">{errors?.tel?.message || "Ошибка!"}</p>}
                         </div>
                         <div className="auth__form-parentPassword" onMouseEnter={() => setVisibilityEye(true)} onMouseLeave={() => setVisibilityEye(false)} >
-                            <input  {...register("password", {
+                            <input style={{width:210}}  {...register("password", {
                                 required: "Поле обязательно к заполнению!",
                                 minLength: {
                                     value: 8,
