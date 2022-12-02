@@ -29,7 +29,7 @@
 
         ul {
             display: flex;
-            gap: 4px;
+            gap: 0.5rem;
         }
 
         &-text-gray {
@@ -43,13 +43,21 @@
             }
         }
 
+        &-gray,
+        &-black {
+            font-weight: 600;
+        }
+
         &-gray {
             color: $gray;
         }
 
+        &-black {
+            color: black;
+        }
+
         &-text-black {
             font-weight: 600;
-
             color: $black;
         }
     }

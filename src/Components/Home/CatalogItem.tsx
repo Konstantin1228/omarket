@@ -25,7 +25,6 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
         }))
         : weight.map((weight, idx) => ({ weight, points: points[idx], discounts: discounts[idx], price: price[idx], count: 1, totalPrice: price[idx] }))
       : weight.map((weight, idx) => ({ weight: weight, points: points[idx], discounts: discounts[idx], price: price[idx], count: 1, totalPrice: price[idx] }))
-
   );
   return (
     <div className="item-wrapper"  >

@@ -3,6 +3,10 @@
 .header {
     margin-bottom: 2em;
 
+    a {
+        color: black;
+    }
+
     &__top {
         display: flex;
         align-items: center;
@@ -77,6 +81,7 @@
             align-items: center;
             gap: 1.5rem;
 
+
             @media (max-width:768px) {
                 gap: 1rem;
                 width: 100%;
@@ -132,13 +137,13 @@
                 }
 
                 background-color: $orange;
-                color: white;
-            }
 
+                    color: white;
+            }
 
             ul {
                 position: absolute;
-                top: 2.7em;
+                top: 2.8em;
                 left: 0;
                 border: 1px solid #DFDFDF;
                 box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.08);
@@ -148,9 +153,10 @@
                 cursor: pointer;
                 width: 160%;
                 animation: dropDown .2s ease-in-out;
+                display: flex;
+                flex-direction: column;
 
-                li {
-                    color: black;
+                a {
                     transition: all.3s;
                     padding: 16px 24px;
 
@@ -189,11 +195,6 @@
         position: absolute;
         right: 1rem;
         z-index: 2;
-
-        svg {
-            height: 1.3rem;
-            width: 1.5rem;
-        }
 
         @media (max-width:1024px) {
             display: none;
@@ -250,9 +251,9 @@
 }
 
 .header__center-element:nth-child(1) {
-
     span {
         font-weight: 500 !important;
+        color: white;
     }
 
     &:hover {

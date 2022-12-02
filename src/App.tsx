@@ -1,18 +1,13 @@
-import "./scss/index.scss";
+import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import Cart from "./Components/Cart/Cart";
-import ProfileIndex from "./Components/Profile/ProfileIndex";
-import MyOrders from "./Components/Profile/Components/MyOrders";
-import MyPatterns from "./Components/Profile/Components/MyPatterns";
-import MyAdresses from "./Components/Profile/Components/MyAdresses";
-import MyBankCards from "./Components/Profile/Components/MyBankCards";
+import { MyAdresses, MyBankCards, MyPatterns, MyOrders, ProfileIndex } from "./Components/Profile/ProfileIndex"
 import RequireAuth from "./hooks/RequireAuth";
 import CanEditProfile from "./hooks/CanEditProfile";
 import MainLayout from "./hooks/MainLayout";
-import { useState } from "react";
 import Catalog from "./Components/Catalog/Catalog";
-
+import "./scss/index.scss";
 const App: React.FC = () => {
   const [searchValue, setSearchValue] = useState("")
   return (
@@ -21,7 +16,7 @@ const App: React.FC = () => {
         <Route path="/home" element={<Home searchValue={searchValue} />} />
         <Route element={<RequireAuth />}>
           <Route path="/cart" element={<Cart />} />
-          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/catalog/:sortTag" element={<Catalog />} />
           <Route element={<CanEditProfile />}>
             <Route path="/profile" element={<ProfileIndex />} >
               {/* @ts-ignore */}
@@ -33,7 +28,7 @@ const App: React.FC = () => {
           </Route>
         </Route>
       </Route>
-      <Route path="*" element={<Navigate to={"/home"} replace />} />
+      {/* <Route path="*" element={<Navigate to={"/home"} replace />} /> */}
     </Routes >
   );
 }

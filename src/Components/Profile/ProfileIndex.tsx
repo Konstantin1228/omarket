@@ -32,4 +32,4 @@ const ProfileIndex: React.FC = () => {
     )
 }
 
-export default ProfileIndex
+export { MyAdresses, MyOrders, MyBankCards, MyPatterns, ProfileIndex }

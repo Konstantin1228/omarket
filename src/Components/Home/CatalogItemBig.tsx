@@ -34,6 +34,7 @@ const CatalogItemBig: FC = () => {
         : weight.map((weight, idx) => ({ weight: weight, points: points[idx], price: price[idx], count: 1, totalPrice: price[idx] })));
     const [estimatedPrice, setEstimatedPrice] = useState(items.reduce((previous, current) => previous + current.totalPrice, 0));
     const [totalBonus, setTotalBonus] = useState(items.reduce((previous, obj) => previous + obj.points * obj.count, 0));
+    
     const addItem = (idx: number) => {
         const item = items[idx]
         item.count += 1;
@@ -139,11 +140,11 @@ const CatalogItemBig: FC = () => {
                                                     <div className="item-big-about-chapter-block">
                                                         {items[idx].totalPrice !== 0 &&
                                                             <>
-                                                                <div className="item-about-chapter-block-crossOut"></div>
-                                                                <span className="item-about-chapter-block-lastPrice">{price[idx] * items[idx].count}₽</span>
+                                                                <div className="item-big-about-chapter-block-crossOut"></div>
+                                                                <span className="item-big-about-chapter-block-lastPrice">{price[idx] * items[idx].count}₽</span>
                                                             </>
                                                         }
-                                                        <span className="item-about-chapter-price">{Math.round(price[idx] - price[idx] / 100 * discounts[idx]) * items[idx].count}₽</span>
+                                                        <span className="item-big-about-chapter-price">{Math.round(price[idx] - price[idx] / 100 * discounts[idx]) * items[idx].count}₽</span>
                                                     </div>
                                                     :
                                                     <span className='item-big-about-chapter-price'>{items[idx].price * items[idx].count}₽</span>

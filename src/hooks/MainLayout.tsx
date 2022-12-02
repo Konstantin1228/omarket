@@ -8,10 +8,10 @@ import { useAppDispatch, useAppSelector } from './hooks'
 import { setCanEditProfile, setIsUserAuth } from '../redux/user/slice'
 import Toasts from '../Components/CustomComponents/Toasts/Toasts'
 import CatalogItemBig from '../Components/Home/CatalogItemBig'
-export interface setSearchValue {
+export interface setStateProps {
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
-const MainLayout: React.FC<setSearchValue> = ({ setSearchValue }) => {
+const MainLayout: React.FC<setStateProps> = ({ setSearchValue }) => {
     const dispatch = useAppDispatch()
     const { isActivePopup } = useAppSelector(state => state.cartSlice)
     useEffect(() => {

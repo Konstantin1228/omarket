@@ -1,5 +1,4 @@
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { getDocs, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'

@@ -8,6 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { useTransition, animated, Transition } from '@react-spring/web'
 import { closePopup } from '../../../../redux/cart/slice'
 const ToastItem: FC<Item> = ({ title, img, id, typeOfUnit, weight, count }) => {
+  console.log(title, img, id, typeOfUnit, weight, count);
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const deleteItem = () => dispatch(closeToast(id))

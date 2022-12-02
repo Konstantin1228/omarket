@@ -2,17 +2,20 @@ import { FormControlLabel, Checkbox } from '@mui/material'
 import React from 'react'
 interface CheckboxProps {
     label: string
+    inArray: string
+    updateState: React.Dispatch<React.SetStateAction<any>>
+    state: any[]
 }
-const CustomCheckbox: React.FC<CheckboxProps> = ({ label }) => {
+
+const CustomCheckbox: React.FC<CheckboxProps> = ({ updateState, state, label, inArray }) => {
     return (
         <FormControlLabel
             control={
                 <Checkbox
                     sx={{ color: "#DFDFDF", '&.Mui-checked': { color: "#00953F", }, }}
-                // checked={typeOfPayment.isActive}
-                // onChange={() => setFilterOrders(({ adresses, payment }) => ({
-                //     adresses: adresses, payment: payment.map(({ paymentType, isActive }) => { return { paymentType, isActive: paymentType === typeOfPayment.paymentType ? !isActive : isActive } })
-                // }))}
+                    checked={state.includes(inArray )}
+                    onChange={() => updateState((prevData: string[]) => state.includes(inArray) ? state.filter(el => el !== inArray) :
+                        [...prevData, inArray])}
                 />
             }
             label={<span className='bold'>{label}</span>}
@@ -20,4 +23,4 @@ const CustomCheckbox: React.FC<CheckboxProps> = ({ label }) => {
     )
 }
 
-export default CustomCheckbox
+export default React.memo(CustomCheckbox)

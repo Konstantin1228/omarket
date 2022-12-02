@@ -10,137 +10,193 @@
         font-size: 3rem;
         font-weight: 700;
         color: white;
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), #0D0D0D;
         background: url(../../images/allGoods.png) no-repeat;
         background-size: cover;
+        border-radius: 30px;
         margin-bottom: 2rem;
     }
 
     &__bottom {
         display: flex;
         gap: 5rem;
+        margin-bottom: 1.2rem;
+        min-height: 30rem;
 
         &-filters {
             display: flex;
             flex-direction: column;
-            border: 1px solid $strokeGray;
-            border-radius: 14px;
-            padding: 1rem;
-            width: 20rem;
+            gap: 0.2rem;
+            position: sticky;
 
-            .css-1elwnq4-MuiPaper-root-MuiAccordion-root {
-                border-radius: 0px;
-                box-shadow: none;
-                margin: 0 !important;
-
-                &:first-child {
-                    padding-bottom: 0.5rem;
-                }
-
-                .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root {
-                    padding: 0;
-                }
-
-                .css-15v22id-MuiAccordionDetails-root {
-                    padding: 0;
-                }
-
-                &::before {
-                    content: none;
-                }
+            &-selectedSpan {
+                color: $darkGrey;
+                margin-bottom: 1.5rem;
             }
 
-            .catalog__bottom-filters-parentAccardion {
+            &-currentTag {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
-
-                .counter {
-                    border: 1px solid $strokeGray;
-                    border-radius: 14px;
-                    padding: 0.5rem 1.6rem;
-                    min-width: 3rem;
-                }
-
-                .dash {
-                    color: $strokeGray;
-                    font-size: 40px;
-                }
+                justify-content: space-between;
+                background: linear-gradient(225deg, #00953F 4.69%, #006834 109.37%);
+                border-radius: 14px;
+                padding: 1rem 1.5rem;
+                color: white;
             }
 
-            &-buttons {
+            &-accardion {
                 display: flex;
                 flex-direction: column;
-                gap: 0.5rem;
+                border: 1px solid $strokeGray;
+                border-radius: 14px;
+                padding: 1rem;
+                width: 20rem;
 
-                &-reset {
-                    transition: all.3s;
-                    cursor: pointer;
-                    padding: 8px;
-                    border: 1px solid #DFDFDF;
-                    border-radius: 14px;
-                    width: 100%;
-                    color: #9C9C9C;
+                .css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+                    border-radius: 0px;
+                    box-shadow: none;
+                    margin: 0 !important;
+                    padding-bottom: 0;
+
+                    &:first-child {
+                        padding-bottom: 0.2rem;
+                    }
+
+                    .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root {
+                        padding: 0;
+                    }
+
+                    .css-15v22id-MuiAccordionDetails-root {
+                        padding: 0;
+                    }
+
+                    &::before {
+                        content: none;
+                    }
                 }
 
-                .button-submit {
-                    padding: 8px;
+                .catalog__bottom-filters-parentAccardion {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .counter {
+                        border: 1px solid $strokeGray;
+                        border-radius: 14px;
+                        padding: 0.5rem 1.6rem;
+                        max-width: 5rem;
+                        width: 100%;
+                    }
+
+                    .dash {
+                        color: $strokeGray;
+                        font-size: 40px;
+                    }
+                }
+
+                &-buttons {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+
+                    &-reset {
+                        outline: none;
+                        margin-top: 0.5rem;
+                        transition: all.3s;
+                        cursor: pointer;
+                        padding: 8px;
+                        border: 1px solid #DFDFDF;
+                        border-radius: 14px;
+                        width: 100%;
+                        color: #9C9C9C;
+                    }
+
+                    .button-submit {
+                        border: none;
+                        background-color: $orange;
+                        color: white;
+                        padding: 8px;
+                        height: fit-content;
+
+                    }
                 }
             }
         }
 
         &-items {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
             width: 100%;
 
-            &-totalItems {
-                color: $darkGrey;
-            }
-
-            &-right {
+            &-top {
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
+                justify-content: space-between;
+                margin-bottom: 1.5rem;
 
-                &-displayType {
+                &-totalItems {
+                    color: $darkGrey;
+                }
+
+                &-right {
                     display: flex;
                     align-items: center;
-                    gap: 0.2rem;
 
-                    button {
-                        cursor: pointer;
-                        transition: all.3s;
-                        padding: 4px;
-                    }
-
-                    .active {
+                    &-displayType {
                         display: flex;
                         align-items: center;
-                        border-radius: 4px;
-                        background-color: $green;
+                        gap: 0.2rem;
+                        margin-right: 0.2rem;
 
-                        svg {
-                            rect {
-                                fill: white;
+                        button {
+                            display: flex;
+                            align-items: center;
+                            cursor: pointer;
+                            transition: all.3s;
+                            padding: 4px;
+                        }
+
+                        .active {
+                            display: flex;
+                            align-items: center;
+                            border-radius: 4px;
+                            background-color: $green;
+
+                            svg {
+                                rect {
+                                    fill: white;
+                                }
                             }
                         }
                     }
-                }
 
-                &-filterType {
-                    display: flex;
-                    gap: 0.5rem;
-
-                    &-text {
-                        font-weight: 600;
-                    }
-
-                    &-typeFilter {
+                    &-filterType {
                         display: flex;
                         align-items: center;
+                        gap: 0.5rem;
+
+                        &-text {
+                            font-weight: 600;
+                        }
+
+                        &-typeFilter {
+                            display: flex;
+                            align-items: center;
+                        }
                     }
                 }
+            }
+
+            &-bottom-grid {
+                // display: flex;
+                display: grid;
+                // flex-wrap: wrap;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+                // justify-content: space-between;
+            }
+
+            &-bottom-block {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     }
