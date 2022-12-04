@@ -1,6 +1,6 @@
-import { FormControlLabel } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox/Checkbox'
-import React, { memo, useEffect, useMemo } from 'react'
+import React from 'react'
+import { FormControlLabel, styled } from '@mui/material'
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox/Checkbox'
 import { NavLink, useLocation } from 'react-router-dom'
 import { FilterOrders } from '../ProfileIndex'
 export interface SearchAdressOrCard {
@@ -9,7 +9,12 @@ export interface SearchAdressOrCard {
 }
 const SelectBar: React.FC<SearchAdressOrCard> = ({ filterOrders, setFilterOrders }) => {
     const location = useLocation().pathname
-
+    // const CustomCheckbox = styled(Checkbox)<CheckboxProps>(({ theme }) => ({
+    //     padding: "0.1rem",
+    //     "& .MuiFormControlLabel-label":{
+    //         padding:"0.3rem"
+    //     }
+    // }));
     return (
         <div className="profile__left">
             <ul className="profile__left-ul">
@@ -78,35 +83,33 @@ const SelectBar: React.FC<SearchAdressOrCard> = ({ filterOrders, setFilterOrders
                     <div className="profile__left-ul-li-title bold">Адрес</div>
                     <ul className="profile__left-ul-checkboxes">
                         {filterOrders.adresses.map((userAdress) =>
-                            <li className="profile__left-ul-checkboxes-li" key={userAdress.adress} >
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={userAdress.isActive}
-                                            onChange={() => setFilterOrders(({ adresses, payment }) => ({
-                                                adresses: adresses.map(({ adress, isActive }) => { return { adress, isActive: adress === userAdress.adress ? !isActive : isActive } }), payment
-                                            }))}
-                                        />
-                                    }
-                                    label={userAdress.adress} />
-                            </li>
+                            <FormControlLabel
+                                key={userAdress.adress}
+                                control={
+                                    <Checkbox
+                                        checked={userAdress.isActive}
+                                        onChange={() => setFilterOrders(({ adresses, payment }) => ({
+                                            adresses: adresses.map(({ adress, isActive }) => { return { adress, isActive: adress === userAdress.adress ? !isActive : isActive } }), payment
+                                        }))}
+                                    />
+                                }
+                                label={userAdress.adress} />
                         )}
                     </ul>
                     <div className="profile__left-ul-li-title bold">Способ оплаты</div>
                     <ul className="profile__left-ul-checkboxes">
                         {filterOrders.payment.map((typeOfPayment, idx) =>
-                            <li className="profile__left-ul-checkboxes-li" key={typeOfPayment.paymentType}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={typeOfPayment.isActive}
-                                            onChange={() => setFilterOrders(({ adresses, payment }) => ({
-                                                adresses: adresses, payment: payment.map(({ paymentType, isActive }) => { return { paymentType, isActive: paymentType === typeOfPayment.paymentType ? !isActive : isActive } })
-                                            }))}
-                                        />
-                                    }
-                                    label={typeOfPayment.paymentType} />
-                            </li>
+                            <FormControlLabel
+                                key={typeOfPayment.paymentType}
+                                control={
+                                    <Checkbox
+                                        checked={typeOfPayment.isActive}
+                                        onChange={() => setFilterOrders(({ adresses, payment }) => ({
+                                            adresses: adresses, payment: payment.map(({ paymentType, isActive }) => { return { paymentType, isActive: paymentType === typeOfPayment.paymentType ? !isActive : isActive } })
+                                        }))}
+                                    />
+                                }
+                                label={typeOfPayment.paymentType} />
                         )}
                     </ul>
                 </ul>

@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { Swiper as SwiperCore } from 'swiper/types';
 import "./slider.scss"
 import "swiper/css/pagination";
-
+import { useMediaQuery } from 'react-responsive';
+import { CarrotIcon, CoffeIcon, FrozenIcon, GroceryIcon, HomeIcon, MilkIcon } from '../Header/HeaderIcons';
 const Slider = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
     const swiperRef = useRef<SwiperCore>();
     return (
         <div className="slider">
@@ -16,7 +18,7 @@ const Slider = () => {
                 centeredSlides={true}
                 autoplay={{
                     delay: 2500,
-                    disableOnInteraction: false,
+                    disableOnInteraction: true,
                 }}
                 loop={true}
                 pagination={{
@@ -53,11 +55,55 @@ const Slider = () => {
                         <img src={require("../images/banner-dowload.png")} alt="dowload our app" className="slider__right-img" />
                     </Link>
                 </SwiperSlide>
+                {isMobile &&
+                    <>
+                        <SwiperSlide>
+                            <Link to="">
+                                <img src={require("../images/slider-image2.png")} alt="stock" className="slider__right-img" />
+                            </Link>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Link to="">
+                                <img src={require("../images/slider-image.png")} alt="stock" className="slider__right-img" />
+                            </Link>
+                        </SwiperSlide>
+                    </>
+                }
             </Swiper>
-            <div className="slider__right">
-                <img src={require("../images/slider-image2.png")} alt="stock" className="slider__right-img" />
-                <img src={require("../images/slider-image.png")} alt="stock" className="slider__right-img" />
-            </div>
+            {!isMobile &&
+                <div className="slider__right">
+                    <img src={require("../images/slider-image2.png")} alt="stock" className="slider__right-img" />
+                    <img src={require("../images/slider-image.png")} alt="stock" className="slider__right-img" />
+                </div>
+            }
+            {isMobile &&
+                <div className='header__bottom'>
+                    <Link to={"/catalog/drink"} className="header__bottom-component">
+                        <CoffeIcon />
+                        <span>Напитки</span>
+                    </Link>
+                    <Link to={"/catalog/grocery"} className="header__bottom-component">
+                        <GroceryIcon />
+                        <span>Бакалея</span>
+                    </Link>
+                    <Link to={"/catalog/frozen"} className="header__bottom-component">
+                        <FrozenIcon />
+                        <span>Замороженная продукция</span>
+                    </Link>
+                    <Link to={"/catalog/natural"} className="header__bottom-component">
+                        <CarrotIcon />
+                        <span>Овощи и фрукты</span>
+                    </Link>
+                    <Link to={"/catalog/home"} className="header__bottom-component">
+                        <HomeIcon />
+                        <span>Все для дома</span>
+                    </Link>
+                    <Link to={"/catalog/milkProducts"} className="header__bottom-component">
+                        <MilkIcon />
+                        <span>Молочные продукты</span>
+                    </Link>
+                </div>
+            }
         </div >
     )
 }

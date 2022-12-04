@@ -26,7 +26,6 @@
                 color: $red;
                 font-weight: 600;
                 cursor: pointer;
-
             }
 
             &-sets {
@@ -44,7 +43,6 @@
             align-items: center;
             gap: 0.7rem;
             cursor: pointer;
-
         }
 
         @media (max-width:768px) {
@@ -80,7 +78,6 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
-
 
             @media (max-width:768px) {
                 gap: 1rem;
@@ -119,6 +116,20 @@
         flex-wrap: wrap;
         flex: 1 1;
 
+        @media (max-width:768px) {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 2%;
+            row-gap: 4%;
+            height: 100%;
+
+            span {
+                text-align: center;
+                white-space: wrap;
+                color: black;
+            }
+        }
+
         &-component {
             display: flex;
             align-items: center;
@@ -131,14 +142,27 @@
             border-radius: 14px;
             transition: all .7s;
 
+            @media (max-width:768px) {
+                flex-direction: column;
+                margin: 0;
+                padding: 1rem 0 0.4rem 0;
+                border: 1px solid $strokeGray;
+                box-shadow: none;
+                min-height: 5rem;
+
+                span {
+                    word-wrap: break-word;
+                    color: black;
+                }
+            }
+
             &:hover {
                 path {
                     fill: white;
                 }
 
                 background-color: $orange;
-
-                    color: white;
+                color: white;
             }
 
             ul {
@@ -169,13 +193,9 @@
                 }
             }
         }
-
-        @media (max-width:768px) {
-            display: none;
-        }
-
     }
 }
+
 
 .header-input {
     position: relative;
@@ -186,7 +206,7 @@
     width: 100%;
 
     input {
-        width: 100%;
+        width: 98%;
         background-color: transparent;
         border: none;
     }

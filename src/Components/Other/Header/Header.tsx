@@ -3,9 +3,8 @@ import { useMediaQuery } from "react-responsive";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 import { setStateProps } from "../../../hooks/MainLayout";
-import { CarrotIcon, CoffeIcon, FrozenIcon, GroceryIcon, HomeIcon, MilkIcon, BonusIcon, ProfileIcon, CartIcon } from "./HeaderIcons/index";
+import { CarrotIcon, CoffeIcon, FrozenIcon, GroceryIcon, HomeIcon, MilkIcon, BonusIcon, ProfileIcon, CartIcon } from "./HeaderIcons/";
 import MenuIcon from '@mui/icons-material/Menu';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "./header.scss"
 export const linkSettings = [
   { path: "drink", text: "Напитки" },
@@ -29,7 +28,6 @@ const Header: React.FC<setStateProps> = ({ setSearchValue }) => {
     setSearchValue(e.nativeEvent.target.value)
     if (location !== "/home") navigate("/home")
   }, 500);
-
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   return (
@@ -37,15 +35,15 @@ const Header: React.FC<setStateProps> = ({ setSearchValue }) => {
       <div className="header__top">
         <ul className="header__top-left">
           <li className="header__top-left-stock ">Акции</li>
-          <li className="header__top-left-sets ">Сеты</li>
+          {/* <li className="header__top-left-sets ">Сеты</li> */}
           <li className="header__top-left-item ">Новости</li>
-          <li className="header__top-left-item ">Доставка</li>
-          <li className="header__top-left-item ">Условия</li>
+          {/* <li className="header__top-left-item ">Доставка</li> */}
+          {/* <li className="header__top-left-item ">Условия</li> */}
         </ul>
-        <div className="header__top-right">
+        {/* <div className="header__top-right">
           <span>Москва</span>
           <ExpandMoreIcon />
-        </div>
+        </div> */}
       </div>
       {isMobile ?
         <div className="header__center">
@@ -144,44 +142,46 @@ const Header: React.FC<setStateProps> = ({ setSearchValue }) => {
           </div>
         </div>
       }
-      <ul className="header__bottom">
-        <Link onClick={() => setDropDown(false)} to={"/catalog/all"} className={dropDown ? "header__bottom-component active" : "header__bottom-component"}
-          onMouseLeave={() => setDropDown(false)} onMouseEnter={() => setDropDown(true)}>
-          <MenuIcon sx={{ fontSize: "1rem" }} />
-          <span>Все категории</span>
-          {dropDown &&
-            <ul >
-              {linkSettings.map(({ path, text }, idx) =>
-                <Link key={idx} onClick={() => setDropDown(false)} to={`/catalog/${path}`}>{text}</Link>)
-              }
-            </ul>
-          }
-        </Link >
-        <Link to={"/catalog/drink"} className="header__bottom-component">
-          <CoffeIcon />
-          <span>Напитки</span>
-        </Link>
-        <Link to={"/catalog/grocery"} className="header__bottom-component">
-          <GroceryIcon />
-          <span>Бакалея</span>
-        </Link>
-        <Link to={"/catalog/frozen"} className="header__bottom-component">
-          <FrozenIcon />
-          <span>Замороженная продукция</span>
-        </Link>
-        <Link to={"/catalog/natural"} className="header__bottom-component">
-          <CarrotIcon />
-          <span>Овощи и фрукты</span>
-        </Link>
-        <Link to={"/catalog/home"} className="header__bottom-component">
-          <HomeIcon />
-          <span>Все для дома</span>
-        </Link>
-        <Link to={"/catalog/milkProducts"} className="header__bottom-component">
-          <MilkIcon />
-          <span>Молочные продукты</span>
-        </Link>
-      </ul>
+      {!isMobile &&
+        <ul className="header__bottom">
+          <Link onClick={() => setDropDown(false)} to={"/catalog/all"} className={dropDown ? "header__bottom-component active" : "header__bottom-component"}
+            onMouseLeave={() => setDropDown(false)} onMouseEnter={() => setDropDown(true)}>
+            <MenuIcon sx={{ fontSize: "1rem" }} />
+            <span>Все категории</span>
+            {dropDown &&
+              <ul >
+                {linkSettings.map(({ path, text }, idx) =>
+                  <Link key={idx} onClick={() => setDropDown(false)} to={`/catalog/${path}`}>{text}</Link>)
+                }
+              </ul>
+            }
+          </Link >
+          <Link to={"/catalog/drink"} className="header__bottom-component">
+            <CoffeIcon />
+            <span>Напитки</span>
+          </Link>
+          <Link to={"/catalog/grocery"} className="header__bottom-component">
+            <GroceryIcon />
+            <span>Бакалея</span>
+          </Link>
+          <Link to={"/catalog/frozen"} className="header__bottom-component">
+            <FrozenIcon />
+            <span>Замороженная продукция</span>
+          </Link>
+          <Link to={"/catalog/natural"} className="header__bottom-component">
+            <CarrotIcon />
+            <span>Овощи и фрукты</span>
+          </Link>
+          <Link to={"/catalog/home"} className="header__bottom-component">
+            <HomeIcon />
+            <span>Все для дома</span>
+          </Link>
+          <Link to={"/catalog/milkProducts"} className="header__bottom-component">
+            <MilkIcon />
+            <span>Молочные продукты</span>
+          </Link>
+        </ul>
+      }
     </header >
   );
 };

@@ -59,6 +59,7 @@ const Catalog = () => {
         setWeightQuery([])
         setTags([])
         setBrand([])
+        setLoading(true)
     }
 
     const sortTag = location.pathname.split("/")[2]
@@ -70,7 +71,6 @@ const Catalog = () => {
         if (brand.length) Data = Data?.filter(el => brand.find(brand => el?.title?.toLowerCase().includes(brand.toLowerCase())))
         setItems(Data)
         setLoading(false)
-        console.log(123);
     }
 
     useEffect(() => {
@@ -87,7 +87,8 @@ const Catalog = () => {
     useEffect(() => {
         fetchData()
     }, [loading])
-
+    
+    
     return (
         <div className="catalog">
             <div className="cart__path">

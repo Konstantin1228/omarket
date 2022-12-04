@@ -13,6 +13,7 @@ const Cart = () => {
   const withDiscount = itemsInCart.reduce((previous, current) => previous + (current.price * current.count), 0)
   const totalPoints = itemsInCart.reduce((previous, current) => previous + current.points * current.count, 0)
   const [stage, setStage] = useState(1)
+  console.log(itemsInCart.map(el => el), totalPoints);
   return (
     <div className="cart">
       <div className="cart__path">

@@ -4,7 +4,7 @@ import { DaDataSuggestion, DaDataAddress, AddressSuggestions } from 'react-dadat
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { db } from '../../../firebase'
 import { calcCrow } from '../../Cart/FunctionsAndTypes/functions'
-import { DeliviryAddress, AddAdress, DeliviryAddress1 } from '../FunctionsAndTypes/types'
+import { AddAdress, DeliviryAddress1 } from '../FunctionsAndTypes/types'
 import ModalWindow from '../../Other/ModalWindow/ModalWindow'
 const MyAdresses = () => {
   const [loading, setLoading] = useState(true)
@@ -96,6 +96,7 @@ const MyAdresses = () => {
     setModal({ type: "makeMain", itemName: deliviryAdresses[idx].city })
     setActive(true)
   }
+
   return (
     <>
       {loading ?

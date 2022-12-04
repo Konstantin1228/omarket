@@ -64,9 +64,9 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
                     addToCart(
                         discounts[0] !== undefined || discounts.length === points.length ?
                             //@ts-ignore
-                            { title, count, price, weight, itemPoints, image, defaultPrice: items[idx].defaultPrice, tags: shareType || "", typeOfUnit }
+                            { title, count, price, weight, points: itemPoints, image, defaultPrice: items[idx].defaultPrice, tags: shareType || "", typeOfUnit }
                             :
-                            { title, count, price, weight, itemPoints, image, tags: shareType || "", typeOfUnit }
+                            { title, count, price, weight, points: itemPoints, image, tags: shareType || "", typeOfUnit }
                     ))
                 dispatch(addItemToasts({ title, img: image, id, typeOfUnit, weight, count }))
             }

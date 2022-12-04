@@ -5,6 +5,7 @@ import { itemType } from "./CatalogItem";
 import Slider from "../Other/Slider/Slider";
 import Skeleton from "../CustomComponents/Skeleton";
 import Chapter, { GoodsType } from "./Chapter";
+import { useMediaQuery } from "react-responsive";
 interface Home {
   searchValue: string
 }
@@ -12,6 +13,7 @@ const Home: React.FC<Home> = ({ searchValue }) => {
   const [active, setActive] = useState(true)
   const [searchedProducts, setSearchedProducts] = useState<GoodsType[]>()
   const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     const getSearchedValue = async () => {
       setLoading(true)
@@ -24,6 +26,7 @@ const Home: React.FC<Home> = ({ searchValue }) => {
     }
     getSearchedValue()
   }, [searchValue])
+  
   return (
     <>
       {searchValue.length !== 0 ?
