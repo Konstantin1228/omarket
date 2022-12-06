@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 #### Omarket :https://0market-a68l2ymm5-konstantin1228.vercel.app/home
+=======
+#### Omarket
+#### Интернет магазин продовольственных товаров(обращаю ваше внимания на то, что на скринах далеко не все страницы!)
+#### Деплой:https://omarket-h0bfg4i5c-konstantin1228.vercel.app/
+>>>>>>> f8e5464cdd46e1494fc76e5c15603751a1095c5f
 ![MyCollages.jpg](https://i.ibb.co/P5snZFT/My-Collages-2.jpg) 
 
 #### На данном этапе выполнено:
