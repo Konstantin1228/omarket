@@ -5,7 +5,6 @@ import CatalogItem from "./CatalogItem";
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';
-import { query } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import './chapter.scss';
 import 'swiper/css';

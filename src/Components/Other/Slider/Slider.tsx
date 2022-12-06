@@ -57,7 +57,7 @@ const Slider = () => {
                 </SwiperSlide>
                 {isMobile &&
                     <>
-                        <SwiperSlide>
+                        <SwiperSlide >
                             <Link to="">
                                 <img src={require("../images/slider-image2.png")} alt="stock" className="slider__right-img" />
                             </Link>

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch } from "../../hooks/hooks";
 import { addToCart, openPopup } from "../../redux/cart/slice";
 import "./item.scss"
@@ -27,7 +28,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
       : weight.map((weight, idx) => ({ weight: weight, points: points[idx], discounts: discounts[idx], price: price[idx], count: 1, totalPrice: price[idx] }))
   );
   return (
-    <div className="item-wrapper"  >
+    <div className="item-wrapper">
       <div className="item">
         <div className="item-tags">
           {tags.includes("Новинка") && <div className="item-tag-new">Новинка</div>}
@@ -59,9 +60,11 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
               <span className="item-about-chapter-price">{price[0]}₽</span>
             }
           </div>
-          <button className="item-more" onClick={() => dispatch(openPopup({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }))}>
-            <span>Подробнее</span>
-            <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path d="M0.910093 0.744078C1.23553 0.418641 1.76317 0.418641 2.0886 0.744078L6.49935 5.15482L10.9101 0.744078C11.2355 0.418641 11.7632 0.418641 12.0886 0.744078C12.414 1.06951 12.414 1.59715 12.0886 1.92259L7.08861 6.92259C6.76317 7.24802 6.23553 7.24802 5.91009 6.92259L0.910093 1.92259C0.584656 1.59715 0.584656 1.06951 0.910093 0.744078Z" fill="#FF6600" /> </svg>
+          <button className="item-about-more" onClick={() => dispatch(openPopup({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }))}>
+            <span>
+              Подробнее
+            </span>
+            <ExpandMoreIcon sx={{ color: "#FF6600", fontWeight: "600" }} />
           </button>
         </div>
       </div>

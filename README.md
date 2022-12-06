@@ -1,6 +1,4 @@
-#### Omarket
-#### Интернет магазин продовольственных товаров(обращаю ваше внимания на то, что на скринах далеко не все страницы!)
-
+#### Omarket :https://0market-a68l2ymm5-konstantin1228.vercel.app/home
 ![MyCollages.jpg](https://i.ibb.co/P5snZFT/My-Collages-2.jpg) 
 
 #### На данном этапе выполнено:

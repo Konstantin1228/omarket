@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { MyAdresses, MyBankCards, MyPatterns, MyOrders, ProfileIndex } from "./Components/Profile/ProfileIndex"
 import Home from "./Components/Home/Home";
 import Cart from "./Components/Cart/Cart";
-import { MyAdresses, MyBankCards, MyPatterns, MyOrders, ProfileIndex } from "./Components/Profile/ProfileIndex"
 import RequireAuth from "./hooks/RequireAuth";
 import CanEditProfile from "./hooks/CanEditProfile";
 import MainLayout from "./hooks/MainLayout";
@@ -14,9 +14,9 @@ const App: React.FC = () => {
     <Routes>
       <Route element={<MainLayout setSearchValue={setSearchValue} />}>
         <Route path="/home" element={<Home searchValue={searchValue} />} />
+        <Route path="/catalog/:sortTag" element={<Catalog />} />
         <Route element={<RequireAuth />}>
           <Route path="/cart" element={<Cart />} />
-          <Route path="/catalog/:sortTag" element={<Catalog />} />
           <Route element={<CanEditProfile />}>
             <Route path="/profile" element={<ProfileIndex />} >
               {/* @ts-ignore */}

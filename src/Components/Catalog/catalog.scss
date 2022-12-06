@@ -69,33 +69,12 @@
                         &:first-child {
                             padding-bottom: 0.2rem;
                         }
-
-                        // MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary
-                        //  PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-root MuiCheckbox-colorPrimary 
                     }
 
                     &::before {
                         content: none !important;
                     }
                 }
-
-                // .css-1elwnq4-MuiPaper-root-MuiAccordion-root {
-                //     &:first-child {
-                //         padding-bottom: 0.2rem;
-                //     }
-
-                //     .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root {
-                //         padding: 0;
-                //     }
-
-                //     .css-15v22id-MuiAccordionDetails-root {
-                //         padding: 0;
-                //     }
-
-                //     &::before {
-                //         content: none;
-                //     }
-                // }
 
                 .catalog__bottom-filters-parentAccardion {
                     display: flex;
