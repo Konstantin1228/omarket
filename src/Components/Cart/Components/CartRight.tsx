@@ -43,37 +43,38 @@ const CartRight: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscou
                     </div>
                 </div>
                 {itemsInCart.map(obj => obj.tags === 'discount' || obj.tags === 'bonus').includes(true) ?
-                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice">
-                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount">
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
+                    <>
+                        <div className="cart__inner-notEmpty-makeOrder-count-noDiscount" style={{ borderBottom: "none" }}>
+                            <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                 Итоговая цена <span>без</span> скидки:
                             </div>
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
+                            <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                 {withoutDiscount}₽
                             </div>
                         </div>
-                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-withDiscount">
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-withDiscount-text">
+                        <div className="cart__inner-notEmpty-makeOrder-count-withDiscount" style={{ marginBottom: "0" }}>
+                            <div className="cart__inner-notEmpty-makeOrder-count-withDiscount-text">
                                 Итоговая цена <span>cо</span> скидкой:
                             </div>
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-withDiscount-text">
+                            <div className="cart__inner-notEmpty-makeOrder-count-withDiscount-text">
                                 {withDiscount}₽
                             </div>
                         </div>
-                    </div> :
-                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice">
-                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount">
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
+                    </>
+                    :
+                    <>
+                        <div className="cart__inner-notEmpty-makeOrder-count-noDiscount">
+                            <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                 Итоговая цена:
                             </div>
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
+                            <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                 {withDiscount}₽
                             </div>
                         </div>
-                    </div>
+                    </>
                 }
-                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-prompt">
-                    При покупке заказа до 7 000₽ - цена доставки 300₽ От 7 000₽
+                <div className="cart__inner-notEmpty-makeOrder-count-prompt">
+                    При покупке заказа до 1 000₽ - цена доставки 300₽ От 1 000₽
                     бесплатно в черте города За чертой города доставка не
                     осуществляется
                 </div>

@@ -4,7 +4,7 @@ import CatalogItem from "./CatalogItem";
 import { itemType } from "./CatalogItem";
 import Slider from "../Other/Slider/Slider";
 import Skeleton from "../CustomComponents/Skeleton";
-import Chapter, { GoodsType } from "./Chapter";
+import Chapter, { GoodsType } from "./Chapter/Chapter";
 import { useMediaQuery } from "react-responsive";
 interface Home {
   searchValue: string
@@ -26,7 +26,7 @@ const Home: React.FC<Home> = ({ searchValue }) => {
     }
     getSearchedValue()
   }, [searchValue])
-  
+
   return (
     <>
       {searchValue.length !== 0 ?

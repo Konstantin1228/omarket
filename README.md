@@ -1,5 +1,4 @@
-#### Omarket :https://0market-a68l2ymm5-konstantin1228.vercel.app/home
-#### Деплой:https://omarket-h0bfg4i5c-konstantin1228.vercel.app/
+#### Omarket :https://omarket-beta.vercel.app/home
 ![MyCollages.jpg](https://i.ibb.co/P5snZFT/My-Collages-2.jpg) 
 
 #### На данном этапе выполнено:

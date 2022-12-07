@@ -1,3 +1,5 @@
+@import "../../../../../scss/defaultVariables.scss";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -80,4 +82,84 @@
     }
   }
 
+}
+
+.cart__inner-notEmpty-makeOrder-count-totalPrice {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid $gray;
+
+  &-noDiscount {
+    display: flex;
+    justify-content: space-between;
+
+    &-text {
+      font-size: 19px;
+      font-weight: 500;
+
+      span {
+        font-size: 19px;
+        font-weight: 600;
+        color: $red;
+      }
+    }
+  }
+
+  &-withDiscount {
+    display: flex;
+    justify-content: space-between;
+
+    &-text {
+      font-weight: 500;
+      font-size: 19px;
+
+      span {
+        font-size: 19px;
+        font-weight: 600;
+        color: $green;
+
+      }
+    }
+  }
+
+  &-prompt {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &-bold {
+      font-weight: 600;
+    }
+  }
+
+  &-payment,
+  &-paymentWithBorder {
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    &-text {
+      max-width: 150px;
+    }
+
+    &-multipleFields {
+      text-align: right;
+    }
+
+    .bankCard {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+
+  &-paymentWithBorder {
+    padding-bottom: 16px;
+    margin-bottom: 0;
+    border-bottom: 2px solid #DFDFDF;
+  }
 }

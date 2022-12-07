@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import Skeleton from "../CustomComponents/Skeleton";
-import CatalogItem from "./CatalogItem";
+import Skeleton from "../../CustomComponents/Skeleton";
+import CatalogItem from "./../CatalogItem";
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';

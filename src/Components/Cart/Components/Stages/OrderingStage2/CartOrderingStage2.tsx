@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, } from '../../../../hooks/hooks';
+import { useAppDispatch, } from '../../../../../hooks/hooks';
 import makeAnimated from 'react-select/animated';
 import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from 'react-dadata';
-import { IFormInputStage2, stageType3 } from '../../FunctionsAndTypes/types';
-import ModalWindow from '../../../Other/ModalWindow/ModalWindow';
+import { IFormInputStage2, stageType3 } from '../../../FunctionsAndTypes/types';
+import ModalWindow from '../../../../Other/ModalWindow/ModalWindow';
 import { PatternFormat } from 'react-number-format';
-import { setGeneralInformation } from '../../../../redux/cart/slice';
+import { setGeneralInformation } from '../../../../../redux/cart/slice';
 import Select from "react-select";
 import { getDocs, query, collection, where, getDoc, doc } from 'firebase/firestore';
-import { db } from '../../../../firebase';
-import { DeliviryAddress } from '../../../Profile/FunctionsAndTypes/types';
-import { AntSwitch } from '../../../CustomComponents/AntSwtich';
-import { calcCrow, onlyNumberInput } from '../../FunctionsAndTypes/functions';
+import { db } from '../../../../../firebase';
+import { DeliviryAddress } from '../../../../Profile/FunctionsAndTypes/types';
+import { AntSwitch } from '../../../../CustomComponents/AntSwtich';
+import { calcCrow, onlyNumberInput } from '../../../FunctionsAndTypes/functions';
+import "./stage2.scss"
+import Loader from '../../../../Other/Loader';
 const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscount, totalPoints, itemsInCart }) => {
     const dispatch = useAppDispatch()
     const [activeBonus, setActiveBonus] = useState(false)
@@ -91,9 +93,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
     return (
         <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)}>
             {loading ?
-                <div className="container__loader-absolute">
-                    <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
-                </div>
+                <Loader />
                 :
                 <>
                     <div className="cart__inner-notEmpty-left">
@@ -119,13 +119,11 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                 {deliviryAdresses.haveDeliviryAdresses &&
                                     <>
                                         <div className="cart__inner-notEmpty-left-ordering-adress-text">Выбрать существующий адрес доставки:</div>
-                                        <div className="select-rotate">
-                                            <Select value={userAdress ? adressOptions.find((el) => el.value === userAdress) : ""}
-                                                classNamePrefix="reactSelect" maxMenuHeight={150}
-                                                onChange={(newValue: any) => changeSelectAdress(newValue)}
-                                                isSearchable={false} options={adressOptions} placeholder="Адрес" components={makeAnimated()}
-                                            />
-                                        </div>
+                                        <Select value={userAdress ? adressOptions.find((el) => el.value === userAdress) : ""}
+                                            classNamePrefix="reactSelect" maxMenuHeight={150}
+                                            onChange={(newValue: any) => changeSelectAdress(newValue)}
+                                            isSearchable={false} options={adressOptions} placeholder="Адрес" components={makeAnimated()}
+                                        />
                                     </>
                                 }
                                 <div className="cart__inner-notEmpty-left-ordering-adress-more" style={{ paddingBottom: 40 }}>
@@ -232,7 +230,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                             message: "Минимальное количество бонусов к списанию:150!"
                                         },
                                         onChange: (e) => onlyNumberInput(e.target.value, setValue, 6, "writeOffBonuses")
-                                    })} className={`cart__inner-notEmpty-left-ordering-paymentType-bonuses-paymentBonuses-${errors.writeOffBonuses ? "false" : "true"}`} placeholder="0" />
+                                    })} className={`bonus-${errors.writeOffBonuses ? "false" : "true"}`} placeholder="0" />
                                     <div className="cart__inner-notEmpty-left-ordering-paymentType-right">
                                         <div className={"cart__inner-notEmpty-left-ordering-paymentType-bonuses-right-text bold"}>Введите количество бонусов которые вы хотите потратить</div>
                                         {errors.writeOffBonuses && <p className="errorRelative" >{errors?.writeOffBonuses?.message || "Ошибка!"}</p>}
@@ -262,11 +260,9 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                         </div>
                         <div className="cart__inner-notEmpty-makeOrder-count">
                             <div className="cart__inner-notEmpty-makeOrder-count-toCharge">
-                                <div className="cart__inner-notEmpty-makeOrder-promoCode-title">
-                                    Бонусы к начислению:
-                                </div>
+                                <span className="cart__inner-notEmpty-makeOrder-promoCode-title">Бонусы к начислению:</span>
                                 <div className="cart__inner-notEmpty-makeOrder-count-toCharge-totalBonus">
-                                    {totalPoints}
+                                    <span>{totalPoints}</span>
                                     <svg
                                         width="22"
                                         height="16"
@@ -282,44 +278,42 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                 </div>
                             </div>
                             {itemsInCart.map(obj => obj.tags === 'discount' || obj.tags === 'bonus').includes(true) ?
-                                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice">
-                                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount">
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
+                                <>
+                                    <div className="cart__inner-notEmpty-makeOrder-count-noDiscount" style={{ borderBottom: "none" }}>
+                                        <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                             Итоговая цена <span>без</span> скидки:
                                         </div>
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
+                                        <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                             {withoutDiscount}₽
                                         </div>
                                     </div>
-                                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-withDiscount">
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-withDiscount-text">
+                                    <div className="cart__inner-notEmpty-makeOrder-count-withDiscount" style={{ marginBottom: 0 }}>
+                                        <div className="cart__inner-notEmpty-makeOrder-count-withDiscount-text">
                                             Итоговая цена <span>cо</span> скидкой:
                                         </div>
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-withDiscount-text">
+                                        <div className="cart__inner-notEmpty-makeOrder-count-withDiscount-text">
                                             {withDiscount}₽
                                         </div>
                                     </div>
-                                </div> :
-                                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice">
-                                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount">
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
-                                            Итоговая цена:
-                                        </div>
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-noDiscount-text">
-                                            {withDiscount}₽
-                                        </div>
-                                    </div>
+                                </>
+                                :
+                                <div className="cart__inner-notEmpty-makeOrder-count-noDiscount">
+                                    <span className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">Итоговая цена:</span>
+                                    <span className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">{withDiscount}₽</span>
                                 </div>
                             }
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-prompt">
+                            <div className="cart__inner-notEmpty-makeOrder-count-prompt">
                                 {watchDeliviryCost !== undefined ?
                                     <>
-                                        <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-prompt-bold">Доставка:</div>
+                                        <span className="cart__inner-notEmpty-makeOrder-count-prompt-bold">Доставка:</span>
                                         {watchDeliviryCost === 0 ?
-                                            <div>От 1 000₽ бесплатно черте города</div>
-                                            : "Стоимость доставки:300₽"}
+                                            <span>От 1 000₽ бесплатно черте города</span>
+                                            :
+                                            <span>Стоимость доставки:300₽</span>
+                                        }
                                     </>
-                                    : <p>При покупке заказа до 1 000₽ - цена доставки 300₽. От 1 000₽ бесплатно в черте города. За чертой города доставка неосуществляется</p>}
+                                    :
+                                    <p>При покупке заказа до 1 000₽ - цена доставки 300₽. От 1 000₽ бесплатно в черте города. За чертой города доставка неосуществляется</p>}
                             </div>
                         </div>
                         <div className="cart__inner-notEmpty-makeOrder-grandTotal">

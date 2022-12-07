@@ -1,8 +1,8 @@
 import { getDocs, query, collection, where, doc, setDoc } from 'firebase/firestore'
 import React from 'react'
 import { db } from '../../../firebase'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import Cart_Item from '../../Cart/Components/Cart_Item'
+import { useAppSelector } from '../../../hooks/hooks'
+import Cart_Item from '../../Cart/Components/CartItem/Cart_Item'
 import { BankCard } from '../../Cart/FunctionsAndTypes/types'
 import { DeliviryAddress1 } from '../../Profile/FunctionsAndTypes/types'
 import "./modalWindow.scss"

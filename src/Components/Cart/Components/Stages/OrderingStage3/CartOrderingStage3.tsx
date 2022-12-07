@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller, SubmitHandler, } from 'react-hook-form'
 import { NumberFormatBase, PatternFormat } from 'react-number-format'
-import { BankCard, stageType3 } from '../../FunctionsAndTypes/types'
-import ModalWindow from '../../../Other/ModalWindow/ModalWindow'
+import { BankCard, stageType3 } from '../../../FunctionsAndTypes/types'
+import ModalWindow from '../../../../Other/ModalWindow/ModalWindow'
 import Select from "react-select";
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
 import makeAnimated from 'react-select/animated';
-import { setBankCardInformation } from '../../../../redux/cart/slice'
-import { BankCards } from '../../../../redux/user/types'
+import { setBankCardInformation } from '../../../../../redux/cart/slice'
+import { BankCards } from '../../../../../redux/user/types'
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../../../../firebase'
+import { db } from '../../../../../firebase'
 import axios from 'axios'
+import "./stage3.scss"
 function CardExpiry(props: any) {
     const format = (val: string) => {
         if (val === "") return "";
@@ -101,8 +102,8 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
         label:
             <>
                 {(scheme === "Visa" || scheme === "Mastercard" || scheme === "Jcb" || scheme === "Amex")
-                    ? <img src={require(`../../../../images/cards/${scheme}.png`)} alt={scheme} /> :
-                    <img src={require(`../../../../images/cards/unkownCard.png`)} alt={scheme} />}
+                    ? <img src={require(`../../../../../images/cards/${scheme}.png`)} alt={scheme} /> :
+                    <img src={require(`../../../../../images/cards/unkownCard.png`)} alt={scheme} />}
                 <div className="profile__adress__inner-bottom-bankCardElement-center">
                     <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="2" cy="2" r="2" fill="#0D0D0D" />
@@ -243,17 +244,17 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                                     </svg>
                                 </div>
                             </div>
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment">
-                                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-title">Адрес доставки:</div>
-                                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-multipleFields">
-                                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-multipleFields-text">{adress}</div>
-                                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-multipleFields-text">Квартира/офис {flat}</div>
-                                    <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-multipleFields-text">Этаж {floor}</div>
+                            <div className="cart__inner-notEmpty-makeOrder-count-payment">
+                                <div className="cart__inner-notEmpty-makeOrder-count-payment-title">Адрес доставки:</div>
+                                <div className="cart__inner-notEmpty-makeOrder-count-payment-multipleFields">
+                                    <div className="cart__inner-notEmpty-makeOrder-count-payment-multipleFields-text">{adress}</div>
+                                    <div className="cart__inner-notEmpty-makeOrder-count-payment-multipleFields-text">Квартира/офис {flat}</div>
+                                    <div className="cart__inner-notEmpty-makeOrder-count-payment-multipleFields-text">Этаж {floor}</div>
                                 </div>
                             </div>
-                            <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment">
-                                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-title">Доставка:</div>
-                                <div className="cart__inner-notEmpty-makeOrder-count-totalPrice-payment-text">
+                            <div className="cart__inner-notEmpty-makeOrder-count-payment">
+                                <div className="cart__inner-notEmpty-makeOrder-count-payment-title">Доставка:</div>
+                                <div className="cart__inner-notEmpty-makeOrder-count-payment-text">
                                     {deliviryCost > 0 ? `${deliviryCost}₽` : "Бесплатно"}
                                 </div>
                             </div>

@@ -1,0 +1,165 @@
+@import "../../../../scss/defaultVariables.scss";
+
+.itemCart {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1rem 1rem;
+    border-bottom: 1px solid $gray;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &-left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        img {
+            height: 10rem;
+        }
+
+        &-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            &-bottom {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                width: fit-content;
+
+                &-svg {
+                    display: flex;
+                    align-items: center;
+                }
+
+                &-text {
+                    color: $gray;
+                }
+
+                &-textGreen {
+                    color: $green;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                }
+            }
+
+            &-top {
+                padding-bottom: 1rem;
+                word-break: break-all;
+                width: 100%;
+                font-weight: 5F00;
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    &-right {
+        display: flex;
+        align-items: center;
+        gap: 1.7rem;
+
+        &-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+
+            &-minus {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                border: 1px solid $orange;
+                border-radius: 4px;
+                color: $orange;
+                padding: 0.8rem 0.5rem;
+                transition: all.3s;
+
+                &:hover {
+                    background-color: $orange;
+
+                    path {
+                        fill: #fff;
+
+                    }
+                }
+            }
+
+            &-totalCounter {
+                width: 4rem;
+                text-align: center;
+                user-select: none;
+            }
+
+            &-plus {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                border: 1px solid $orange;
+                border-radius: 4px;
+                color: $orange;
+                padding: 0.5rem;
+                transition: all.3s;
+
+                &:hover {
+                    background-color: $orange;
+
+                    path {
+                        fill: #fff;
+
+                    }
+                }
+            }
+        }
+
+        &-totalPrice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            // height: 50px ;
+
+            &-withDiscount {
+                position: relative;
+
+                &-lastPrice {
+                    color: $gray;
+                    font-size: 0.9rem;
+                    text-decoration: line-through;
+                    text-align-last: right;
+                }
+
+                &-currentPrice {
+                    font-weight: 500;
+                    font-size: 1.1rem;
+                }
+            }
+
+            &-noDiscount {
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+        }
+
+        &-delete {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border: 1px solid $red;
+            border-radius: 4px;
+            transition: all.3s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $red;
+
+                path {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+}

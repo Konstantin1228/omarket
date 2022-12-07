@@ -1,18 +1,9 @@
 import React from "react";
-import { countPlus, countMinus, deleteItem } from "../../../redux/cart/slice";
-import { ItemsInCart } from "../../../redux/cart/types";
-import { useAppDispatch } from "../../../hooks/hooks";
+import { countPlus, countMinus, deleteItem } from "../../../../redux/cart/slice";
+import { ItemsInCart } from "../../../../redux/cart/types";
+import { useAppDispatch } from "../../../../hooks/hooks";
+import "./cartItem.scss"
 const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultPrice, tags, typeOfUnit, weight, canDeleteAndAdd }) => {
-  const renderSVG = (tags: string) => {
-    switch (tags) {
-      case "bonus":
-        return;
-      case "discount":
-        return "%";
-      default:
-        return;
-    }
-  };
   const renderTag = (tags: string) => {
     switch (tags) {
       case "bonus":
@@ -27,7 +18,6 @@ const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultP
                 </linearGradient>
               </defs>
             </svg>
-
           </div>
           <div className="itemCart-left-text-bottom-textGreen">
             Условия акции выполнены
@@ -55,18 +45,16 @@ const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultP
           </div></div>;
     }
   };
+
   const dispatch = useAppDispatch()
   return (
     <div className="itemCart">
       <div className="itemCart-left">
-        <div className="itemCart-left-img">
-          <img
-            src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"}
-            height={90}
-            width={90}
-            alt=""
-          />
-        </div>
+        <img
+          className="itemCart-left-img"
+          src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"}
+          alt=""
+        />
         <div className="itemCart-left-text">
           <div className="itemCart-left-text-top">{`${title} ${weight} ${typeOfUnit}.`}</div>
           <div className="itemCart-left-text-bottom">
@@ -115,7 +103,7 @@ const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultP
             <div className="itemCart-right-totalPrice-withDiscount">
               <div className="item-about-chapter-block-crossOut"></div>
               <div className="itemCart-right-totalPrice-withDiscount-lastPrice">
-                {count * defaultPrice }₽
+                {count * defaultPrice}₽
               </div>
               <div className="itemCart-right-totalPrice-withDiscount-currentPrice">
                 {count * price}₽

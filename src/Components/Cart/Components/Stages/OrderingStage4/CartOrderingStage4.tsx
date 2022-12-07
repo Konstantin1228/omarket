@@ -1,10 +1,13 @@
 import { getDocs, query, collection, where, doc, getDoc, setDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { db } from '../../../../firebase'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
-import { clearCart } from '../../../../redux/cart/slice'
-import ModalWindow from '../../../Other/ModalWindow/ModalWindow'
+import { db } from '../../../../../firebase'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
+import { clearCart } from '../../../../../redux/cart/slice'
+import Loader from '../../../../Other/Loader'
+import ModalWindow from '../../../../Other/ModalWindow/ModalWindow'
+import "./stage4.scss"
+import "../../../cart.scss"
 interface SetStage {
     setStage: React.Dispatch<React.SetStateAction<number>>
 }
@@ -17,7 +20,7 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
     const { itemsInCart } = useAppSelector(state => state.cartSlice)
     const newDate = new Date()
     let orderDate = `${newDate.toLocaleDateString().replace("/", ".")}  
-    ${newDate.getHours()}:${newDate.getMinutes().toString().length === 2 ? newDate.getMinutes() : `0${newDate.getMinutes()}`}`
+         ${newDate.getHours()}:${newDate.getMinutes().toString().length === 2 ? newDate.getMinutes() : `0${newDate.getMinutes()}`}`
     const userScheme = scheme.charAt(0).toUpperCase() + scheme.slice(1, scheme.length)
 
     useEffect(() => {
@@ -71,11 +74,11 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
     }, [])
 
     return (
-        <div className="container">
+        <>
             <ModalWindow active={activeModal} setActive={setAciveModal} type={'check'} />
             {loading ?
                 <div className="container__loader">
-                    <div className="lds-ring" ><div></div><div></div><div></div><div></div></div >
+                    <Loader />
                     <div className="container__text">Подождите, пожалуйста, Ваш запрос в обработке</div>
                 </div>
                 :
@@ -119,8 +122,7 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
                     </div>
                 </>
             }
-
-        </div>
+        </>
     )
 }
 

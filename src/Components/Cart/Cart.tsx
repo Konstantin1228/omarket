@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/hooks";
-import Cart_Item from "./Components/Cart_Item";
-import CartOrderingStage2 from "./Components/Stages/CartOrderingStage2";
-import CartOrderingStage3 from "./Components/Stages/CartOrderingStage3";
+import Cart_Item from "./Components/CartItem/Cart_Item";
+import CartOrderingStage2 from "./Components/Stages/OrderingStage2/CartOrderingStage2";
+import CartOrderingStage3 from "./Components/Stages/OrderingStage3/CartOrderingStage3";
 import CartRight from "./Components/CartRight";
-import CartOrderingStage4 from "./Components/Stages/CartOrderingStage4";
+import CartOrderingStage4 from "./Components/Stages/OrderingStage4/CartOrderingStage4";
 import "./cart.scss"
 const Cart = () => {
   const { itemsInCart } = useAppSelector((state) => state.cartSlice);
-  const withoutDiscount = itemsInCart.reduce((previous, current) => previous + (current.count * (current.defaultPrice || 0)), 0)
-  const withDiscount = itemsInCart.reduce((previous, current) => previous + (current.price * current.count), 0)
+  const withoutDiscount = itemsInCart.reduce((previous, { count, defaultPrice, price }) => previous + (count * (defaultPrice || price)), 0)
+  const withDiscount = itemsInCart.reduce((previous, { price, count }) => (previous + price * count), 0)
   const totalPoints = itemsInCart.reduce((previous, current) => previous + current.points * current.count, 0)
   const [stage, setStage] = useState(1)
-  console.log(itemsInCart.map(el => el), totalPoints);
   return (
     <div className="cart">
       <div className="cart__path">

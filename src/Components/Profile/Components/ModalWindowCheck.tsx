@@ -71,7 +71,7 @@ const ModalWindowCheck: FC<ModalWindow> = ({ active, setActive, orderDetails }) 
                                 <p>{scheme} ****{bankCard.slice(12, 16)}</p>
                             </div>
                         </div>
-                        <div className="modal__content-top-orderInformation-items">
+                        <div className="modal__content-top-orderInformation-items" style={{ maxHeight: "35rem" }}>
                             <div className="profile__myOrders-elementFouthColumns">
                                 <div className="profile__myOrders-text-left bold">Картинка</div>
                                 <div className="profile__myOrders-text-left bold">Наименование</div>
@@ -79,7 +79,7 @@ const ModalWindowCheck: FC<ModalWindow> = ({ active, setActive, orderDetails }) 
                                 <div className="profile__myOrders-text-left bold">Цена</div>
                             </div>
                             {orderDetails.itemsInCart.map(({ title, price, image, count }, idx) => (
-                                <div className="profile__myOrders-elementFouthColumns" key={idx}>
+                                <div className="profile__myOrders-elementFouthColumns" key={idx} >
                                     <img className='profile__myOrders-text-left' src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} width={198} height={160} alt="Картинка товара" />
                                     <div className="profile__myOrders-text-left bold">{title}</div>
                                     <div className="profile__myOrders-text-left bold">{count}</div>
