@@ -6,6 +6,7 @@ import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';
 import { useMediaQuery } from "react-responsive";
+import supabase from "../../../config/supabseClient";
 import './chapter.scss';
 import 'swiper/css';
 interface ChapterProps {
@@ -44,10 +45,14 @@ const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagS
       // getRes();
     } else if (tagSorting) {
       const getRes = async () => {
-        await axios.get(`https://636a3f3db10125b78fd50f7d.mockapi.io/goods/goods/?tags=${tagSorting}`).then((res) => {
-          setGoods(res.data);
-        });
-        setLoading(false)
+        let { data, error } = await supabase.from('goods').select().contains("tags", [tagSorting]).limit(20)
+
+        if (data) {
+          setGoods(data);
+          setLoading(false)
+        }
+
+        if (error) console.log(error)
       };
       getRes();
     }

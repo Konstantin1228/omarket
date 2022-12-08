@@ -33,7 +33,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
         <div className="item-tags">
           {tags.includes("Новинка") && <div className="item-tag-new">Новинка</div>}
           {(tags.includes("discount") || tags.includes("bonus")) && <div className="item-tag-stock">Акция</div>}
-          {tags.includes("discount") && <div className="item-tag-stock">-{discounts[0]}%</div>}
+          {tags.includes("discount") && discounts[0] !== 0 && <div className="item-tag-stock">-{discounts[0]}%</div>}
           {tags.includes("Хит") && <div className="item-tag-hit">Хит</div>}
         </div>
         <figure className="item-information">
@@ -43,27 +43,23 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
         </figure>
         <div className="item-about">
           <div className="item-about-chapter">
-            <div className="item-about-chapter-weight">
-              {typeOfUnit === 'л' ? "Литраж" : "Вес"}
-            </div>
+            <span className="item-about-chapter-weight">{typeOfUnit === 'л' ? "Литраж" : "Вес"}</span>
             <span className="item-about-chapter-price">Цена</span>
           </div>
           <div className="item-about-chapter-bottom">
             <span className="item-about-chapter-weight">  {`${weight[0]} ${typeOfUnit}`}.</span>
-            {tags.includes("discount") ?
+            {tags.includes("discount") && discounts[0] !== 0 ?
               <div className="item-about-chapter-block">
                 <div className="item-about-chapter-block-crossOut"></div>
                 <span className="item-about-chapter-block-lastPrice">{price[0]}₽</span>
-                <span className="item-about-chapter-price">{price[0] - (price[0] / 100) * discounts[0]}₽</span>
+                <span className="item-about-chapter-price">{Math.ceil(price[0] - (price[0] / 100) * discounts[0])}₽</span>
               </div>
               :
               <span className="item-about-chapter-price">{price[0]}₽</span>
             }
           </div>
           <button className="item-about-more" onClick={() => dispatch(openPopup({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }))}>
-            <span>
-              Подробнее
-            </span>
+            <span>  Подробнее</span>
             <ExpandMoreIcon sx={{ color: "#FF6600", fontWeight: "600" }} />
           </button>
         </div>

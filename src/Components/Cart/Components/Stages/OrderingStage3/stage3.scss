@@ -240,4 +240,31 @@
             color: $gray;
         }
     }
+
+    @media (max-width:768px) {
+        // position: static;
+        width: 100%;
+        padding-top: 1rem;
+        border-top: 1px solid #DFDFDF;
+
+        // gap: ;
+        &-top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            button {
+                width: 100%;
+                font-size: 1.3rem;
+            }
+
+        span {
+            font-weight: 400;
+            font-size: 1.5rem;
+
+            &:last-child {
+                font-weight: 500;
+            }
+        }
+    }
 }

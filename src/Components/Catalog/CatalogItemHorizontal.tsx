@@ -74,6 +74,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
     }
 
     const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
+
     return (
         <div className="item-horizontal">
             <div className="item-tags">
@@ -91,7 +92,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
                     <button className={`button-submit${totalCount ? "" : "-false"}`} onClick={addItemsToCart}>{totalCount ? "Добавить в корзину" : "Выберите одну позицию!"} </button>
                 </div>
                 <div className="item-horizontal-information-bottom">
-                    <span>Литраж</span>
+                    <span>{typeOfUnit.toLowerCase() === 'л' ? "Литраж" : "Вес"}</span>
                     <span>Кол-во</span>
                     <span className="redText">Акции</span>
                     <span>Бонус</span>

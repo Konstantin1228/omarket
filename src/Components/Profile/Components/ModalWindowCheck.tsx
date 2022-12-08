@@ -78,10 +78,10 @@ const ModalWindowCheck: FC<ModalWindow> = ({ active, setActive, orderDetails }) 
                                 <div className="profile__myOrders-text-left bold">Количество товаров</div>
                                 <div className="profile__myOrders-text-left bold">Цена</div>
                             </div>
-                            {orderDetails.itemsInCart.map(({ title, price, image, count }, idx) => (
+                            {orderDetails.itemsInCart.map(({ title, price, image, count, weight, typeOfUnit }, idx) => (
                                 <div className="profile__myOrders-elementFouthColumns" key={idx} >
                                     <img className='profile__myOrders-text-left' src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} width={198} height={160} alt="Картинка товара" />
-                                    <div className="profile__myOrders-text-left bold">{title}</div>
+                                    <div className="profile__myOrders-text-left bold">{title + " " + weight + typeOfUnit}</div>
                                     <div className="profile__myOrders-text-left bold">{count}</div>
                                     <div className="profile__myOrders-text-left bold">{price * count}₽</div>
                                 </div>
