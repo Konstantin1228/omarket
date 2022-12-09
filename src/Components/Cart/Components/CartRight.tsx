@@ -82,7 +82,7 @@ const CartRight: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscou
                         <span className="cart__inner-notEmpty-makeOrder-grandTotal-price-text">Итого:</span>
                         <span className="cart__inner-notEmpty-makeOrder-grandTotal-price-text">{withDiscount}₽</span>
                     </div>
-                        <button className="button-submit">Перейти к оформлению</button>
+                    <button className="button-submit" onClick={() => setStage(2)}>Перейти к оформлению</button>
                 </>
             }
         </div>

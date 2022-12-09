@@ -33,7 +33,6 @@ export interface ItemsInCart {
     image: string;
     tags: string;
     typeOfUnit: string
-    canDeleteAndAdd?: boolean
     defaultPrice?: number
 };
 export const getCartFromLS = () => {

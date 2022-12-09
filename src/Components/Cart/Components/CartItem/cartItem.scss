@@ -3,8 +3,10 @@
 .itemCart {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 1rem 1rem;
+    align-items: center;
     border-bottom: 1px solid $gray;
+    margin: 0.9rem;
+    padding: 0.6rem;
 
     &:last-child {
         border-bottom: none;
@@ -17,7 +19,7 @@
         gap: 1rem;
 
         img {
-            height: 10rem;
+            height: 6rem;
 
             @media (max-width:768px) {
                 height: 6rem;
@@ -34,16 +36,19 @@
         &-text {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            gap: 0.4rem;
+            height: 100%;
 
             &-bottom {
                 display: flex;
-                align-items: center;
                 gap: 0.5rem;
                 cursor: pointer;
                 width: fit-content;
 
                 &-svg {
+                    height: 1rem;
+                    width: 1rem;
                     display: flex;
                     align-items: center;
                 }
@@ -60,11 +65,8 @@
             }
 
             &-top {
-                padding-bottom: 1rem;
+                max-width: 100%;
                 word-break: break-all;
-                width: 100%;
-                font-weight: 5F00;
-                font-size: 1.1rem;
             }
 
             @media (max-width:368px) {
@@ -72,31 +74,30 @@
             }
         }
 
-        @media (max-width:368px) {
-            width: 100%;
-            align-items: stretch;
-            justify-content: start;
-        }
+        // @media (max-width:368px) {
+        // }
     }
 
     &-right {
         display: flex;
+        justify-content: flex-end;
         align-items: center;
-        gap: 1.7rem;
+        gap: 1rem;
 
         &-counter {
             display: flex;
-            align-items: center;
-            gap: 0.9rem;
+            height: fit-content;
+            gap: 0.3rem;
 
-            &-minus {
+            &-minus,
+            &-plus {
                 cursor: pointer;
                 display: flex;
                 align-items: center;
                 border: 1px solid $orange;
                 border-radius: 4px;
                 color: $orange;
-                padding: 0.8rem 0.5rem;
+                padding: 0.1rem 0.15rem;
                 transition: all.3s;
 
                 &:hover {
@@ -110,34 +111,17 @@
             }
 
             &-totalCounter {
-                width: 4rem;
-                text-align: center;
+                min-width: 4rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 user-select: none;
             }
 
-            &-plus {
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                border: 1px solid $orange;
-                border-radius: 4px;
-                color: $orange;
-                padding: 0.5rem;
-                transition: all.3s;
-
-                &:hover {
-                    background-color: $orange;
-
-                    path {
-                        fill: #fff;
-
-                    }
-                }
-            }
-
             @media (max-width:768px) {
-                gap: 0;
                 align-items: stretch;
+                justify-content: center;
+                gap: 0;
 
                 .item-big-about-chapter-amount-minus,
                 .item-big-about-chapter-amount-total,
@@ -162,16 +146,24 @@
                     justify-content: center;
                 }
             }
+
+            @media (max-width:768px) {
+                align-items: stretch;
+            }
         }
 
         &-totalPrice {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 3rem;
 
             &-withDiscount {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 position: relative;
+                width: 7rem;
+
 
                 &-lastPrice {
                     color: $gray;
@@ -188,6 +180,8 @@
 
             &-noDiscount {
                 font-weight: 500;
+                text-align: center;
+                width: 7rem;
                 font-size: 1.1rem;
             }
         }
@@ -212,6 +206,7 @@
             @media (max-width:368px) {
                 background-color: $orange;
                 border: none;
+                padding: 0.3rem 0.5rem;
 
                 path {
                     fill: white;
@@ -220,17 +215,33 @@
 
         }
 
-        // @media (max-width:768px) {
-            // margin-left: -6rem;
-        // }
+        @media (max-width:368px) {
+            flex-direction: column;
+            gap: 0.4rem;
+            align-items: start;
+        }
     }
 
-    @media (max-width:768px) {
+    @media (max-width:368px) {
         padding: 0;
         border: none;
         border-bottom: 1px solid $gray;
         padding-bottom: 0.6rem;
-        flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        justify-content: start;
+        gap: 1rem;
+
+        &-right-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        &-right-bottom {
+            margin-top: 0.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
     }
 }

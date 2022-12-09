@@ -20,24 +20,43 @@
             font-weight: 700;
             color: black;
         }
+
+        @media (max-width:768px) {
+            gap: 0rem;
+            width: 100%;
+            justify-content: space-between;
+
+            &-top {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+
     }
 
     &__path {
         display: flex;
         margin-bottom: 1rem;
 
-        .cart__path-ul {
+        &-ul {
             display: flex;
             gap: 0.5rem;
 
             @media (max-width:768px) {
                 gap: 0.5rem;
                 align-items: center;
+                justify-content: center;
+
+                span {
+                    font-size: 1.7rem;
+                }
             }
 
-            span {
-                font-size: 1.7rem;
-            }
         }
 
         &-text-gray {
@@ -100,6 +119,8 @@
             gap: 1rem;
 
             &-left {
+                display: flex;
+                flex-direction: column;
                 width: 100%;
 
                 &-items {
@@ -107,7 +128,7 @@
                     border-radius: 14px;
                     width: 100%;
                     height: fit-content;
-                    max-height: 36rem;
+                    max-height: 41rem;
                     overflow-y: auto;
                     overflow-x: hidden;
 

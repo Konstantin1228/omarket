@@ -87,12 +87,12 @@ const Catalog = () => {
     useEffect(() => {
         fetchData()
     }, [loading])
-    
-    
+
+
     return (
         <div className="catalog">
             <div className="cart__path">
-                <ul>
+                <ul className='cart__path-ul'>
                     <li className={`cart__path-text-gray`} >Главная</li>
                     <div className={`cart__path-${filterTag?.text ? "gray" : "black"}`}>{">"}</div>
                     <Link to={"/catalog/all"} className={`cart__path-text-${filterTag?.text ? "gray" : "black"}`} onClick={() => setLoading(true)}>Категории товара</Link>

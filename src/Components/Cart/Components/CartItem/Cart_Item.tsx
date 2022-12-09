@@ -3,9 +3,10 @@ import { countPlus, countMinus, deleteItem } from "../../../../redux/cart/slice"
 import { ItemsInCart } from "../../../../redux/cart/types";
 import { useAppDispatch } from "../../../../hooks/hooks";
 import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import { useMediaQuery } from "react-responsive";
 import "./cartItem.scss"
-const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultPrice, tags, typeOfUnit, weight, canDeleteAndAdd }) => {
+const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultPrice, tags, typeOfUnit, weight }) => {
   const renderTag = (tags: string) => {
     switch (tags) {
       case "bonus":
@@ -49,97 +50,89 @@ const Cart_Item: React.FC<ItemsInCart> = ({ title, count, image, price, defaultP
         );
     }
   };
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 368px)' })
   const dispatch = useAppDispatch()
   return (
     <div className="itemCart">
-      <div className="itemCart-left">
-        <img className="itemCart-left-img" src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} alt="" />
-        <div className="itemCart-left-text">
-          <span className="itemCart-left-text-top">{`${title} ${weight} ${typeOfUnit}.`}</span>
-          {/* <span className="itemCart-right-totalPrice-withDiscount-currentPrice">{count * price}₽</span> */}
-
-          <span className="itemCart-left-text-top">333</span>
-          <div className="itemCart-left-text-bottom">
-            {renderTag(tags)}
+      {isMobile ?
+        <div className="itemCart-left">
+          <img className="itemCart-left-img" src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} alt="" />
+        </div>
+        :
+        <div className="itemCart-left">
+          <img className="itemCart-left-img" src={image.length > 5 ? image : "https://i.ibb.co/dkm3qTZ/no-image.png"} alt="" />
+          <div className="itemCart-left-text">
+            <span className="itemCart-left-text-top">{`${title} ${weight} ${typeOfUnit}.`}</span>
+            <div className="itemCart-left-text-bottom">{renderTag(tags)}</div>
           </div>
         </div>
-      </div>
+      }
       <div className="itemCart-right">
-        <div className="itemCart-right-counter">
-          {canDeleteAndAdd &&
-            isMobile ?
-            <button className="item-big-about-chapter-amount-minus" onClick={() => dispatch(countMinus({ title, weight }))}><RemoveIcon /></button>
-            :
-            <button className="itemCart-right-counter-minus" onClick={() => dispatch(countMinus({ title, weight }))}>
-              <svg
-                width="12"
-                height="2"
-                viewBox="0 0 12 2"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.666016 0.999675C0.666016 0.631485 0.964492 0.333008 1.33268 0.333008H10.666C11.0342 0.333008 11.3327 0.631485 11.3327 0.999675C11.3327 1.36786 11.0342 1.66634 10.666 1.66634H1.33268C0.964492 1.66634 0.666016 1.36786 0.666016 0.999675Z"
-                  fill="#FF6600"
-                />
-              </svg>
-            </button>
-          }
-          <span className={isMobile ? "item-big-about-chapter-amount-total" : "itemCart-right-counter-totalCounter"}>{count} шт.</span>
-          {canDeleteAndAdd &&
-            isMobile ?
-            <button className="item-big-about-chapter-amount-plus" onClick={() => dispatch(countPlus({ title, weight }))}>+</button>
-            :
-            <button className="itemCart-right-counter-plus" onClick={() => dispatch(countPlus({ title, weight }))}>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5.99935 0.666992C6.36754 0.666992 6.66602 0.965469 6.66602 1.33366V5.33366H10.666C11.0342 5.33366 11.3327 5.63214 11.3327 6.00033C11.3327 6.36852 11.0342 6.667 10.666 6.667H6.66602V10.667C6.66602 11.0352 6.36754 11.3337 5.99935 11.3337C5.63116 11.3337 5.33268 11.0352 5.33268 10.667V6.667H1.33268C0.964492 6.667 0.666016 6.36852 0.666016 6.00033C0.666016 5.63214 0.964492 5.33366 1.33268 5.33366H5.33268V1.33366C5.33268 0.965469 5.63116 0.666992 5.99935 0.666992Z"
-                  fill="#FF6600"
-                />
-              </svg>
-            </button>
-          }
-        </div>
-        {
-          !isMobile &&
-          <div className="itemCart-right-totalPrice">
-            {tags === 'discount' && defaultPrice ?
-              <div className="itemCart-right-totalPrice-withDiscount">
-                <div className="item-about-chapter-block-crossOut"></div>
-                <span className="itemCart-right-totalPrice-withDiscount-lastPrice">{count * defaultPrice}₽</span>
-                <span className="itemCart-right-totalPrice-withDiscount-currentPrice">{count * price}₽</span>
-                <div className="itemCart-right-totalPrice-withDiscount-currentPrice"></div>
+        {isMobile
+          ?
+          <>
+            <div className="itemCart-right-top">
+              <span className="itemCart-left-text-top">{`${title} ${weight} ${typeOfUnit}.`}</span>
+              <span className="itemCart-left-text-top bold">{count * price}₽</span>
+              <div className="itemCart-left-text-bottom">{renderTag(tags)}</div>
+            </div>
+            <div className="itemCart-right-bottom">
+              <div className="itemCart-right-counter">
+                <button className="item-big-about-chapter-amount-minus" onClick={() => dispatch(countMinus({ title, weight }))}><RemoveIcon fontSize="small" /></button>
+                <span className="item-big-about-chapter-amount-total">{count} шт.</span>
+                <button className="item-big-about-chapter-amount-plus" onClick={() => dispatch(countPlus({ title, weight }))}> <AddIcon fontSize="small" /></button>
               </div>
-              :
-              < span className="itemCart-right-totalPrice-noDiscount">{price * count}₽</span>}
-          </div>
+              <button className="itemCart-right-delete" onClick={() => dispatch(deleteItem({ title, weight }))}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.66732 1.66634C3.66732 0.929961 4.26427 0.333008 5.00065 0.333008H9.00065C9.73703 0.333008 10.334 0.929962 10.334 1.66634V2.99967H11.6604C11.6646 2.99964 11.6687 2.99964 11.6728 2.99967H13.0007C13.3688 2.99967 13.6673 3.29815 13.6673 3.66634C13.6673 4.03453 13.3688 4.33301 13.0007 4.33301H12.2881L11.7099 12.428C11.66 13.1257 11.0794 13.6663 10.3799 13.6663H3.6214C2.92188 13.6663 2.34129 13.1257 2.29145 12.428L1.71324 4.33301H1.00065C0.632461 4.33301 0.333984 4.03453 0.333984 3.66634C0.333984 3.29815 0.632461 2.99967 1.00065 2.99967H2.32848C2.33262 2.99964 2.33674 2.99964 2.34087 2.99967H3.66732V1.66634ZM5.00065 2.99967H9.00065V1.66634H5.00065V2.99967ZM3.04997 4.33301L3.6214 12.333H10.3799L10.9513 4.33301H3.04997Z"
+                    fill="#F83C3C"
+                  />
+                </svg>
+              </button>
+            </div>
+          </>
+          :
+          <>
+            <div className="itemCart-right-counter">
+              <button className="itemCart-right-counter-minus" onClick={() => dispatch(countMinus({ title, weight }))}><RemoveIcon /></button>
+              <span className="itemCart-right-counter-totalCounter">{count} шт.</span>
+              <button className="itemCart-right-counter-plus" onClick={() => dispatch(countPlus({ title, weight }))}><AddIcon /></button>
+            </div>
+            <div className="itemCart-right-totalPrice">
+              {(tags === 'discount' && defaultPrice) ?
+                <div className="itemCart-right-totalPrice-withDiscount">
+                  <span className="itemCart-right-totalPrice-withDiscount-lastPrice">{count * defaultPrice}₽</span>
+                  <span className="itemCart-right-totalPrice-withDiscount-currentPrice">{count * price}₽</span>
+                </div>
+                :
+                <span className="itemCart-right-totalPrice-noDiscount">{count * price}₽</span>
+              }
+              <button className="itemCart-right-delete" onClick={() => dispatch(deleteItem({ title, weight }))}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.66732 1.66634C3.66732 0.929961 4.26427 0.333008 5.00065 0.333008H9.00065C9.73703 0.333008 10.334 0.929962 10.334 1.66634V2.99967H11.6604C11.6646 2.99964 11.6687 2.99964 11.6728 2.99967H13.0007C13.3688 2.99967 13.6673 3.29815 13.6673 3.66634C13.6673 4.03453 13.3688 4.33301 13.0007 4.33301H12.2881L11.7099 12.428C11.66 13.1257 11.0794 13.6663 10.3799 13.6663H3.6214C2.92188 13.6663 2.34129 13.1257 2.29145 12.428L1.71324 4.33301H1.00065C0.632461 4.33301 0.333984 4.03453 0.333984 3.66634C0.333984 3.29815 0.632461 2.99967 1.00065 2.99967H2.32848C2.33262 2.99964 2.33674 2.99964 2.34087 2.99967H3.66732V1.66634ZM5.00065 2.99967H9.00065V1.66634H5.00065V2.99967ZM3.04997 4.33301L3.6214 12.333H10.3799L10.9513 4.33301H3.04997Z"
+                    fill="#F83C3C"
+                  />
+                </svg>
+              </button>
+            </div>
+          </>
         }
-        {
-          canDeleteAndAdd &&
-          <button className="itemCart-right-delete" onClick={() => dispatch(deleteItem({ title, weight }))}>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3.66732 1.66634C3.66732 0.929961 4.26427 0.333008 5.00065 0.333008H9.00065C9.73703 0.333008 10.334 0.929962 10.334 1.66634V2.99967H11.6604C11.6646 2.99964 11.6687 2.99964 11.6728 2.99967H13.0007C13.3688 2.99967 13.6673 3.29815 13.6673 3.66634C13.6673 4.03453 13.3688 4.33301 13.0007 4.33301H12.2881L11.7099 12.428C11.66 13.1257 11.0794 13.6663 10.3799 13.6663H3.6214C2.92188 13.6663 2.34129 13.1257 2.29145 12.428L1.71324 4.33301H1.00065C0.632461 4.33301 0.333984 4.03453 0.333984 3.66634C0.333984 3.29815 0.632461 2.99967 1.00065 2.99967H2.32848C2.33262 2.99964 2.33674 2.99964 2.34087 2.99967H3.66732V1.66634ZM5.00065 2.99967H9.00065V1.66634H5.00065V2.99967ZM3.04997 4.33301L3.6214 12.333H10.3799L10.9513 4.33301H3.04997Z"
-                fill="#F83C3C"
-              />
-            </svg>
-          </button>
-        }
-      </div>
-    </div >
+      </div >
+    </div>
   );
 };
 
