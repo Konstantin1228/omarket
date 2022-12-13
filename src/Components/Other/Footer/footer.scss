@@ -62,6 +62,12 @@ footer {
 
                 }
             }
+
+            &-flex {
+                display: flex;
+                align-items: center;
+                gap: 0.7rem;
+            }
         }
 
         .on__top {
@@ -112,6 +118,65 @@ footer {
         padding: 1.2rem 2rem 0px 2rem;
     }
 
+    @media (max-width:768px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        z-index: 3;
+        box-shadow: 0px -0.5px 0px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        bottom: 0;
+        margin: 0 -1rem;
+        // width: 89%;
+
+        .footer__component,
+        .footer__component-active {
+            transition: all.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            position: relative;
+
+            svg {
+                width: 2rem;
+                height: 2rem;
+
+                path {
+                    fill: $darkGrey;
+                }
+            }
+
+            span {
+                color: $darkGrey;
+            }
 
 
+            .MuiBadge-standard {
+                position: absolute;
+                left: -0.9rem;
+                background-color: $orange;
+                color: white;
+                width: auto;
+                height: auto;
+                font-size: 1rem;
+                font-weight: 400;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+
+        .footer__component-active {
+            span {
+                color: $orange;
+            }
+
+            svg {
+                path {
+                    fill: $orange;
+                }
+            }
+        }
+    }
 }

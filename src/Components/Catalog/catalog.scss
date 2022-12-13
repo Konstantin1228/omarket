@@ -18,7 +18,7 @@
 
     &__bottom {
         display: flex;
-        gap: 5rem;
+        gap: 2rem;
         margin-bottom: 1.2rem;
         min-height: 30rem;
 
@@ -95,6 +95,53 @@
                     }
                 }
 
+                label {
+
+                    .MuiSvgIcon-fontSizeMedium {
+
+                        // background-color: black;
+                        svg {}
+
+                        // border: 5px solid #8d1d1d !important;
+
+                        path {
+                            // sx={{
+                            //     // MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root
+                            //     "MuiSvgIcon-root": {
+                            //     },
+                            //     '&.Mui-checked': {
+                            //         color: "#00953F",
+                            //     },
+                            // }}
+                        }
+                    }
+
+                    .PrivateSwitchBase-input {}
+                }
+
+                .showAll {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.3rem;
+                    margin-top: 0.1rem;
+
+                    &-text {
+                        color: $orange;
+                        font-weight: 500;
+                        text-align: left;
+                    }
+
+                    svg {
+                        height: 1.2rem;
+                        width: 1.2rem;
+                        fill: $orange;
+                    }
+
+                    &:active {
+                        transform: none;
+                    }
+                }
+
                 &-buttons {
                     display: flex;
                     flex-direction: column;
@@ -118,7 +165,6 @@
                         color: white;
                         padding: 8px;
                         height: fit-content;
-
                     }
                 }
             }
@@ -202,4 +248,8 @@
             }
         }
     }
+}
+
+.catalog__bottom-items-bottom-grid {
+    gap: 1.5rem;
 }

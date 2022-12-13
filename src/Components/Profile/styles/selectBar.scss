@@ -1,13 +1,13 @@
+@import "../../../scss/defaultVariables.scss";
+
 .profile__left {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0.8rem;
 
     &-ul {
-        padding: 1.5rem;
-        padding-bottom: 0;
-        padding-top: 0;
-        border: 1px solid #DFDFDF;
+        padding: 0 1.5rem;
+        border: 1px solid $strokeGray;
         border-radius: 14px;
         width: fit-content;
         white-space: nowrap;
@@ -36,15 +36,15 @@
         &-liActive {
             cursor: pointer;
             display: flex;
-            gap: 15px;
-            padding-top: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #DFDFDF;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid $strokeGray;
             transition: all.3s;
             color: #000;
 
             &-text {
-                font-size: 17px;
+                font-size: 1.1rem;
             }
 
 
@@ -53,36 +53,52 @@
             }
 
             &:hover {
-                color: #00953F;
+                color: $green;
 
                 path {
-                    fill: #00953F;
+                    fill: $green;
                 }
 
             }
 
             &-title {
-                margin-bottom: 12px;
+                margin-bottom: 0.7rem;
 
                 &:first-child {
-                    margin-top: 16px;
+                    margin-top: 0.9rem;
+                }
+            }
+
+            &-svg {
+                width: fit-content;
+                height: 1rem;
+
+                svg {
+                    height: 100%;
+                    width: fit-content;
+
+                    path {
+                        fill: black;
+                    }
                 }
             }
         }
 
         &-liActive {
-            color: #00953F;
+            color: $green;
 
-            path {
-                fill: #00953F;
+            div {
+                path {
+                    fill: $green;
+                }
             }
         }
 
         &-checkboxes {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            max-width: 140px;
+            gap: 1rem;
+            max-width: 9rem;
 
             &-li {
                 input {
@@ -92,7 +108,7 @@
 
                 &:last-child {
                     padding-bottom: 1rem;
-                    border-bottom: 1px solid #DFDFDF;
+                    border-bottom: 1px solid $strokeGray;
                     margin-bottom: 10px;
                 }
             }

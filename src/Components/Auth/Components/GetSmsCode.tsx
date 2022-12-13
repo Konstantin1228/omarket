@@ -2,6 +2,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'
+import supabase from '../../../config/supabseClient'
 import { auth, db } from '../../../firebase'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { setNextStage } from '../../../redux/user/slice'
@@ -19,72 +20,61 @@ const GetSmsCode: React.FC = () => {
             }, 1000);
         }
     }, [time])
-    const generateRecaptcha = () => {
-        //@ts-ignore
-        window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
-            size: 'invisible',
-            сallback: (response: any) => {
-                // reCAPTCHA solved, allow signInWithPhoneNumber.
-                onSignInSubmit();
-            }
-        }, auth);
-    }
-    // useEffect(() => {
-    //     generateRecaptcha()
-    //     // @ts-ignore
-    //     let appVerifier = window.recaptchaVerifier
-    //     const phone = "+79523661409"
-    //     signInWithPhoneNumber(auth, phone, appVerifier)
-    //         .then((confirmationResult) => {
-    //             //@ts-ignore
-    //             window.confirmationResult = confirmationResult;
-    //             let code = watch("tel")
-    //             //@ts-ignore
-    //             window.confirmationResult.confirm(code).then((result) => {
-    //                 const user = result.user;
-    //                 console.log(user);
-    //                 console.log("otp true");
-    //                 // @ts-ignore
-    //             }).catch((error) => {
-    //                 console.log(error)
-    //             });
-    //         }).catch((error) => {
-    //             console.log(error)
-    //         });
+    // const generateRecaptcha = () => {
+    //     //@ts-ignore
+    //     window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+    //         size: 'invisible',
+    //         сallback: (response: any) => {
+    //             // reCAPTCHA solved, allow signInWithPhoneNumber.
+    //             onSignInSubmit();
+    //         }
+    //     }, auth);
+    // }
 
+    // useEffect(() => {
+    //     const GetSmsCode = async () => {
+    //         let { data, error } = await supabase.auth.signUp({
+    //             phone: '+13334445555',
+    //             password: '123456',
+    //         })
+    //         console.log(data)
+    //     }
+    //     GetSmsCode()
     // }, [])
 
+
     const onSubmit: SubmitHandler<PasswordRecoveryInterface> = async (data) => {
-        if (type === "registration") {
-            dispatch(setNextStage({ stage: 3, type: "registration" }))
-        } else if (type === "recoveryPass") {
-            //@ts-ignore
-            window.recaptchaVerifier.render().then(function (widgetId) {
-                //@ts-ignore
-                grecaptcha.reset(widgetId);
-            });
-            // @ts-ignore
-            let appVerifier = window.recaptchaVerifier
-            const phone = "+79523661409"
-            signInWithPhoneNumber(auth, phone, appVerifier)
-                .then((confirmationResult) => {
-                    //@ts-ignore
-                    window.confirmationResult = confirmationResult;
-                    let code = watch("tel")
-                    //@ts-ignore
-                    window.confirmationResult.confirm(code).then((result) => {
-                        const user = result.user;
-                        console.log(user);
-                        console.log("otp true");
-                        // @ts-ignore
-                    }).catch((error) => {
-                        console.log(error)
-                    });
-                }).catch((error) => {
-                    console.log(error)
-                });
-            dispatch(setNextStage({ stage: 3, type: "recoveryPass" }))
-        }
+
+        // if (type === "registration") {
+        //     dispatch(setNextStage({ stage: 3, type: "registration" }))
+        // } else if (type === "recoveryPass") {
+        //     //@ts-ignore
+        //     window.recaptchaVerifier.render().then(function (widgetId) {
+        //         //@ts-ignore
+        //         grecaptcha.reset(widgetId);
+        //     });
+        //     // @ts-ignore
+        //     let appVerifier = window.recaptchaVerifier
+        //     const phone = "+79523661409"
+        //     signInWithPhoneNumber(auth, phone, appVerifier)
+        //         .then((confirmationResult) => {
+        //             //@ts-ignore
+        //             window.confirmationResult = confirmationResult;
+        //             let code = watch("tel")
+        //             //@ts-ignore
+        //             window.confirmationResult.confirm(code).then((result) => {
+        //                 const user = result.user;
+        //                 console.log(user);
+        //                 console.log("otp true");
+        //                 // @ts-ignore
+        //             }).catch((error) => {
+        //                 console.log(error)
+        //             });
+        //         }).catch((error) => {
+        //             console.log(error)
+        //         });
+        //     dispatch(setNextStage({ stage: 3, type: "recoveryPass" }))
+        // }
     };
 
     return (

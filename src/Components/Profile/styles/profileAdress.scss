@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin-bottom: 250px;
+    min-height: 30rem;
 
     &Parent {
         display: flex;
@@ -10,14 +10,11 @@
         flex: 1;
 
         &-element {
-            // display: grid;
-            // grid: 1;
-            // grid-template-columns: repeat(3, 1fr);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
-            margin-top: 10px;
+            padding-bottom: 1.4rem;
+            margin-top: 0.5rem;
             border-bottom: 1px solid #DFDFDF;
 
             &:last-child {
@@ -28,34 +25,35 @@
         &-element-parent {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-
-            p {
-                max-width: 200px;
-                width: 100%;
-            }
-
-            &:nth-child(2) {
-                align-items: center;
-                justify-content: center;
-            }
+            gap: 0.3rem;
 
             &:last-child {
                 justify-content: end;
             }
         }
+
+        .adress {
+            max-width: 18rem;
+            width: 100%;
+        }
+
+        .comment {
+            width: 100%;
+            max-width: 14rem;
+            word-wrap: break-word;
+        }
     }
 
     &__inner {
-        min-height: 270px;
+        min-height: 20rem;
         border: 1px solid #DFDFDF;
         border-radius: 14px;
-        padding: 26px;
+        padding: 1.5rem;
 
         &-top {
             display: flex;
             justify-content: space-between;
-            padding-bottom: 24px;
+            padding-bottom: 1.5rem;
             border-bottom: 1px solid #DFDFDF;
         }
 
@@ -63,8 +61,8 @@
             display: flex;
             flex-wrap: wrap;
             flex: 1;
-            gap: 40px;
-            margin-top: 24px;
+            gap: 2rem;
+            margin-top: 1rem;
 
             &-element,
             &-bankCardElement {
@@ -72,10 +70,6 @@
                 flex-direction: column;
                 gap: 8px;
                 flex: 1;
-
-                input {
-                    width: 80%;
-                }
 
                 img {
                     height: 2rem;

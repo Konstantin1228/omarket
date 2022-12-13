@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/hooks";
 import Cart_Item from "./Components/CartItem/Cart_Item";
 import CartOrderingStage2 from "./Components/Stages/OrderingStage2/CartOrderingStage2";

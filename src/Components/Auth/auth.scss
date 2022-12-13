@@ -4,6 +4,8 @@ $gray:#9C9C9C;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
 
     &__title {
         display: flex;
@@ -79,7 +81,7 @@ $gray:#9C9C9C;
                 }
 
                 &__value-container {
-                    padding: 16px 0 16px 24px
+                    padding: 1rem 0 1rem 1.5rem !important;
                 }
 
                 &__option {
@@ -112,6 +114,7 @@ $gray:#9C9C9C;
                     border-top: 1px solid #DFDFDF;
                     scrollbar-width: thin;
                     animation: scaleIn .2s ease-in-out;
+                    // border: 1px solid #DFDFDF !important;
 
                     &-list {
                         display: flex;
@@ -144,6 +147,11 @@ $gray:#9C9C9C;
             margin: 0 auto;
             cursor: pointer;
         }
+    }
+
+    @media (max-width:768px) {
+        margin: 0;
+        height: 80vh;
     }
 }
 

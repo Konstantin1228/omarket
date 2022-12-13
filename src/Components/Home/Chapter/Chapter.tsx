@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import Skeleton from "../../CustomComponents/Skeleton";
-import CatalogItem from "./../CatalogItem";
+import CatalogItem, { ItemType } from "./../CatalogItem";
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';
@@ -15,23 +14,10 @@ interface ChapterProps {
   databaseName?: string;
   tagSorting?: string;
 };
-export interface GoodsType {
-  id: number,
-  discounts: number[]
-  description: string
-  image: string
-  points: number[]
-  price: number[]
-  tags: string[]
-  title: string
-  typeOfUnit: string
-  weight: number[]
-}
 const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagSorting }) => {
-  const [goods, setGoods] = useState<GoodsType[]>([]);
+  const [goods, setGoods] = useState<ItemType[]>([]);
   const [loading, setLoading] = useState(true)
   const swiperRef = useRef<SwiperCore>();
-
   useEffect(() => {
     setLoading(true)
     if (databaseName) {
@@ -94,4 +80,4 @@ const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagS
   );
 };
 
-export default Chapter;
+export default React.memo(Chapter);

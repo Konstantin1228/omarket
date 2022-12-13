@@ -1,9 +1,9 @@
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
-import { itemType } from "../../Components/Home/CatalogItem";
+import { ItemType } from "../../Components/Home/CatalogItem";
 export interface CartSliceState {
     itemsInCart: ItemsInCart[];
     userInformation: UserInformation
-    bigItemInformation: itemType
+    bigItemInformation: ItemType
     isActivePopup: boolean
 }
 export const UserInformationObj = {

@@ -151,11 +151,11 @@ const MyAdresses = () => {
                         deliviryAdresses.map((el, idx) => (
                           !el.isDefault &&
                           <div className="profile__adressParent-element" key={idx}>
-                            <div className="profile__adressParent-element-parent">
+                            <div className="profile__adressParent-element-parent adress">
                               <p className="bold">Адрес:</p>
                               <p>{el.city}</p>
                             </div>
-                            <div className="profile__adressParent-element-parent">
+                            <div className="profile__adressParent-element-parent comment">
                               <p className="bold">Комментарии к адресу:</p>
                               <p>{el.comment ? el.comment : "Отсутсвует"}</p>
                             </div>

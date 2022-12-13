@@ -1,10 +1,12 @@
-@import url(./defaultStyles.scss);
+// @import url(./defaultStyles.scss);
+@import "./defaultStyles.scss";
 @import "./defaultVariables.scss";
 
 
 .app {
     color: black;
     margin: 1.3rem 10rem 3em 10rem;
+
 }
 
 .react-dadata__container {
@@ -86,6 +88,12 @@
 }
 
 @media (max-width:768px) {
+    .app {
+        height: 100vh;
+        padding: 1rem;
+        margin: 0;
+    }
+
     * {
         font-size: 12px;
     }

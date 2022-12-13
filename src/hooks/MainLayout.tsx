@@ -8,12 +8,15 @@ import { useAppDispatch, useAppSelector } from './hooks'
 import { setCanEditProfile, setIsUserAuth } from '../redux/user/slice'
 import Toasts from '../Components/CustomComponents/Toasts/Toasts'
 import CatalogItemBig from '../Components/Home/CatalogItemBig'
+import { useMediaQuery } from 'react-responsive'
+import FooterMobile from '../Components/Other/Footer/FooterMobile'
 export interface setStateProps {
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 const MainLayout: React.FC<setStateProps> = ({ setSearchValue }) => {
     const dispatch = useAppDispatch()
     const { isActivePopup } = useAppSelector(state => state.cartSlice)
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
     useEffect(() => {
         const getData = async () => {
             try {
@@ -38,8 +41,10 @@ const MainLayout: React.FC<setStateProps> = ({ setSearchValue }) => {
                 <Header setSearchValue={setSearchValue} />
                 {isActivePopup && <CatalogItemBig />}
                 <Outlet />
+                {isMobile && <FooterMobile />}
             </div>
-            <Footer />
+            {!isMobile && <Footer />}
+            {/* {isMobile ? <FooterMobile /> : <Footer />} */}
         </>
 
     )

@@ -27,6 +27,11 @@ button {
     }
 }
 
+.orangeColor {
+    color: $orange;
+}
+
+
 .button-submit,
 .button-submit-false {
     display: flex;
@@ -260,6 +265,106 @@ input {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+}
+
+.reactSelect {
+    &__control {
+        cursor: pointer !important;
+        border-radius: 14px !important;
+        border: none !important;
+        width: 98% !important;
+        box-shadow: none !important;
+        border: 1px solid #DFDFDF !important;
+
+        &--is-disabled {
+            background-color: (rgba(239, 239, 239, 0.3)) !important;
+            border: 1px solid #DFDFDF !important;
+        }
+
+        &--menu-is-open {
+            border-bottom-right-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            box-shadow: none !important;
+            color: black !important;
+        }
+    }
+
+    &__placeholder {
+        padding: 2.5px !important;
+    }
+
+    &__single-value {
+        color: black !important;
+    }
+
+    &__indicator {
+        svg {
+            width: 15px !important;
+            height: 15px !important;
+        }
+
+        &-separator {
+            display: none !important;
+        }
+    }
+
+    &__value-container {
+        padding: 1rem 1.5rem !important;
+    }
+
+    &__option {
+        display: flex !important;
+        gap: 16px !important;
+        cursor: pointer !important;
+        background-color: #fff !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        width: 93% !important;
+        margin-left: 0.5rem !important;
+        padding: 1rem 1rem 0.5rem 0 !important;
+        text-align: left !important;
+
+        &:last-child {
+            border-bottom: none !important;
+        }
+
+        &--is-selected {
+            display: none !important;
+        }
+    }
+
+    &__menu {
+        border: none !important;
+        margin-top: -5px !important;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.08) !important;
+        border-radius: 14px !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-top: 1px solid #DFDFDF !important;
+        scrollbar-width: thin !important;
+        animation: scaleIn .2s ease-in-out !important;
+        width: 98% !important;
+
+        &-list {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.7rem !important;
+
+            &::-webkit-scrollbar {
+                width: 7px !important;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #DFDFDF;
+                border-radius: 12px;
+            }
+        }
     }
 }
 

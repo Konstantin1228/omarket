@@ -114,146 +114,139 @@ const UserInformation: React.FC = () => {
                 <div className='profile-parent'>
                     <form className="profile__right" onSubmit={handleSubmit(onSubmit)}>
                         <div className="profile__right-top">
-                            <div className="profile__right-top-text bold">Статус:</div>
+                            <span className="profile__right-top-text bold">Статус:</span>
                             <div className="profile__right-top-parent">
                                 <div className="profile__right-top-parent-circle"></div>
-                                <div className="profile__right-top-text bold">Золото</div>
+                                <span className="bold">Золото</span>
                             </div>
                         </div>
                         <div className="profile__right-bottom">
-                            <div className="profile__right-bottom-child">
-                                <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">ФИО:</div>
-                                    <input disabled={!canEdit} defaultValue={userInformation?.nameSurname}
-                                        className={`input${errors.nameSurname ? "-error" : ""}`} style={{ width: 340 }}  {...register("nameSurname", {
-                                            required: "Поле обязательно к заполнению!",
-                                            maxLength: {
-                                                value: 50,
-                                                message: "Максимальная длина -50 символов!"
-                                            }
-                                        })}
-                                        placeholder="Жанара Ибрагимова" />
-                                    {errors.nameSurname && <p className="errorAuth" >{errors?.nameSurname.message || "Ошибка!"} </p>}
-                                </div>
-                                <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">Номер телефона:</div>
-                                    <input disabled={!canEdit} className={`input${errors.telephone ? "-error" : ""}`} style={{ width: 340 }} defaultValue={userInformation?.telephone}
-                                        placeholder='+7 (707) 456 - 78 - 45' {...register("telephone", {
-                                            required: "Поле обязательно к заполнению!",
-                                            pattern: {
-                                                message: "Введите корректный номер телефона!",
-                                                value: /^[+]{1}[0-9]{1} [(]{1}[0-9]{3}[)]{1} [0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$/
-                                            },
-                                            onChange: (e) => {
-                                                setValue("telephone", formattedTelephone(e, setError, clearErrors))
-                                            }
-                                        })} />
-                                    {errors.telephone && <p className="errorAuth">{errors.telephone.message || "Ошибка!"} </p>}
-                                </div>
-                                <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">Электронная почта:</div>
-                                    <input disabled={!canEdit} defaultValue={userInformation?.email} className={`input${errors.email ? "-error" : ""}`} style={{ width: 340 }}
-                                        {...register("email", {
-                                            required: "Поле обязательно к заполнению",
-                                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu
-                                        })} placeholder='zhnara.yelemiesova@gmail.com' />
-                                    {errors.email && <p className="errorAuth">{errors.email.message || "Введите корректный Email!"} </p>}
-                                </div>
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">ФИО:</span>
+                                <input disabled={!canEdit} defaultValue={userInformation?.nameSurname}
+                                    className={`input${errors.nameSurname ? "-error" : ""}`}  {...register("nameSurname", {
+                                        required: "Поле обязательно к заполнению!",
+                                        maxLength: {
+                                            value: 50,
+                                            message: "Максимальная длина -50 символов!"
+                                        }
+                                    })}
+                                    placeholder="Жанара Ибрагимова" />
+                                {errors.nameSurname && <p className="errorAuth" >{errors?.nameSurname.message || "Ошибка!"} </p>}
                             </div>
-                            <div className="profile__right-bottom-child">
-                                <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">Пол:</div>
-                                    <Controller
-                                        control={control}
-                                        name="sex"
-                                        render={() => (
-                                            <>
-                                                <Select isSearchable={false} options={sexOption} value={sexOption.find((el) => el.value === watch("sex"))}
-                                                    classNamePrefix="reactSelect" maxMenuHeight={100} isDisabled={!canEdit}
-                                                    onChange={(newValue: any) => {
-                                                        setValue("sex", newValue.value)
-                                                        trigger("sex")
-                                                    }}
-                                                    placeholder="Выбрать" components={makeAnimated()} />
-                                                {errors.sex && <p className="errorAuth">{errors.sex.message || "Ошибка!"} </p>}
-                                            </>
-                                        )}
-                                        rules={{ required: "Поле обязательно к заполнению!" }}
-                                    />
-                                </div>
-                                <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">Дата рождения:</div>
-                                    <input disabled={!canEdit} defaultValue={userInformation?.dateOfBirth} type="date" className={`input${errors.dateOfBirth ? "-error" : ""}`}
-                                        style={{ width: 340 }}    {...register("dateOfBirth", {
-                                            required: "Поле обязательно к заполнению!",
-                                        })} />
-                                    {errors.dateOfBirth && <p className="errorAuth">{errors.dateOfBirth.message || "Ошибка!"} </p>}
-                                </div>
-                                <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">Семейное положение:</div>
-                                    <Controller
-                                        control={control}
-                                        name="familyStatus"
-                                        render={() => (
-                                            <>
-                                                <Select defaultValue={"123"} value={familyStatusOptions.find((el) => el.value === watch("familyStatus"))} classNamePrefix="reactSelect"
-                                                    isDisabled={!canEdit} maxMenuHeight={100} onChange={(newValue: any) => {
-                                                        setValue("familyStatus", newValue.value)
-                                                        trigger("familyStatus")
-                                                    }}
-                                                    isSearchable={false} options={familyStatusOptions} placeholder="Выбрать" components={makeAnimated()} />
-                                                {errors.familyStatus && <p className="errorAuth">{errors.familyStatus.message || "Ошибка!"} </p>}
-                                            </>
-                                        )}
-                                        rules={{ required: "Поле обязательно к заполнению!" }}
-                                    />
-                                </div>
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">Номер телефона:</span>
+                                <input disabled={!canEdit} className={`input${errors.telephone ? "-error" : ""}`} defaultValue={userInformation?.telephone}
+                                    placeholder='+7 (707) 456 - 78 - 45' {...register("telephone", {
+                                        required: "Поле обязательно к заполнению!",
+                                        pattern: {
+                                            message: "Введите корректный номер телефона!",
+                                            value: /^[+]{1}[0-9]{1} [(]{1}[0-9]{3}[)]{1} [0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$/
+                                        },
+                                        onChange: (e) => {
+                                            setValue("telephone", formattedTelephone(e, setError, clearErrors))
+                                        }
+                                    })} />
+                                {errors.telephone && <p className="errorAuth">{errors.telephone.message || "Ошибка!"} </p>}
                             </div>
-                            <div className="profile__right-bottom-child">
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">Электронная почта:</span>
+                                <input disabled={!canEdit} defaultValue={userInformation?.email} className={`input${errors.email ? "-error" : ""}`}
+                                    {...register("email", {
+                                        required: "Поле обязательно к заполнению",
+                                        pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu
+                                    })} placeholder='zhnara.yelemiesova@gmail.com' />
+                                {errors.email && <p className="errorAuth">{errors.email.message || "Введите корректный Email!"} </p>}
+                            </div>
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">Пол:</span>
+                                <Controller
+                                    control={control}
+                                    name="sex"
+                                    render={() => (
+                                        <>
+                                            <Select isSearchable={false} options={sexOption} value={sexOption.find((el) => el.value === watch("sex"))}
+                                                classNamePrefix="reactSelect" maxMenuHeight={100} isDisabled={!canEdit}
+                                                onChange={(newValue: any) => {
+                                                    setValue("sex", newValue.value)
+                                                    trigger("sex")
+                                                }}
+                                                placeholder="Выбрать" components={makeAnimated()} />
+                                            {errors.sex && <p className="errorAuth">{errors.sex.message || "Ошибка!"} </p>}
+                                        </>
+                                    )}
+                                    rules={{ required: "Поле обязательно к заполнению!" }}
+                                />
+                            </div>
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">Дата рождения:</span>
+                                <input disabled={!canEdit} defaultValue={userInformation?.dateOfBirth} type="date" className={`input${errors.dateOfBirth ? "-error" : ""}`}
+                                    {...register("dateOfBirth", {
+                                        required: "Поле обязательно к заполнению!",
+                                    })} />
+                                {errors.dateOfBirth && <p className="errorAuth">{errors.dateOfBirth.message || "Ошибка!"} </p>}
+                            </div>
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">Семейное положение:</span>
+                                <Controller
+                                    control={control}
+                                    name="familyStatus"
+                                    render={() => (
+                                        <>
+                                            <Select defaultValue={"123"} value={familyStatusOptions.find((el) => el.value === watch("familyStatus"))} classNamePrefix="reactSelect"
+                                                isDisabled={!canEdit} maxMenuHeight={100} onChange={(newValue: any) => {
+                                                    setValue("familyStatus", newValue.value)
+                                                    trigger("familyStatus")
+                                                }}
+                                                isSearchable={false} options={familyStatusOptions} placeholder="Выбрать" components={makeAnimated()} />
+                                            {errors.familyStatus && <p className="errorAuth">{errors.familyStatus.message || "Ошибка!"} </p>}
+                                        </>
+                                    )}
+                                    rules={{ required: "Поле обязательно к заполнению!" }}
+                                />
+                            </div>
+                            <div className="profile__right-bottom-child-element">
+                                <span className="profile__right-bottom-child-element-text bold">Дети:</span>
+                                <Controller
+                                    control={control}
+                                    name="isHaveChild"
+                                    render={({ fieldState: { error } }) => (
+                                        <>
+                                            <Select isDisabled={!canEdit} value={childOptions.find((el) => !!el.value === watch("isHaveChild"))}
+                                                classNamePrefix="reactSelect" maxMenuHeight={100} onChange={(newValue: any) => updateHaveChild(newValue)}
+                                                isSearchable={false} options={childOptions} placeholder="Выбрать" components={makeAnimated()} />
+                                            {error && <p className="errorAuth">{error.message || "Ошибка!"} </p>}
+                                        </>
+                                    )}
+                                />
+                            </div>
+                            {watch("isHaveChild") &&
                                 <div className="profile__right-bottom-child-element">
-                                    <div className="profile__right-bottom-child-element-text bold">Дети:</div>
+                                    <span className="profile__right-bottom-child-element-text bold">Кол-во человек в семье:</span>
                                     <Controller
                                         control={control}
-                                        name="isHaveChild"
+                                        name="childCount"
                                         render={({ fieldState: { error } }) => (
                                             <>
-                                                <Select isDisabled={!canEdit} value={childOptions.find((el) => !!el.value === watch("isHaveChild"))}
-                                                    classNamePrefix="reactSelect" maxMenuHeight={100} onChange={(newValue: any) => updateHaveChild(newValue)}
-                                                    isSearchable={false} options={childOptions} placeholder="Выбрать" components={makeAnimated()} />
+                                                <PatternFormat disabled={!canEdit} defaultValue={watch("childCount")} className={`input${errors.childCount ? "-error" : ""}`}
+                                                    onValueChange={(e) => {
+                                                        setValue("childCount", Number(e.value))
+                                                        trigger("childCount")
+                                                    }}
+                                                    format='##' placeholder='1' style={{ width: 100, textAlign: 'center' }} />
                                                 {error && <p className="errorAuth">{error.message || "Ошибка!"} </p>}
                                             </>
                                         )}
+                                        rules={{
+                                            min: {
+                                                value: 2,
+                                                message: "Введите корректные данные"
+                                            }
+                                        }}
                                     />
                                 </div>
-                                {watch("isHaveChild") &&
-                                    <div className="profile__right-bottom-child-element">
-                                        <div className="profile__right-bottom-child-element-text bold">Кол-во человек в семье:</div>
-                                        <Controller
-                                            control={control}
-                                            name="childCount"
-                                            render={({ fieldState: { error } }) => (
-                                                <>
-                                                    <PatternFormat disabled={!canEdit} defaultValue={watch("childCount")} className={`input${errors.childCount ? "-error" : ""}`}
-                                                        onValueChange={(e) => {
-                                                            setValue("childCount", Number(e.value))
-                                                            trigger("childCount")
-                                                        }}
-                                                        format='##' placeholder='1' style={{ width: 100, textAlign: 'center' }} />
-                                                    {error && <p className="errorAuth">{error.message || "Ошибка!"} </p>}
-                                                </>
-                                            )}
-                                            rules={{
-                                                min: {
-                                                    value: 2,
-                                                    message: "Введите корректные данные"
-                                                }
-                                            }}
-                                        />
-                                    </div>
-                                }
-                            </div>
+                            }
                         </div>
-
                     </form >
                     {canEdit ?
                         <input type="submit" value={"Сохранить"} className={`button-submit${isValid ? "" : "-false"} profileButton`} />

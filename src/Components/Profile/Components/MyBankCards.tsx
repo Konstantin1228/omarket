@@ -1,11 +1,12 @@
-import axios from 'axios';
-import { getDocs, query, collection, where, doc, setDoc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
+import { getDocs, query, collection, where, doc, setDoc, getDoc } from 'firebase/firestore';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { NumberFormatBase, PatternFormat } from 'react-number-format';
 import { db } from '../../../firebase';
 import { BankCard, } from '../../../redux/user/types';
 import ModalWindow from '../../Other/ModalWindow/ModalWindow';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import axios from 'axios';
 
 function CardExpiry(props: any) {
   const format = (val: string) => {
@@ -232,25 +233,14 @@ const MyBankCards = () => {
                 {bankCardData.length >= 1 ?
                   bankCardData.map((el, idx) =>
                     <div className="profile__adress__inner-bottom-bankCardElement" key={idx} onClick={() => deleteBankCard(idx)}>
-                      {/* {el.scheme} */}
-
-                      {(el.scheme === "Visa" || el.scheme === "Mastercard" || el.scheme === "Jcb" || el.scheme === "Amex")
-                        ? <img src={require(`../../../images/cards/${el.scheme}.png`)} alt={el.scheme} /> :
+                      {(el.scheme === "Visa" || el.scheme === "Mastercard" || el.scheme === "Jcb" || el.scheme === "Amex") ?
+                        <img src={require(`../../../images/cards/${el.scheme}.png`)} alt={el.scheme} /> :
                         <img src={require(`../../../images/cards/unkownCard.png`)} alt={el.scheme} />}
-
                       <div className="profile__adress__inner-bottom-bankCardElement-center">
-                        <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="2" cy="2" r="2" fill="#0D0D0D" />
-                        </svg>
-                        <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="2" cy="2" r="2" fill="#0D0D0D" />
-                        </svg>
-                        <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="2" cy="2" r="2" fill="#0D0D0D" />
-                        </svg>
-                        <svg width="5" height="5" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="2" cy="2" r="2" fill="#0D0D0D" />
-                        </svg>
+                        <FiberManualRecordIcon sx={{ fontSize: "0.5rem" }} />
+                        <FiberManualRecordIcon sx={{ fontSize: "0.5rem" }} />
+                        <FiberManualRecordIcon sx={{ fontSize: "0.5rem" }} />
+                        <FiberManualRecordIcon sx={{ fontSize: "0.5rem" }} />
                       </div>
                       <div className="profile__adress__inner-bottom-bankCardElement-left">
                         <p className='text bold'>{el.bankCard.slice(-4)}</p>

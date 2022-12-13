@@ -1,26 +1,37 @@
-import { FormControlLabel, Checkbox } from '@mui/material'
 import React from 'react'
+import { FormControlLabel, Checkbox } from '@mui/material'
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form'
+
 interface CheckboxProps {
-    label: string
+    setValue: UseFormSetValue<any>
+    watch: UseFormWatch<any>
+    keyValue: string
     inArray: string
-    updateState: React.Dispatch<React.SetStateAction<any>>
-    state: any[]
+    label: string
 }
 
-const CustomCheckbox: React.FC<CheckboxProps> = ({ updateState, state, label, inArray }) => {
+const CustomCheckbox: React.FC<CheckboxProps> = ({ setValue, watch, keyValue, label, inArray }) => {
+    const array = watch(keyValue)
+    const handleChange = () => array.includes(inArray) ? setValue(keyValue, array.filter((el: number | string) => el !== inArray)) : setValue(keyValue, [...array, inArray])
     return (
         <FormControlLabel
+            // background: #00953F;
+            // border-radius: 4px;    
             control={
                 <Checkbox
-                    sx={{ color: "#DFDFDF", '&.Mui-checked': { color: "#00953F", }, }}
-                    checked={state.includes(inArray )}
-                    onChange={() => updateState((prevData: string[]) => state.includes(inArray) ? state.filter(el => el !== inArray) :
-                        [...prevData, inArray])}
+                    sx={{
+                        // '& .MuiSvgIcon-root': {
+                        // color: "#00953F",
+                        // },
+                        '&.Mui-checked': { color: "#00953F", }
+                    }}
+                    checked={array.includes(inArray)}
+                    onChange={handleChange}
                 />
             }
-            label={<span className='bold'>{label}</span>}
+            label={< span className='bold' > {label}</span >}
         />
     )
 }
 
-export default React.memo(CustomCheckbox)
+export default CustomCheckbox

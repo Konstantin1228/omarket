@@ -1,12 +1,15 @@
 import React from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/hooks';
+import { clearCart } from '../../redux/cart/slice';
 interface Props {
     stage: number
     setStage: React.Dispatch<React.SetStateAction<number>>
     isMobile: boolean
 }
 const CartPath: React.FC<Props> = ({ stage, setStage, isMobile }) => {
+    const dispatch = useAppDispatch()
     return (
         <>
             <div className="cart__path">
@@ -46,7 +49,7 @@ const CartPath: React.FC<Props> = ({ stage, setStage, isMobile }) => {
                                     <ArrowBackIosIcon />
                                     <span className="cart__path-black" onClick={() => setStage(1)}>Корзина</span>
                                 </div>
-                                <span className="cart__path-gray">Очистить</span>
+                                <span className="cart__path-gray" onClick={() => dispatch(clearCart())}>Очистить</span>
                             </>
                         }
                         {stage === 2 &&
@@ -73,7 +76,7 @@ const CartPath: React.FC<Props> = ({ stage, setStage, isMobile }) => {
                         }
                         {stage >= 3 &&
                             <>
-                                {stage != 4 && <span className="cart__title-arrow">❮</span>}
+                                {stage !== 4 && <span className="cart__title-arrow">❮</span>}
                                 <span className="cart__title-title" onClick={() => setStage(3)} >Оплата</span>
                             </>
                         }

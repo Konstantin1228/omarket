@@ -3,11 +3,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { addToCart, closePopup } from '../../redux/cart/slice'
 import { addItemToasts } from '../../redux/toasts/slice'
 import { useTransition, animated } from '@react-spring/web'
+import Rating from '@mui/material/Rating';
+import GradeIcon from '@mui/icons-material/Grade';
 import "./itemBig.scss"
 const CatalogItemBig: FC = () => {
     const dispatch = useAppDispatch()
     const { isActivePopup } = useAppSelector(state => state.cartSlice)
-    const { id, title, description, image, tags, typeOfUnit, discounts, weight, points, price, } = useAppSelector(state => state.cartSlice.bigItemInformation)
+    const { id, title, description, image, tags, typeOfUnit, discounts, weight, points, price, rating } = useAppSelector(state => state.cartSlice.bigItemInformation)
     const renderSVG = (shareType: string | undefined) => {
         switch (shareType) {
             case "bonus":
@@ -85,7 +87,6 @@ const CatalogItemBig: FC = () => {
     }
 
     const totalCount = items.reduce((previous, current) => previous + current.count, 0) > 0
-
     return (
         <div className='modal-active' onClick={() => dispatch(closePopup())} >
             {transition((style, isActivePopup) => (
@@ -93,8 +94,8 @@ const CatalogItemBig: FC = () => {
                     <animated.div style={{ ...style }} className="modal__content item-big" onClick={(e) => e.stopPropagation()} >
                         <div className="item-tags">
                             {tags.includes("Новинка") && <div className="item-tag-new">Новинка</div>}
-                            {shareType === "discount" || shareType === "bonus" && <div className="item-tag-stock">Акция</div>}
-                            {shareType === "discount" && <div className="item-tag-stock">-{discounts[0]}%</div>}
+                            {(shareType === "discount" || shareType === "bonus") && <div className="item-tag-stock">Акция</div>}
+                            {shareType === "discount" && <div className="item-tag-stock">-{discounts.find((el) => el !== 0)}%</div>}
                             {tags.includes("Хит") && <div className="item-tag-hit">Хит</div>}
                         </div>
                         <figure className="item-big-information">
@@ -155,13 +156,13 @@ const CatalogItemBig: FC = () => {
                             }
                             <div className="item-big-grade">
                                 <span className="item-big-grade-reviews">Отзывы:12</span>
-                                <div className="item-big-grade-stars">
-                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg>
-                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg>
-                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg>
-                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg>
-                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg" >   <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /> </svg>
-                                </div>
+                                <Rating name="half-rating" defaultValue={rating} precision={0.5} max={5}
+                                    icon={<GradeIcon sx={{
+                                        color: "#FF6600",
+                                    }} />}
+                                    emptyIcon={<GradeIcon />}
+                                />
+                                {/* <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M8.99937 0.0839844C9.31502 0.0839844 9.60357 0.26232 9.74473 0.54464L11.8938 4.84282L16.6193 5.53016C16.9332 5.57581 17.1939 5.79567 17.2919 6.09731C17.3899 6.39895 17.3082 6.73007 17.0811 6.95148L13.6419 10.3048L14.4155 15.0327C14.4667 15.3452 14.3363 15.6597 14.0791 15.8443C13.8218 16.0289 13.4822 16.0518 13.2025 15.9034L8.99937 13.6732L4.79622 15.9034C4.51653 16.0518 4.1769 16.0289 3.91968 15.8443C3.66246 15.6597 3.5321 15.3452 3.58323 15.0327L4.3569 10.3048L0.917623 6.95148C0.690535 6.73007 0.608818 6.39895 0.706824 6.09731C0.804829 5.79567 1.06556 5.57581 1.37942 5.53016L6.10493 4.84282L8.25402 0.54464C8.39518 0.26232 8.68373 0.0839844 8.99937 0.0839844Z" fill="#FF6600" /></svg> */}
                             </div>
                         </div>
                     </animated.div>

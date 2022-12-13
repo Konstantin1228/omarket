@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch } from "../../hooks/hooks";
-import { addToCart, openPopup } from "../../redux/cart/slice";
+import { openPopup } from "../../redux/cart/slice";
 import "./item.scss"
-export interface itemType {
+export interface ItemType {
   id: number;
   title: string;
+  brand: string
   description: string;
   image: string;
   tags: string[];
@@ -14,8 +15,9 @@ export interface itemType {
   weight: number[];
   points: number[];
   price: number[];
+  rating: number;
 }
-const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }) => {
+const CatalogItem: React.FC<ItemType> = ({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price, rating, brand }) => {
   const dispatch = useAppDispatch();
   const [items, setItems] = useState(
     tags.includes("bonus") || tags.includes("discount")
@@ -58,7 +60,7 @@ const CatalogItem: React.FC<itemType> = ({ id, title, description, image, tags, 
               <span className="item-about-chapter-price">{price[0]}₽</span>
             }
           </div>
-          <button className="item-about-more" onClick={() => dispatch(openPopup({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price }))}>
+          <button className="item-about-more" onClick={() => dispatch(openPopup({ id, title, description, image, tags, typeOfUnit, discounts, weight, points, price, rating, brand }))}>
             <span>  Подробнее</span>
             <ExpandMoreIcon sx={{ color: "#FF6600", fontWeight: "600" }} />
           </button>

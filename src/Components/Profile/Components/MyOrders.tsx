@@ -87,17 +87,17 @@ const MyOrders: React.FC<SearchAdressOrCard> = ({ setFilterOrders, filterOrders 
               {!((filterOrders.adresses.reduce((current, previous) => current + Number(previous.isActive), 0) !== 0 ||
                 filterOrders.payment.reduce((current, previous) => current + Number(previous.isActive), 0) !== 0) && filteredOrders && filteredOrders.length === 0) ?
                 < div className="profile__myOrders-element">
-                  <div className="profile__myOrders-text bold">Номер</div>
-                  <div className="profile__myOrders-text bold">Сумма</div>
-                  <div className="profile__myOrders-text bold">Дата и время</div>
-                  <div className="profile__myOrders-text bold">Статус</div>
-                  <div className="profile__myOrders-text bold">Адрес</div>
-                  <div className="profile__myOrders-text bold">Комментарий</div>
-                  <div className="profile__myOrders-text bold">Всего товаров</div>
-                  <div className="profile__myOrders-text bold"></div>
+                  <span className="profile__myOrders-text bold">Номер</span>
+                  <span className="profile__myOrders-text bold">Сумма</span>
+                  <span className="profile__myOrders-text bold">Дата и время</span>
+                  <span className="profile__myOrders-text bold">Статус</span>
+                  <span className="profile__myOrders-text bold">Адрес</span>
+                  <span className="profile__myOrders-text bold">Комментарий</span>
+                  <span className="profile__myOrders-text bold">Всего товаров</span>
+                  <span className="profile__myOrders-text bold"></span>
                 </div>
                 :
-                <p className="prompt" style={{ padding: 10 }}>Не найдено заказов по указанным фильтрам!</p>
+                <span className="prompt" style={{ padding: 10 }}>Не найдено заказов по указанным фильтрам!</span>
               }
               {
                 ((filterOrders.adresses.reduce((current, previous) => current + Number(previous.isActive), 0) !== 0 ||
