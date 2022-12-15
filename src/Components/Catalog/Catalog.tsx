@@ -1,23 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import supabase from '../../config/supabseClient';
-import Loader from '../Other/Loader';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import Loader from '../Other/Loader/Loader';
 import CustomCheckbox from './Components/CustomCheckbox';
 import CatalogItem, { ItemType } from '../Home/CatalogItem';
 import CatalogItemHorizontal from './CatalogItemHorizontal';
 import { Close, KeyboardArrowDown } from '@mui/icons-material/';
 import { MenuItem, Accordion, AccordionSummary, AccordionDetails, FormGroup, Slider, Select } from '@mui/material/';
 import { linkSettings } from '../Other/Header/Header';
-import { useForm, useWatch } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { BlockItemsIcon, HorizontalItemsIcon } from './Components/Icons';
 import "./catalog.scss"
 interface QueryType {
     sortType: string
     priceValue: number
-    filterTag: {
-        path: string
-        text: string
-    } | undefined
     tags: string[]
     weightQuery: string[]
     brandsQuery: string[]
@@ -30,24 +27,23 @@ const Catalog = () => {
     const routeParams = useParams();
     const navigate = useNavigate()
     const location = useLocation()
-    const { register, control, trigger, setError, handleSubmit, setValue, watch, reset } = useForm<QueryType>({
+    const { setValue, watch, reset } = useForm<QueryType>({
         mode: "onChange", defaultValues: {
             sortType: "title true",
             priceValue: 4000,
-            filterTag: linkSettings.find(el => el.path === routeParams.sortTag),
             tags: [],
             weightQuery: [],
             brandsQuery: [],
         }
     })
 
-    const [firstLoading, setFirstLoading] = useState(true)
-    const [loading, setLoading] = useState(true)
+    const [loadersStatus, setLoadersStatus] = useState({ mainLoading: true, firstLoading: true })
     const [horizontalProductDisplay, setHorizontalProductDisplay] = useState(true)
+    const [listStatus, setListStatus] = useState({ isFullFirst: false, isFullSecond: false })
 
     const [items, setItems] = useState<ItemType[]>()
     const [queryProperties, setQueryProperties] = useState<filters>({ properties: [], brands: [] })
-
+    const [queryTag, setQueryTag] = useState(linkSettings.find(el => el.path === routeParams.sortTag))
     const changePrice = (event: Event, newValue: number | number[]) => setValue("priceValue", newValue as number)
 
 
@@ -63,46 +59,42 @@ const Catalog = () => {
 
     const deleteFilterTag = () => {
         navigate("/catalog/all")
-        // setFilterTag(undefined)
-        setValue("filterTag", undefined)
-        setLoading(true)
+        setQueryTag(undefined)
+        setLoadersStatus(prev => ({ ...prev, mainLoading: true }))
     }
 
     const resetFilter = () => {
-        setLoading(true)
+        setLoadersStatus(prev => ({ ...prev, mainLoading: true }))
         reset()
     }
 
     const sortTag = location.pathname.split("/")[2]
     const fetchData = async () => {
-
-        const orderType = watch("sortType").split(" "),
+        const regExp = new RegExp(/[^.\d]/g),
+            orderType = watch("sortType").split(" "),
             tags = watch("tags"),
-            weightQuery = watch("weightQuery").map(weight => weight.replace(/[\D]+/g, ""))
-
-        // watch("weightQuery").map(weight => console.log( weight.test("/[\D]+/g"))
-        const { data, error } = await supabase.from('goods').select().contains("tags", sortTag === "all" ? [...tags,] : [...tags, sortTag])
-            .contains("weight", weightQuery).order(orderType[0], { ascending: orderType[1] === "true" })
-        // data = data as unknown as ItemType
+            weightQuery = watch("weightQuery").map(weight => weight.replace(regExp, "")),
+            { data, error } = await supabase.from('goods').select()
+                .contains("tags", sortTag === "all" ? [...tags,] : [...tags, sortTag])
+                .contains("weight", weightQuery)
+                .order(orderType[0], { ascending: orderType[1] === "true" })
         if (data) {
             const maxPrice = watch("priceValue")
             const brand = watch("brandsQuery")
             let Data: ItemType[] = data.filter(el => Math.max(...el?.price) <= maxPrice)
             if (brand.length) Data = Data.filter(el => brand.find(brand => el?.title?.toLowerCase().includes(brand.toLowerCase())))
-            if (firstLoading) {
+            if (loadersStatus.firstLoading) {
                 const answerArray: filters = { properties: [], brands: [] }
-                data.map((data: any) => {
-                    answerArray.properties.push(...data.weight)
-                    answerArray.brands.push(data?.title)
+                data.forEach((data: any) => {
+                    if (data.brand.length) answerArray.brands = Array.from(new Set([...answerArray.brands, data.brand]))
+                    answerArray.properties = Array.from(new Set([...answerArray.properties, ...data.weight])).sort((a, b) => a - b)
                 })
-                answerArray.properties = Array.from(new Set(answerArray.properties)).sort((a: string, b: string) => (Number(a) - Number(b)))
-                    .map((properties, idx) => properties + data[idx].typeOfUnit)
-                console.log(answerArray);
+                answerArray.properties = answerArray.properties.map((el) => el + data.find(element => element.weight.includes(el)).typeOfUnit)
                 setQueryProperties(answerArray)
-                setFirstLoading(false)
+                setLoadersStatus(prev => ({ ...prev, firstLoading: false, }))
             }
             setItems(Data)
-            setLoading(false)
+            setLoadersStatus(prev => ({ ...prev, mainLoading: false }))
         }
         if (error) {
             console.log(error);
@@ -110,30 +102,31 @@ const Catalog = () => {
     }
 
     useEffect(() => {
-        setLoading(true)
-        setValue("filterTag", linkSettings.find(el => el.path === routeParams.sortTag))
+        setQueryTag(linkSettings.find(el => el.path === routeParams.sortTag))
+        setLoadersStatus(prev => ({ ...prev, mainLoading: true }))
         if (!linkSettings.find(el => el.path === sortTag)?.path && location.pathname !== '/catalog/all') {
             navigate("/home")
-            return
+        } else {
+            resetFilter()
+            fetchData()
+            setLoadersStatus(prev => ({ ...prev, firstLoading: true }))
         }
-        resetFilter()
-        fetchData()
-        setFirstLoading(true)
     }, [location.pathname])
 
     useEffect(() => {
         fetchData()
-    }, [loading])
+    }, [loadersStatus.mainLoading])
 
-    const fiterTagText = watch("filterTag.text")
-    const fiterTagPath = watch("filterTag.path")
+    const fiterTagText = queryTag?.text
     return (
         <div className="catalog">
             <div className="cart__path">
                 <ul className='cart__path-ul'>
                     <Link to={"/home"} className={`cart__path-text-gray`} >Главная</Link>
-                    <div className={`cart__path-${watch("filterTag.text") ? "gray" : "black"}`}>{">"}</div>
-                    <Link to={"/catalog/all"} className={`cart__path-text-${fiterTagText ? "gray" : "black"}`} onClick={() => setLoading(true)}>Категории товара</Link>
+                    <div className={`cart__path-${fiterTagText ? "gray" : "black"}`}>{">"}</div>
+                    <Link to={"/catalog/all"} className={`cart__path-text-${fiterTagText ? "gray" : "black"}`} onClick={() => setLoadersStatus(prev => ({ ...prev, mainLoading: true }))}>
+                        Категории товара
+                    </Link>
                     {(location.pathname !== '/catalog/all' && fiterTagText) &&
                         <>
                             <div className="cart__path-black">{">"}</div>
@@ -141,7 +134,7 @@ const Catalog = () => {
                         </>
                     }
                 </ul>
-            </div>
+            </div >
             <h1 className="catalog__category">{sortTag === "all" ? "Категории товаров" : fiterTagText}</h1>
             <div className="catalog__bottom">
                 <div className="catalog__bottom-filters">
@@ -200,77 +193,77 @@ const Catalog = () => {
                             <AccordionSummary expandIcon={<KeyboardArrowDown fontSize='small' />}><span className="bold">Свойства</span></AccordionSummary>
                             <AccordionDetails>
                                 <FormGroup>
-                                    {queryProperties.properties.length > 4 ?
+                                    {listStatus.isFullFirst ?
+                                        <>
+                                            {queryProperties.properties.map((queryPropertie, idx) =>
+                                                <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"weightQuery"} label={queryPropertie + "."} inArray={queryPropertie} />
+                                            )}
+                                            < button className='hide' onClick={() => setListStatus(prev => ({ ...prev, isFullFirst: false }))}>Скрыть</button>
+                                        </>
+                                        :
                                         <>
                                             {queryProperties.properties.slice(0, 4).map((queryPropertie, idx) =>
-                                                <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"weightQuery"} label={queryPropertie} inArray={queryPropertie} />
+                                                <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"weightQuery"} label={queryPropertie + "."} inArray={queryPropertie} />
                                             )}
-                                            <button className='showAll'>
-                                                <span className='showAll-text'>Показать все</span>
-                                                <ChevronRightIcon />
-                                            </button>
+                                            {queryProperties.properties.length >= 5 &&
+                                                < button className='showAll' onClick={() => setListStatus(prev => ({ ...prev, isFullFirst: true }))}>
+                                                    <span className='showAll-text'>Показать все</span>
+                                                    <ChevronRightIcon />
+                                                </button>
+                                            }
                                         </>
-                                        :
-                                        queryProperties.properties.map((queryPropertie, idx) =>
-                                            <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"weightQuery"} label={queryPropertie} inArray={queryPropertie} />
-                                        )
                                     }
                                 </FormGroup>
                             </AccordionDetails>
                         </Accordion>
-                        <Accordion>
-                            <AccordionSummary expandIcon={<KeyboardArrowDown fontSize='small' />}><span className="bold">Бренды</span></AccordionSummary>
-                            <AccordionDetails>
-                                <FormGroup>
-                                    {queryProperties.brands.length > 4 ?
-                                        <>
-                                            {queryProperties.brands.slice(0, 4).map((brandQuery, idx) =>
-                                                <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"brandsQuery"} label={brandQuery} inArray={brandQuery} />
-                                            )}
-                                            <button className='showAll'>
-                                                <span className='showAll-text'>Показать все</span>
-                                                <ChevronRightIcon />
-                                            </button>
-                                        </>
-                                        :
-                                        queryProperties.brands.map((brandQuery, idx) =>
-                                            <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"brandsQuery"} label={brandQuery} inArray={brandQuery} />
-                                        )
-                                    }
-                                </FormGroup>
-                            </AccordionDetails>
-                        </Accordion>
+                        {queryProperties.brands.length !== 0 &&
+                            <Accordion>
+                                <AccordionSummary expandIcon={<KeyboardArrowDown fontSize='small' />}><span className="bold">Бренды</span></AccordionSummary>
+                                <AccordionDetails>
+                                    <FormGroup>
+                                        {listStatus.isFullSecond ?
+                                            <>
+                                                {queryProperties.brands.map((brandQuery, idx) =>
+                                                    <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"brandsQuery"} label={brandQuery} inArray={brandQuery} />
+                                                )}
+                                                < button className='hide' onClick={() => setListStatus(prev => ({ ...prev, isFullSecond: false }))}>Скрыть</button>
+                                            </>
+                                            :
+                                            <>
+                                                {queryProperties.brands.slice(0, 4).map((brandQuery, idx) =>
+                                                    <CustomCheckbox key={idx} watch={watch} setValue={setValue} keyValue={"brandsQuery"} label={brandQuery} inArray={brandQuery} />
+                                                )}
+                                                {queryProperties.brands.length >= 5 &&
+                                                    < button className='showAll' onClick={() => setListStatus(prev => ({ ...prev, isFullSecond: true }))}>
+                                                        <span className='showAll-text'>Показать все</span>
+                                                        <ChevronRightIcon />
+                                                    </button>
+                                                }
+                                            </>
+                                        }
+                                    </FormGroup>
+                                </AccordionDetails>
+                            </Accordion>
+                        }
                         <div className="catalog__bottom-filters-accardion-buttons">
                             <button className="catalog__bottom-filters-accardion-buttons-reset" onClick={resetFilter}>Сбросить</button>
-                            <button className="button-submit" onClick={() => setLoading(true)}>Применить</button>
+                            <button className="button-submit" onClick={() => setLoadersStatus(prev => ({ ...prev, mainLoading: true }))}>Применить</button>
                         </div>
                     </div>
                 </div>
-                {loading ? <Loader /> :
+                {loadersStatus.mainLoading ? <Loader /> :
                     <div className="catalog__bottom-items">
                         <div className="catalog__bottom-items-top">
-                            <span className="catalog__bottom-items-top-totalItems">Всего {items?.length || 0} продуктов</span>
+                            <span className="catalog__bottom-items-top-totalItems">
+                                {items?.length ? "Всего " + items.length + " продуктов" : "Нет продуктов по выбранным параметрам"}
+                            </span>
                             <div className="catalog__bottom-items-top-right">
                                 <div className="catalog__bottom-items-top-right-displayType">
                                     <button className={!horizontalProductDisplay ? 'active' : ""} onClick={() => setHorizontalProductDisplay(false)}>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="4" height="7" rx="1" fill="#9C9C9C" />
-                                            <rect y="9" width="4" height="7" rx="1" fill="#9C9C9C" />
-                                            <rect x="6" width="4" height="7" rx="1" fill="#9C9C9C" />
-                                            <rect x="6" y="9" width="4" height="7" rx="1" fill="#9C9C9C" />
-                                            <rect x="12" width="4" height="7" rx="1" fill="#9C9C9C" />
-                                            <rect x="12" y="9" width="4" height="7" rx="1" fill="#9C9C9C" />
-                                        </svg>
+                                        <BlockItemsIcon />
                                     </button>
                                     <button className={horizontalProductDisplay ? 'active' : ""} onClick={() => setHorizontalProductDisplay(true)}>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="4" width="4" height="4" rx="1" transform="rotate(90 4 0)" fill="#9C9C9C" />
-                                            <rect x="4" y="6" width="4" height="4" rx="1" transform="rotate(90 4 6)" fill="#9C9C9C" />
-                                            <rect x="4" y="12" width="4" height="4" rx="1" transform="rotate(90 4 12)" fill="#9C9C9C" />
-                                            <rect x="16" width="4" height="10" rx="1" transform="rotate(90 16 0)" fill="#9C9C9C" />
-                                            <rect x="16" y="6" width="4" height="10" rx="1" transform="rotate(90 16 6)" fill="#9C9C9C" />
-                                            <rect x="16" y="12" width="4" height="10" rx="1" transform="rotate(90 16 12)" fill="#9C9C9C" />
-                                        </svg>
+                                        <HorizontalItemsIcon />
                                     </button>
                                 </div>
                                 <div className="catalog__bottom-items-top-right-filterType">
@@ -278,7 +271,7 @@ const Catalog = () => {
                                     <Select
                                         value={watch("sortType")}
                                         onChange={(e) => {
-                                            setLoading(true)
+                                            setLoadersStatus(prev => ({ ...prev, mainLoading: true }))
                                             setValue("sortType", e.target.value)
                                         }}
                                         displayEmpty
@@ -302,11 +295,7 @@ const Catalog = () => {
                             </div>
                         </div>
                         <div className={`catalog__bottom-items-bottom-${horizontalProductDisplay ? "block" : "grid"}`}>
-                            {items?.length !== 0 ?
-                                items?.map((el, idx) => horizontalProductDisplay ? <CatalogItemHorizontal key={idx} {...el} /> : <CatalogItem key={idx} {...el} />)
-                                :
-                                <span className="catalog__bottom-items-top-totalItems">Нет продуктов по выбранным параметрам</span>
-                            }
+                            {items?.map((el, idx) => horizontalProductDisplay ? <CatalogItemHorizontal key={idx} {...el} /> : <CatalogItem key={idx} {...el} />)}
                         </div>
                     </div>
                 }
@@ -315,4 +304,4 @@ const Catalog = () => {
     )
 }
 
-export default Catalog
+export default React.memo(Catalog)

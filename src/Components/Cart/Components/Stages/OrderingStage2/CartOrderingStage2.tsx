@@ -14,7 +14,7 @@ import { DeliviryAddress } from '../../../../Profile/FunctionsAndTypes/types';
 import { AntSwitch } from '../../../../CustomComponents/AntSwtich';
 import { calcCrow, onlyNumberInput } from '../../../FunctionsAndTypes/functions';
 import "./stage2.scss"
-import Loader from '../../../../Other/Loader';
+import Loader from '../../../../Other/Loader/Loader';
 const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscount, totalPoints, itemsInCart }) => {
     const dispatch = useAppDispatch()
     const [activeBonus, setActiveBonus] = useState(false)

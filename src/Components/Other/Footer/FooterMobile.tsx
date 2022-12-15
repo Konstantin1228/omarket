@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAppSelector } from '../../../hooks/hooks'
 import { HomeIcon, CartIcon, ProfileIcon } from '../Header/HeaderIcons'
 import { CategoriesIcon, ScannerIcon } from './Icons'
-
 const FooterMobile = () => {
     const { itemsInCart } = useAppSelector(state => state.cartSlice)
     const location = useLocation()

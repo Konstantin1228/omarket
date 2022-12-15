@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { db } from '../../../../../firebase'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
 import { clearCart } from '../../../../../redux/cart/slice'
-import Loader from '../../../../Other/Loader'
+import Loader from '../../../../Other/Loader/Loader'
 import ModalWindow from '../../../../Other/ModalWindow/ModalWindow'
 import "./stage4.scss"
 import "../../../cart.scss"
