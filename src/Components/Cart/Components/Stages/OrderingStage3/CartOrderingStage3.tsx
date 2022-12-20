@@ -57,7 +57,7 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
-                console.log(docSnap.data()?.profileInformation?.otherInformation?.bankCards.length)
+                // console.log(docSnap.data()?.profileInformation?.otherInformation?.bankCards.length)
                 docSnap.data()?.profileInformation?.otherInformation?.bankCards.length ? setBankCardData({ bankCards: docSnap.data()?.profileInformation?.otherInformation?.bankCards, haveBankCards: true })
                     : setBankCardData({ bankCards: docSnap.data()?.profileInformation?.otherInformation?.bankCards, haveBankCards: false })
                 // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
@@ -94,7 +94,7 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
         setValue("scheme", scheme)
     }
 
-    const bankCardsOptions = bankCardData.bankCards.map(({ bankCard, date, scheme, CVC }, idx) => ({
+    const bankCardsOptions = bankCardData.haveBankCards ? bankCardData.bankCards.map(({ bankCard, date, scheme, CVC }, idx) => ({
         value: bankCard,
         date,
         scheme,
@@ -122,10 +122,9 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                     <p className='text bold'>{bankCard.slice(-4)}</p>
                 </div>
             </>
-    }))
+    })) : undefined
 
     return (
-
         <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)}>
             {loading ? <div className="container__loader-absolute">
                 <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
@@ -139,7 +138,7 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                                 <>
                                     <div className="cart__inner-notEmpty-left-ordering-adress-text">Выбрать карту:</div>
                                     <div className="select-rotate">
-                                        <Select value={userBankCard ? bankCardsOptions.find((el) => el.value === userBankCard.bankCard) : ""}
+                                        <Select value={userBankCard ? bankCardsOptions?.find((el) => el.value === userBankCard.bankCard) : ""}
                                             classNamePrefix="reactSelect" maxMenuHeight={150}
                                             onChange={(newValue: any) => selectBankCard(newValue)}
                                             isSearchable={false} options={bankCardsOptions} placeholder="Оплата" components={makeAnimated()}

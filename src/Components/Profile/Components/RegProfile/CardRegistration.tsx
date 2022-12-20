@@ -139,33 +139,31 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                             <h1 className="auth__title-text">Карта</h1>
                         </div>
                         <div className="auth__registration">
-                            <div className="auth__registration-top">
-                                <Controller
-                                    control={control}
-                                    name="bankCard"
-                                    render={({ fieldState: { error } }) => (
-                                        <div className='auth__form-parent'>
-                                            <PatternFormat disabled={withoutBankCard} onValueChange={(e) => {
-                                                setValue("bankCard", e.value)
-                                                trigger("bankCard")
-                                            }} placeholder='0000 0000 0000 0000'
-                                                style={{ width: 320 }} className='input' format="#### #### #### ####" />
-                                            {error && <p className="error">{error.message || "Ошибка!"}</p>}
-                                        </div>
-                                    )}
-                                    rules={{
-                                        required: "Поле обязательно к заполнению!",
-                                        minLength: {
-                                            value: 16,
-                                            message: "Введите корректные данные!"
-                                        }
-                                    }}
-                                />
-                            </div>
+                            <Controller
+                                control={control}
+                                name="bankCard"
+                                render={({ fieldState: { error } }) => (
+                                    <div className='auth__form-parent'>
+                                        <PatternFormat disabled={withoutBankCard} onValueChange={(e) => {
+                                            setValue("bankCard", e.value)
+                                            trigger("bankCard")
+                                        }} placeholder='0000 0000 0000 0000'
+                                            className='input' format="#### #### #### ####" />
+                                        {error && <p className="error">{error.message || "Ошибка!"}</p>}
+                                    </div>
+                                )}
+                                rules={{
+                                    required: "Поле обязательно к заполнению!",
+                                    minLength: {
+                                        value: 16,
+                                        message: "Введите корректные данные!"
+                                    }
+                                }}
+                            />
                             <div className="auth__registration-bottom">
                                 <Controller
                                     render={({ fieldState: { error } }) => (
-                                        <div className='auth__form-parent' style={{ width: 180 }}  >
+                                        <div className='auth__form-parent'   >
                                             <CardExpiry
                                                 onValueChange={(values: any) => {
                                                     setValue("date", values.formattedValue)
@@ -190,7 +188,8 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                     control={control}
                                     name="CVC"
                                     render={({ fieldState: { error } }) => (
-                                        <div className='auth__form-parent' style={{ width: 180 }}>
+                                        <div className='auth__form-parent'>
+                                            {/* <div className='auth__form-parent' > */}
                                             <PatternFormat disabled={withoutBankCard} onValueChange={(e) => {
                                                 setValue("CVC", e.value)
                                                 trigger("CVC")

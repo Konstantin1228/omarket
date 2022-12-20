@@ -73,7 +73,7 @@ const GetSmsCode: React.FC = () => {
         //         }).catch((error) => {
         //             console.log(error)
         //         });
-        //     dispatch(setNextStage({ stage: 3, type: "recoveryPass" }))
+        dispatch(setNextStage({ stage: 3, type: "recoveryPass" }))
         // }
     };
 

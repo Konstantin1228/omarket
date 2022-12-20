@@ -67,6 +67,10 @@
             margin-bottom: 0.4rem;
         }
 
+        .auth__form-parent {
+            max-width: 30rem;
+        }
+
         .reactSelect {
             &__control {
                 cursor: pointer !important;
@@ -88,9 +92,7 @@
                 }
             }
 
-            // &__placeholder {
-            // padding: 2.5px;
-            // }
+
 
             &__single-value {
                 display: flex !important;
@@ -171,8 +173,10 @@
 
         &-more {
             display: flex;
+            align-items: center;
             flex-wrap: nowrap;
-            gap: 20px;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
 
             &-element {
                 display: flex;
@@ -191,19 +195,10 @@
                     border: 1px solid $gray;
                     border-radius: 14px;
                     transition: all.3s;
-                    max-width: 320px;
 
                     &:focus {
                         border: 2px solid $black;
                     }
-                }
-
-                &-flat {
-                    max-width: 210px;
-                }
-
-                &-floor {
-                    max-width: 120px;
                 }
             }
         }

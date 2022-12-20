@@ -14,7 +14,7 @@ export interface RegStage {
     userData?: userData
 }
 const RegProfile: React.FC<RegStage> = ({ setStage, setUserData }) => {
-    const { register, formState: { errors, isValid }, setValue,  handleSubmit, control, trigger, setError, clearErrors } = useForm<RegProfile>({ mode: "onChange" })
+    const { register, formState: { errors, isValid }, setValue, handleSubmit, control, trigger, setError, clearErrors } = useForm<RegProfile>({ mode: "onChange" })
     const validateAdressSuggestions = (e: DaDataSuggestion<DaDataAddress> | undefined) => {
         if (e) {
             const { region, city_with_type, street_with_type, house_type_full, house, geo_lat, geo_lon } = e.data
@@ -51,7 +51,7 @@ const RegProfile: React.FC<RegStage> = ({ setStage, setUserData }) => {
             <div className="auth__title">
                 <h1 className="auth__title-text">Профиль</h1>
             </div>
-            <form className="auth__registration" onSubmit={handleSubmit(onSubmit)} >
+            <form className="profileReg" onSubmit={handleSubmit(onSubmit)} >
                 <div className="auth__form-parent" >
                     <input className={`input`} placeholder="Имя Фамилия" {...register("nameSurname", {
                         required: "Поле обязательно к заполнению!",

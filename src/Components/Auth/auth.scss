@@ -5,25 +5,26 @@ $gray:#9C9C9C;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: 26rem;
 
     &__title {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
         margin-bottom: 2rem;
         white-space: nowrap;
 
         &-text {
             font-weight: 700;
-            font-size: 32px;
+            font-size: 2.5rem;
         }
 
         &-arrow {
             display: flex;
             align-items: center;
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 27px;
             cursor: pointer;
         }
     }
@@ -31,20 +32,19 @@ $gray:#9C9C9C;
     &__form {
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 1.2rem;
 
         .eye {
             cursor: pointer;
             position: absolute;
-            right: 12px;
-            top: 19px;
+            right: 0.8rem;
+            top: 35%;
         }
 
         &-parent,
         &-parentPassword {
             display: flex;
             flex-direction: column;
-            gap: 4px;
             position: relative;
 
             .reactSelect {
@@ -140,6 +140,11 @@ $gray:#9C9C9C;
 
                 }
             }
+
+            input {
+                width: 14rem;
+            }
+
         }
 
         &-help {

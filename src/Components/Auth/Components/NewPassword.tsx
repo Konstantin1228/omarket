@@ -1,4 +1,4 @@
-import { collection, doc,  setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { db } from '../../../firebase';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -75,7 +75,7 @@ const NewPassword = () => {
                         </div>
                         <div className="auth__form-parentPassword" onMouseEnter={() => setSecondInput(prevState => ({ ...prevState, visibilityEye: true }))}
                             onMouseLeave={() => setSecondInput(prevState => ({ ...prevState, visibilityEye: false }))} >
-                            <input style={{ width: 210 }} {...register("secondInput", {
+                            <input  {...register("secondInput", {
                                 required: "Введите ваш новый пароль!",
                             })}
                                 className={`${errors.secondInput ? secondInput.passwordShown ? "input-error" : "input-passwordError" : secondInput.passwordShown ? "input" : "input-password"}`}

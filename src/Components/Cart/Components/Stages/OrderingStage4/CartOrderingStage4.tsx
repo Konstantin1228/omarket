@@ -31,6 +31,7 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
                 const ordersData = await getDoc(userRef)
                 const previousData = ordersData.data()?.profileInformation?.userOrders
                 let uniqueOrderNumber = 0
+                console.log(previousData,!!previousData);
                 const generateOrderNumber = () => {
                     const newOrderNumber = Math.floor(Math.random() * 1000)
                     if (previousData && previousData.map((el: any) => el.orderInformation.orderNumber).find((orderNumber: any) => orderNumber === newOrderNumber)) {

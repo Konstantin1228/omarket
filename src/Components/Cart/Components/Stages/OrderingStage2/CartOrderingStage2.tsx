@@ -126,13 +126,13 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                         />
                                     </>
                                 }
-                                <div className="cart__inner-notEmpty-left-ordering-adress-more" style={{ paddingBottom: 40 }}>
+                                <div className="cart__inner-notEmpty-left-ordering-adress-more" >
                                     {userAdress.length === 0 &&
                                         <Controller
                                             control={control}
                                             name="adress"
                                             render={({ fieldState: { error }, }) => (
-                                                <div style={{ width: 250 }} className='auth__form-parent'>
+                                                <div className='auth__form-parent'>
                                                     <div className="cart__inner-notEmpty-left-ordering-adress-text">Адрес:</div>
                                                     <div className="cart__inner-notEmpty-left-ordering-adress-more-element">
                                                         <AddressSuggestions onChange={(e) => { validateAdressSuggestions(e) }}
@@ -140,7 +140,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                                             highlightClassName="react-dadata__suggestions-liHelp" suggestionClassName="react-dadata__suggestions-li"
                                                             token='fa4b2c103c0b276d9f833e9a1351f45d3a8beda3' delay={500} count={3} minChars={2} inputProps={{ "placeholder": "Ввести" }}
                                                         />
-                                                        {error && <p className="errorAuth" style={{ whiteSpace: "normal", bottom: -50, wordBreak: "break-all" }}>{error.message || "Ошибка!"}</p>}
+                                                        {error && <p className="errorAuth">{error.message || "Ошибка!"}</p>}
                                                     </div>
                                                 </div>
                                             )}
@@ -161,7 +161,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                                         trigger("flat")
                                                     }}
                                                         placeholder='Ввести'
-                                                        className={`input${error ? "-error" : ""}`} style={{ maxWidth: 200 }} format="###" />
+                                                        className={`input${error ? "-error" : ""}`}  format="###" />
                                                     {error && <p className="error">{error.message || "Ошибка!"}</p>}
                                                 </div>
                                             )}
@@ -180,12 +180,12 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                             control={control}
                                             name="floor"
                                             render={({ fieldState: { error } }) => (
-                                                <div className='auth__form-parent' style={{ marginLeft: 10 }}>
+                                                <div className='auth__form-parent' >
                                                     <PatternFormat onValueChange={(e) => {
                                                         setValue("floor", e.value)
                                                         trigger("floor")
                                                     }} placeholder='Ввести'
-                                                        className={`input${error ? "-error" : ""}`} style={{ maxWidth: 200 }} format="###" />
+                                                        className={`input${error ? "-error" : ""}`}  format="###" />
                                                     {error && <p className="error">{error?.message || "Ошибка!"}</p>}
                                                 </div>
                                             )}
@@ -208,7 +208,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                         }
                                     })} type="text"
                                         defaultValue={userAdress ? deliviryAdresses.cities[deliviryAdresses.cities.findIndex((el) => el.city == userAdress)].comment : ""}
-                                        placeholder="Ввести" className={`input${errors.comment ? "-error" : ""}`} style={{ maxWidth: 600 }}
+                                        placeholder="Ввести" className={`input${errors.comment ? "-error" : ""}`} 
                                     />
                                     {errors.comment && <p className="error">{errors.comment?.message || "Ошибка!"}</p>}
                                 </div>
@@ -279,7 +279,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                             </div>
                             {itemsInCart.map(obj => obj.tags === 'discount' || obj.tags === 'bonus').includes(true) ?
                                 <>
-                                    <div className="cart__inner-notEmpty-makeOrder-count-noDiscount" style={{ borderBottom: "none" }}>
+                                    <div className="cart__inner-notEmpty-makeOrder-count-noDiscount" >
                                         <div className="cart__inner-notEmpty-makeOrder-count-noDiscount-text">
                                             Итоговая цена <span>без</span> скидки:
                                         </div>
@@ -287,7 +287,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                             {withoutDiscount}₽
                                         </div>
                                     </div>
-                                    <div className="cart__inner-notEmpty-makeOrder-count-withDiscount" style={{ marginBottom: 0 }}>
+                                    <div className="cart__inner-notEmpty-makeOrder-count-withDiscount" >
                                         <div className="cart__inner-notEmpty-makeOrder-count-withDiscount-text">
                                             Итоговая цена <span>cо</span> скидкой:
                                         </div>
