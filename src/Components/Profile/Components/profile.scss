@@ -1,0 +1,100 @@
+@import "../../../scss/defaultVariables.scss";
+@import url(./SelectBar/selectBar.scss);
+@import url(./RegProfile/RegProfile.scss);
+@import url(./MyAdresses/myAdresses.scss);
+@import url(./MyOrders/profileMyOrders.scss);
+
+.profile,
+.profile__myOrders {
+    display: flex;
+    margin-bottom: 1.4rem;
+    gap: 1.1rem;
+
+    &__right {
+        border: 1px solid $strokeGray;
+        border-radius: 14px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        &-top {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid $strokeGray;
+
+            &-parent {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                &-circle {
+                    background: #FDBF00;
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+        &-bottom {
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+
+            &-child-element {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+                min-width: 25.8rem;
+                margin-bottom: 1.2rem;
+
+                .input {
+                    padding: 1rem 1.5rem;
+                    border-radius: 14px;
+                    // max-width: 21.4rem;
+                    // width: 100%;
+                    width: 85%;
+
+                    &::placeholder {
+                        font-weight: 500;
+                    }
+
+                }
+
+                // profile__right-bottom-child-element
+                // &-input,
+                // &-inputSmall {
+                //     padding: 1rem 1.5rem;
+                //     border: 1px solid #DFDFDF;
+                //     border-radius: 14px;
+                //     font-weight: 500;
+
+                //     &::placeholder {
+                //         font-weight: 500;
+                //     }
+                // }
+
+                // &-inputSmall {
+                //     text-align: center;
+
+                //     &::placeholder {
+                //         text-align: center;
+                //     }
+                // }
+            }
+        }
+    }
+
+}
+
+.profileButton {
+    margin-top: 1.5rem;
+    float: right;
+    font-size: 1.2rem;
+    width: 25%;
+}

@@ -1,9 +1,12 @@
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
-import { ItemType } from "../../Components/Home/CatalogItem";
+import { CatalogItemProps } from "../../Components/Home/Types/types";
 export interface CartSliceState {
     itemsInCart: ItemsInCart[];
-    userInformation: UserInformation
-    bigItemInformation: ItemType
+    userInformation: {
+        generalInformation: GeneralInformation,
+        bankCardInformation: BankCard
+    }
+    bigItemInformation: CatalogItemProps
     isActivePopup: boolean
 }
 export const UserInformationObj = {
@@ -35,6 +38,7 @@ export interface ItemsInCart {
     typeOfUnit: string
     defaultPrice?: number
 };
+
 export const getCartFromLS = () => {
     const data = localStorage.getItem("items");
     const items = data ? JSON.parse(data) : [];
@@ -42,10 +46,7 @@ export const getCartFromLS = () => {
         items: items as ItemsInCart[],
     };
 };
-export interface UserInformation {
-    generalInformation: GeneralInformation,
-    bankCardInformation: BankCard
-}
+
 
 export type GeneralInformation = {
     adress: string

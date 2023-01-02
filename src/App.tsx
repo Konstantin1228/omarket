@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { MyAdresses, MyBankCards, MyPatterns, MyOrders, ProfileIndex } from "./Components/Profile/ProfileIndex"
+import { MyAdresses, MyBankCards, MyPatterns, MyOrders, ProfileIndex } from "./Components/Profile/Components/ProfileIndex"
 import Home from "./Components/Home/Home";
 import Cart from "./Components/Cart/Cart";
-import RequireAuth from "./hooks/RequireAuth";
-import CanEditProfile from "./hooks/CanEditProfile";
-import MainLayout from "./hooks/MainLayout";
-import Catalog from "./Components/Catalog/Catalog";
+import RequireAuth from "./hok/RequireAuth";
+import CanEditProfile from "./hok/CanEditProfile";
+import MainLayout from "./hok/MainLayout";
+import Catalog from "./Components/Catalog/Components/Catalog/Catalog";
 import "./scss/index.scss";
+
 const App: React.FC = () => {
   const [searchValue, setSearchValue] = useState("")
   return (

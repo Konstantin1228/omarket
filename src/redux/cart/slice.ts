@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BankCard } from "../../Components/Cart/FunctionsAndTypes/types";
-import { ItemType } from "../../Components/Home/CatalogItem";
+import { CatalogItemProps } from "../../Components/Home/Types/types";
 import { CartSliceState, GeneralInformation, getCartFromLS, ItemsInCart, itemsOperationWithCount, UserInformationObj } from "./types";
 
 const { items } = getCartFromLS()
@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
       const findItem = state.itemsInCart.find((el) => el.title === action.payload.title && el.weight === action.payload.weight);
       if (findItem) {
         findItem.count--
-        if (findItem.count == 0) {
+        if (findItem.count === 0) {
           state.itemsInCart.splice(state.itemsInCart.indexOf(findItem), 1)
         }
       }
@@ -54,9 +54,8 @@ export const cartSlice = createSlice({
       localStorage.setItem("items", json)
     },
     clearCart(state) {
-      state.itemsInCart.splice(0, state.itemsInCart.length)
-      const json = JSON.stringify(state.itemsInCart)
-      localStorage.setItem("items", json)
+      state.itemsInCart = []
+      localStorage.setItem("items", JSON.stringify(state.itemsInCart))
     },
     setGeneralInformation(state, action: PayloadAction<GeneralInformation>) {
       state.userInformation.generalInformation = action.payload
@@ -64,7 +63,7 @@ export const cartSlice = createSlice({
     setBankCardInformation(state, action: PayloadAction<BankCard>) {
       state.userInformation.bankCardInformation = action.payload
     },
-    openPopup(state, action: PayloadAction<ItemType>) {
+    openPopup(state, action: PayloadAction<CatalogItemProps>) {
       state.bigItemInformation = action.payload
       state.isActivePopup = true
     },

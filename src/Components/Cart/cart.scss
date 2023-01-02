@@ -1,7 +1,7 @@
 @import "../../scss/defaultVariables.scss";
 
 .cart {
-    min-height: 30rem;
+    position: relative;
 
     &__title {
         display: flex;
@@ -103,7 +103,10 @@
     }
 
     &__inner {
-        margin-bottom: 2.5rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
 
         &-empty {
             display: flex;
@@ -111,12 +114,14 @@
             border: 1px solid $gray;
             padding: 1.5rem;
             gap: 0.9rem;
+            margin-bottom: 20%;
+            // min-height: 30rem;
         }
 
         &-notEmpty {
             display: flex;
-            justify-content: space-between;
             gap: 1rem;
+            min-height: 40rem;
 
             &-left {
                 display: flex;

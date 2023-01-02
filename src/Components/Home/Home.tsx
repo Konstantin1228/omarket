@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CatalogItem from "./CatalogItem";
-import { ItemType } from "./CatalogItem";
+import CatalogItem from "./CatalogItem/CatalogItem";
 import Slider from "../Other/Slider/Slider";
 import Skeleton from "../CustomComponents/Skeleton";
 import Chapter from "./Chapter/Chapter";
 import { useMediaQuery } from "react-responsive";
+import { CatalogItemProps } from "./Types/types";
 interface Home {
   searchValue: string
 }
 const Home: React.FC<Home> = ({ searchValue }) => {
   const [active, setActive] = useState(true)
-  const [searchedProducts, setSearchedProducts] = useState<ItemType[]>()
+  const [searchedProducts, setSearchedProducts] = useState<CatalogItemProps[]>()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Home: React.FC<Home> = ({ searchValue }) => {
           <div className="chapter-bottom">
             {
               searchedProducts?.length !== 0 && searchedProducts ?
-                searchedProducts.map((obj: ItemType) =>
+                searchedProducts.map((obj: CatalogItemProps) =>
                   <CatalogItem key={obj.id + obj.title} {...obj} />
                 )
                 :

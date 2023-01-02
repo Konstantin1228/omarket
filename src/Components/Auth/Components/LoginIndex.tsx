@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useState } from "react"
+import React, { useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import ReactCountryFlag from "react-country-flag";
 import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { db } from "../../../config/firebase";
 import { useAppDispatch } from "../../../hooks/hooks";
-import { setUserInformation, setNextStage,  setIsUserAuth } from "../../../redux/user/slice";
+import { setUserInformation, setNextStage, setIsUserAuth } from "../../../redux/user/slice";
 import { formattedTelephone } from "../FunctionsAndTypes/functions";
 import { LoginInterface } from "../FunctionsAndTypes/types";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const LoginIndex: React.FC = () => {
     const [visibilityEye, setVisibilityEye] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
     const [country, setCountry] = useState("");
-    const { register, formState: { errors, isValid }, control, trigger, setError, handleSubmit, setValue, watch, clearErrors } = useForm<LoginInterface>({ mode: "onChange" })
+    const { register, formState: { errors, isValid }, control, trigger, setError, handleSubmit, setValue, clearErrors } = useForm<LoginInterface>({ mode: "onChange" })
 
     const onSubmit: SubmitHandler<LoginInterface> = async (data) => {
         const { tel, country, password } = data
@@ -90,7 +90,7 @@ const LoginIndex: React.FC = () => {
                             {errors.tel && <p className="errorAuth">{errors?.tel?.message || "Ошибка!"}</p>}
                         </div>
                         <div className="auth__form-parentPassword" onMouseEnter={() => setVisibilityEye(true)} onMouseLeave={() => setVisibilityEye(false)} >
-                            <input style={{width:210}}  {...register("password", {
+                            <input {...register("password", {
                                 required: "Поле обязательно к заполнению!",
                                 minLength: {
                                     value: 8,

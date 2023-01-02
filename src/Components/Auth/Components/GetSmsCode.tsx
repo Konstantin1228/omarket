@@ -1,9 +1,6 @@
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'
-import supabase from '../../../config/supabseClient'
-import { auth, db } from '../../../firebase'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { setNextStage } from '../../../redux/user/slice'
 import { PasswordRecoveryInterface } from '../FunctionsAndTypes/types'
@@ -11,7 +8,7 @@ import { PasswordRecoveryInterface } from '../FunctionsAndTypes/types'
 const GetSmsCode: React.FC = () => {
     const [time, setTime] = useState(15)
     const dispatch = useAppDispatch()
-    const { register, formState: { errors, isValid }, trigger, handleSubmit, setValue, watch, control } = useForm<PasswordRecoveryInterface>({ mode: "onChange" })
+    const { formState: { errors, isValid }, trigger, handleSubmit, setValue, watch, control } = useForm<PasswordRecoveryInterface>({ mode: "onChange" })
     const { type, stage } = useAppSelector(state => state.userSlice.authorizationOrLogin)
     useEffect(() => {
         if (time !== 0) {
@@ -20,6 +17,7 @@ const GetSmsCode: React.FC = () => {
             }, 1000);
         }
     }, [time])
+
     // const generateRecaptcha = () => {
     //     //@ts-ignore
     //     window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
@@ -117,7 +115,3 @@ const GetSmsCode: React.FC = () => {
 }
 
 export default GetSmsCode
-
-function onSignInSubmit() {
-    throw new Error('Function not implemented.')
-}

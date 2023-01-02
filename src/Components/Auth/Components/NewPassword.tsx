@@ -1,26 +1,23 @@
 import { collection, doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
-import { db } from '../../../firebase';
+import { db } from '../../../config/firebase';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { setIsUserAuth, setNextStage } from '../../../redux/user/slice';
 import { addStatusToasts } from '../../../redux/toasts/slice';
 import { useNavigate } from 'react-router-dom';
-interface NewPassword {
-    firstInput: string
-    secondInput: string
-}
+import { NewPasswordForm } from '../FunctionsAndTypes/types';
+
 const NewPassword = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { type } = useAppSelector(state => state.userSlice.authorizationOrLogin)
     const { telephone, country } = useAppSelector(state => state.userSlice.mainInformation)
-    const { register, formState: { errors, isValid }, handleSubmit, setError } = useForm<NewPassword>({ mode: "onChange" })
+    const { register, formState: { errors, isValid }, handleSubmit, setError } = useForm<NewPasswordForm>({ mode: "onChange" })
     const [loading, setLoading] = useState(false)
-    const onSubmit: SubmitHandler<NewPassword> = async (data) => {
+    const onSubmit: SubmitHandler<NewPasswordForm> = async (data) => {
         if (data.firstInput === data.secondInput) {
             setLoading(true)
-
             const newUserRef = doc(collection(db, "users"));
             await setDoc(newUserRef, {
                 telephone,

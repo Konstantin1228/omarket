@@ -1,7 +1,7 @@
 import { getDocs, query, collection, where, doc, getDoc, setDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { db } from '../../../../../firebase'
+import { db } from '../../../../../config/firebase'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
 import { clearCart } from '../../../../../redux/cart/slice'
 import Loader from '../../../../Other/Loader/Loader'
@@ -80,7 +80,7 @@ const CartOrderingStage4: React.FC<SetStage> = ({ setStage }) => {
             {loading ?
                 <div className="container__loader">
                     <Loader />
-                    <div className="container__text">Подождите, пожалуйста, Ваш запрос в обработке</div>
+                    {/* <div className="container__text">Подождите, пожалуйста, Ваш запрос в обработке</div> */}
                 </div>
                 :
                 <>

@@ -2,19 +2,11 @@ import React from 'react'
 import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from 'react-dadata'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { calcCrow } from '../../../Cart/FunctionsAndTypes/functions'
-import { userData } from './RegistrationIndex'
-interface RegProfile {
-    nameSurname: string
-    deliviryAddress: string
-    userEmail: string
-}
-export interface RegStage {
-    setStage: React.Dispatch<React.SetStateAction<number>>
-    setUserData?: React.Dispatch<React.SetStateAction<userData | undefined>>
-    userData?: userData
-}
-const RegProfile: React.FC<RegStage> = ({ setStage, setUserData }) => {
-    const { register, formState: { errors, isValid }, setValue, handleSubmit, control, trigger, setError, clearErrors } = useForm<RegProfile>({ mode: "onChange" })
+import { RegProfileProps, ShapeComponents } from '../../FunctionsAndTypes/types'
+
+const RegProfile: React.FC<RegProfileProps> = ({ setStage, setUserData }) => {
+    const { register, formState: { errors, isValid }, setValue, handleSubmit, control, trigger, setError, clearErrors } = useForm<ShapeComponents>({ mode: "onChange" })
+    
     const validateAdressSuggestions = (e: DaDataSuggestion<DaDataAddress> | undefined) => {
         if (e) {
             const { region, city_with_type, street_with_type, house_type_full, house, geo_lat, geo_lon } = e.data
@@ -39,7 +31,8 @@ const RegProfile: React.FC<RegStage> = ({ setStage, setUserData }) => {
             }
         }
     }
-    const onSubmit: SubmitHandler<RegProfile> = (data) => {
+
+    const onSubmit: SubmitHandler<ShapeComponents> = (data) => {
         const { nameSurname, deliviryAddress, userEmail } = data
         if (setUserData) {
             setUserData({ nameSurname, deliviryAddress, userEmail })

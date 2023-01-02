@@ -1,21 +1,17 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import ReactCountryFlag from 'react-country-flag';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../../firebase';
+import { db } from '../../../config/firebase';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { setContryAndTel, setNextStage } from '../../../redux/user/slice';
 import { formattedTelephone } from '../FunctionsAndTypes/functions';
-import { addStatusToasts } from '../../../redux/toasts/slice';
-interface RegIndex {
-    tel: string,
-    country: string
-}
+import { RegIndexForm } from '../FunctionsAndTypes/types';
 
 const RegIndex: React.FC = () => {
-    const { register, formState: { errors, isValid }, control, trigger, setError, handleSubmit, setValue, clearErrors, watch } = useForm<RegIndex>({ mode: "onChange" })
+    const { register, formState: { errors, isValid }, control, trigger, setError, handleSubmit, setValue, clearErrors, watch } = useForm<RegIndexForm>({ mode: "onChange" })
 
     const dispatch = useAppDispatch()
     const watchInputTel = watch("tel")
@@ -30,7 +26,7 @@ const RegIndex: React.FC = () => {
     ]
 
 
-    const onSubmit: SubmitHandler<RegIndex> = async (data) => {
+    const onSubmit: SubmitHandler<RegIndexForm> = async (data) => {
         const { tel, country } = data
         setLoading(true)
         const queryTotal = await getDocs(query(collection(db, "users"), where("telephone", '==', tel)))
@@ -42,6 +38,7 @@ const RegIndex: React.FC = () => {
         }
         setLoading(false)
     }
+    
     return (
         <div className="auth">
             {loading ?

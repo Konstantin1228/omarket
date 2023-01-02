@@ -1,6 +1,7 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { stageType3 } from '../FunctionsAndTypes/types'
+
 const CartRight: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscount, totalPoints, itemsInCart }) => {
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller, SubmitHandler, } from 'react-hook-form'
-import { NumberFormatBase, PatternFormat } from 'react-number-format'
+import { PatternFormat } from 'react-number-format'
 import { BankCard, stageType3 } from '../../../FunctionsAndTypes/types'
 import ModalWindow from '../../../../Other/ModalWindow/ModalWindow'
 import Select from "react-select";
@@ -9,39 +9,11 @@ import makeAnimated from 'react-select/animated';
 import { setBankCardInformation } from '../../../../../redux/cart/slice'
 import { BankCards } from '../../../../../redux/user/types'
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../../../../../firebase'
+import { db } from '../../../../../config/firebase'
 import axios from 'axios'
 import "./stage3.scss"
-function CardExpiry(props: any) {
-    const format = (val: string) => {
-        if (val === "") return "";
-        let month = val.substring(0, 2);
-        let year = val.substring(2, 4);
-        if (month.length === 1 && Number(month[0]) > 1) {
-            month = `0${month[0]}`;
-        } else if (month.length === 2) {
-            if (Number(month) === 0) {
-                month = `01`;
-            } else if (Number(month) > 12) {
-                month = "12";
-            }
-        }
-        if (year.length === 1 && Number(year[0]) >= 0) {
-            year = `2`;
-        } else if (year.length === 2) {
-            if (Number(year) === 0) {
-                year = `20`;
-            } else if (Number(year) >= 29) {
-                year = "29";
-            }
-            else if (Number(year) <= 22) {
-                year = "22"
-            }
-        }
-        return `${month}/${year}`;
-    };
-    return <NumberFormatBase placeholder='ММ/ГГ' {...props} format={format} />;
-}
+import { CardExpiry } from '../../../../Profile/FunctionsAndTypes/functions'
+import Loader from '../../../../Other/Loader/Loader'
 const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) => {
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState(true)
@@ -57,10 +29,8 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
                 const q = await (getDocs(query(collection(db, "users"), where("telephone", '==', localStorage.getItem("telephone")))))
                 const userRef = doc(db, 'users', q.docs[0].id);
                 const docSnap = await getDoc(userRef);
-                // console.log(docSnap.data()?.profileInformation?.otherInformation?.bankCards.length)
                 docSnap.data()?.profileInformation?.otherInformation?.bankCards.length ? setBankCardData({ bankCards: docSnap.data()?.profileInformation?.otherInformation?.bankCards, haveBankCards: true })
                     : setBankCardData({ bankCards: docSnap.data()?.profileInformation?.otherInformation?.bankCards, haveBankCards: false })
-                // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
             }
             catch (error) {
                 console.log(error);
@@ -125,10 +95,9 @@ const CartOrderingStage3: React.FC<stageType3> = ({ withDiscount, setStage }) =>
     })) : undefined
 
     return (
-        <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)}>
-            {loading ? <div className="container__loader-absolute">
-                <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
-            </div>
+        <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)} style={{ alignItems: loading ? "center" : "flex-start", minHeight: "25rem" }}>
+            {loading ?
+                <Loader />
                 :
                 <>
                     <div className="cart__inner-notEmpty-left" >

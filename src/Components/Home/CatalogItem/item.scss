@@ -1,0 +1,95 @@
+@import "../../../scss/defaultVariables.scss";
+
+.item-wrapper {
+    // display: flex;
+    // height: 100%;
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 1rem 1.4rem 1.3rem 1.4rem;
+        border: 1px solid #DFDFDF;
+        border-radius: 14px;
+        // height: 100%;
+
+        &-information {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+            width: 100%;
+
+            img {
+                height: 20rem;
+                width: 20rem;
+            }
+
+            &-title,
+            &-description {
+                font-size: 1.25rem;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                display: -webkit-box;
+                overflow: hidden;
+                width: 100%;
+                height: 3rem;
+            }
+
+            &-description {
+                color: $gray;
+                font-size: 0.9rem;
+            }
+        }
+
+        &-about {
+            margin-top: auto;
+            padding-top: 0.8rem;
+            border-top: 1px solid #F4F4F4;
+
+            &-chapter,
+            &-chapter-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 2rem;
+
+                &-weight,
+                &-price {
+                    font-size: 1.1rem;
+                }
+
+                &-price {
+                    color: $orange;
+                }
+
+                &-block {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    &-lastPrice {
+                        text-decoration: line-through;
+                        color: $gray;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+
+            &-more {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                gap: 0.3rem;
+                font-weight: 600;
+                color: $orange;
+                cursor: pointer;
+
+                span {}
+            }
+        }
+
+    }
+}

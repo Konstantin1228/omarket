@@ -1,18 +1,16 @@
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { db } from '../../../firebase'
+import { db } from '../../../config/firebase'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { setContryAndTel, setNextStage } from '../../../redux/user/slice'
 import { formattedTelephone } from '../FunctionsAndTypes/functions'
-interface PassRecovery {
-    tel: string
-}
+
 const PasswordRecovery: React.FC = () => {
     const dispach = useAppDispatch()
     const [loading, setLoading] = useState(false)
-    const { register, formState: { errors, isValid }, trigger, handleSubmit, setValue, watch, setError, clearErrors } = useForm<PassRecovery>({ mode: "onChange" })
-    const onSubmit: SubmitHandler<PassRecovery> = async (data) => {
+    const { register, formState: { errors }, trigger, handleSubmit, setValue, setError, clearErrors } = useForm<{ tel: string }>({ mode: "onChange" })
+    const onSubmit: SubmitHandler<{ tel: string }> = async (data) => {
         setLoading(true)
         const queryTelehpone = await getDocs(query(collection(db, "users"), where("telephone", '==', data.tel)))
         if (queryTelehpone.size == 0) {
@@ -46,7 +44,7 @@ const PasswordRecovery: React.FC = () => {
                             <input type="tel" {...register("tel", {
                                 required: "Поле обязательно к заполнению!",
                             })} onChange={(e: ChangeEvent<HTMLInputElement>) => { setValue("tel", formattedTelephone(e, setError, clearErrors)) }}
-                            className={`${errors.tel ? "input-error" : "input"}`} placeholder="Номер телефона" />
+                                className={`${errors.tel ? "input-error" : "input"}`} placeholder="Номер телефона" />
                             {errors.tel && <p className="errorAuth">{errors?.tel?.message || "Ошибка!"}</p>}
                         </div>
                         <button type='submit' disabled={errors.tel ? true : false} className={`button-submit${errors.tel ? "-false" : ""}`}>Отправить СМС</button>

@@ -6,8 +6,8 @@ import CartOrderingStage3 from "./Components/Stages/OrderingStage3/CartOrderingS
 import CartRight from "./Components/CartRight";
 import CartOrderingStage4 from "./Components/Stages/OrderingStage4/CartOrderingStage4";
 import { useMediaQuery } from "react-responsive";
-import "./cart.scss"
 import CartPath from "./CartPath";
+import "./cart.scss"
 const Cart = () => {
   const { itemsInCart } = useAppSelector((state) => state.cartSlice);
   const withoutDiscount = itemsInCart.reduce((previous, { count, defaultPrice, price }) => previous + (count * (defaultPrice || price)), 0)
@@ -20,14 +20,14 @@ const Cart = () => {
     <div className="cart">
       <CartPath stage={stage} setStage={setStage} isMobile={isMobile} />
       <div className="cart__inner">
-        {itemsInCart.length == 0 ? (
+        {itemsInCart.length === 0 ? (
           <div className="cart__inner-empty">
             <div className="cart__inner-empty-svg"></div>
             <div className="cart__path-gray">Корзина пуста</div>
           </div>
         ) : (
           <>
-            {stage == 1 &&
+            {stage ===1 &&
               <div className="cart__inner-notEmpty">
                 <div className="cart__inner-notEmpty-left-items" >
                   {itemsInCart.map((obj) => <Cart_Item key={`${obj.title}__${obj.weight}`} {...obj} />)}
@@ -35,9 +35,9 @@ const Cart = () => {
                 <CartRight setStage={setStage} withoutDiscount={withoutDiscount} withDiscount={withDiscount} totalPoints={totalPoints} itemsInCart={itemsInCart} />
               </div>
             }
-            {stage == 2 && <CartOrderingStage2 setStage={setStage} withoutDiscount={withoutDiscount} withDiscount={withDiscount} totalPoints={totalPoints} itemsInCart={itemsInCart} />}
-            {stage == 3 && <CartOrderingStage3 setStage={setStage} withoutDiscount={withoutDiscount} withDiscount={withDiscount} totalPoints={totalPoints} itemsInCart={itemsInCart} />}
-            {stage == 4 && <CartOrderingStage4 setStage={setStage} />}
+            {stage === 2 && <CartOrderingStage2 setStage={setStage} withoutDiscount={withoutDiscount} withDiscount={withDiscount} totalPoints={totalPoints} itemsInCart={itemsInCart} />}
+            {stage === 3 && <CartOrderingStage3 setStage={setStage} withoutDiscount={withoutDiscount} withDiscount={withDiscount} totalPoints={totalPoints} itemsInCart={itemsInCart} />}
+            {stage === 4 && <CartOrderingStage4 setStage={setStage} />}
           </>
         )}
       </div>

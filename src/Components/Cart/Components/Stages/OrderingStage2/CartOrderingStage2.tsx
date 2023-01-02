@@ -9,12 +9,13 @@ import { PatternFormat } from 'react-number-format';
 import { setGeneralInformation } from '../../../../../redux/cart/slice';
 import Select from "react-select";
 import { getDocs, query, collection, where, getDoc, doc } from 'firebase/firestore';
-import { db } from '../../../../../firebase';
+import { db } from '../../../../../config/firebase';
 import { DeliviryAddress } from '../../../../Profile/FunctionsAndTypes/types';
 import { AntSwitch } from '../../../../CustomComponents/AntSwtich';
 import { calcCrow, onlyNumberInput } from '../../../FunctionsAndTypes/functions';
-import "./stage2.scss"
 import Loader from '../../../../Other/Loader/Loader';
+import "./stage2.scss"
+
 const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, withDiscount, totalPoints, itemsInCart }) => {
     const dispatch = useAppDispatch()
     const [activeBonus, setActiveBonus] = useState(false)
@@ -25,6 +26,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
     const watchWriteOffBonuses = watch("writeOffBonuses")
     const watchDeliviryCost = watch("deliviryCost")
     const [userAdress, setUserAdress] = useState("")
+
     useEffect(() => {
         const getData = async () => {
             try {
@@ -33,7 +35,6 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                 const docSnap = await getDoc(userRef);
                 docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses ? setDeliviryAdresses({ cities: docSnap.data()?.profileInformation?.otherInformation?.deliviryAdresses, haveDeliviryAdresses: true })
                     : setDeliviryAdresses((previous) => ({ ...previous, haveDeliviryAdresses: false }))
-                // dispatch(setUserAdresses(docSnap.data().profileInformation.otherInformation.deliviryAdresses))
                 setLoading(false)
             } catch (error) {
                 console.log(error)
@@ -91,7 +92,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
     }
 
     return (
-        <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)}>
+        <form className="cart__inner-notEmpty" onSubmit={handleSubmit(onSubmit)} style={{ alignItems: loading ? "center" : "flex-start" }}>
             {loading ?
                 <Loader />
                 :
@@ -161,7 +162,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                                         trigger("flat")
                                                     }}
                                                         placeholder='Ввести'
-                                                        className={`input${error ? "-error" : ""}`}  format="###" />
+                                                        className={`input${error ? "-error" : ""}`} format="###" />
                                                     {error && <p className="error">{error.message || "Ошибка!"}</p>}
                                                 </div>
                                             )}
@@ -185,7 +186,7 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                                         setValue("floor", e.value)
                                                         trigger("floor")
                                                     }} placeholder='Ввести'
-                                                        className={`input${error ? "-error" : ""}`}  format="###" />
+                                                        className={`input${error ? "-error" : ""}`} format="###" />
                                                     {error && <p className="error">{error?.message || "Ошибка!"}</p>}
                                                 </div>
                                             )}
@@ -207,8 +208,8 @@ const CartOrderingStage2: React.FC<stageType3> = ({ setStage, withoutDiscount, w
                                             message: "Превышено максимальное число допустимых символов!"
                                         }
                                     })} type="text"
-                                        defaultValue={userAdress ? deliviryAdresses.cities[deliviryAdresses.cities.findIndex((el) => el.city == userAdress)].comment : ""}
-                                        placeholder="Ввести" className={`input${errors.comment ? "-error" : ""}`} 
+                                        defaultValue={userAdress ? deliviryAdresses.cities[deliviryAdresses.cities.findIndex((el) => el.city === userAdress)].comment : ""}
+                                        placeholder="Ввести" className={`input${errors.comment ? "-error" : ""}`}
                                     />
                                     {errors.comment && <p className="error">{errors.comment?.message || "Ошибка!"}</p>}
                                 </div>

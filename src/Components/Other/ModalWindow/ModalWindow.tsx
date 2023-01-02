@@ -1,6 +1,6 @@
 import { getDocs, query, collection, where, doc, setDoc } from 'firebase/firestore'
 import React from 'react'
-import { db } from '../../../firebase'
+import { db } from '../../../config/firebase'
 import { useAppSelector } from '../../../hooks/hooks'
 import Cart_Item from '../../Cart/Components/CartItem/Cart_Item'
 import { BankCard } from '../../Cart/FunctionsAndTypes/types'

@@ -1,0 +1,80 @@
+.modal__content {
+    // height: 50rem;
+    width: 50.3rem;
+}
+
+.profile__parent {
+    display: flex;
+    flex: 1 1;
+    display: block !important;
+    min-height: 30rem;
+
+    .profile__myOrders {
+        border: 1px solid #DFDFDF;
+        border-radius: 14px;
+        padding: 0 16px 0 16px !important;
+        display: block !important;
+
+        &-text,
+        &-text-left {
+            display: flex;
+            text-align: center;
+            padding: 1.1rem;
+            border-bottom: 1px solid #DFDFDF;
+            border-right: 1px solid #DFDFDF;
+            font-size: 17px;
+            justify-content: space-between;
+            word-break: break-all;
+
+            &-green,
+            &-red {
+                padding: 16px;
+                color: #00953F;
+                border-bottom: 1px solid #DFDFDF;
+                border-right: 1px solid #DFDFDF;
+            }
+
+            &-red {
+                color: #ED1B23;
+            }
+
+            text-align: left;
+
+            &:last-child {
+                border: 0px;
+                border-bottom: 1px solid #DFDFDF;
+            }
+        }
+
+        &-elementSixColumns {
+            grid-template-columns: 0.6fr 1.2fr 2fr repeat(3, 1fr) !important;
+        }
+
+        &-elementFouthColumns {
+            grid-template-columns: repeat(3, 1.5fr) 0.7fr !important;
+
+            img {
+                width: 84%;
+                height: 9rem;
+            }
+
+        }
+
+        &-element,
+        &-elementSixColumns,
+        &-elementFouthColumns {
+            display: grid;
+            grid-template-columns: 0.6fr 0.7fr 1fr 0.8fr 1fr 1.3fr 0.9fr 1fr;
+
+            &:last-child {
+
+                .profile__myOrders-text-left,
+                .profile__myOrders-text-left-red,
+                .profile__myOrders-text-left-green {
+                    border-bottom: 0 !important;
+                }
+            }
+        }
+
+    }
+}

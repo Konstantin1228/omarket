@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import GetSmsCode from './Components/GetSmsCode'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { clearAuthLoginFields } from '../../redux/user/slice'
@@ -9,10 +9,13 @@ import LoginIndex from './Components/LoginIndex'
 import "./auth.scss"
 const Login = () => {
     const dispach = useAppDispatch()
+    const { stage, type } = useAppSelector((state) => state.userSlice.authorizationOrLogin)
+
     useEffect(() => {
         dispach(clearAuthLoginFields())
     }, [])
-    const { stage, type } = useAppSelector((state) => state.userSlice.authorizationOrLogin)
+
+
     return (
         <>
             {stage === 0 && type === "" && <LoginIndex />}

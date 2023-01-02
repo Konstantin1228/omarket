@@ -2,10 +2,11 @@ import React, { ChangeEvent, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
-import { setStateProps } from "../../../hooks/MainLayout";
+import { setStateProps } from "../../../hok/MainLayout";
 import { CarrotIcon, CoffeIcon, FrozenIcon, GroceryIcon, HomeIcon, MilkIcon, BonusIcon, ProfileIcon, CartIcon } from "./HeaderIcons/";
 import MenuIcon from '@mui/icons-material/Menu';
 import "./header.scss"
+
 export const linkSettings = [
   { path: "drink", text: "Напитки" },
   { path: "milkProducts", text: "Молочные продукты" },
@@ -18,6 +19,7 @@ export const linkSettings = [
   { path: "home", text: "Все для дома" },
   { path: "NONE", text: "Товары для животных" },
 ]
+
 const Header: React.FC<setStateProps> = ({ setSearchValue }) => {
   const navigate = useNavigate()
   const location = useLocation().pathname
@@ -133,7 +135,7 @@ const Header: React.FC<setStateProps> = ({ setSearchValue }) => {
               <ProfileIcon />
             </Link>
             <div className="header__center-element">
-              <span>2600</span>
+              <span>2600</span>   
               <BonusIcon />
             </div>
             <Link to="/cart" className="header__center-element" >

@@ -1,0 +1,48 @@
+.auth {
+    min-height: 20rem;
+    margin: 3rem auto;
+
+    &__registration {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        width: 25%;
+
+        .auth__form-parent input {
+            width: auto !important;
+        }
+
+        &-bottom {
+            display: flex;
+            justify-content: space-between;
+
+            .auth__form-parent {
+                width: calc(70% - 20px);
+
+                // input {
+                // width: auto !important;
+                // }
+
+
+                &:last-child  {
+                    width: 30% !important;
+                }
+            }
+        }
+
+        .MuiTypography-root {
+            color: #9C9C9C;
+            font-weight: 500;
+        }
+    }
+}
+
+.prompt {
+    color: #9C9C9C;
+}
+
+.profileReg {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

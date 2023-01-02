@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Skeleton from "../../CustomComponents/Skeleton";
-import CatalogItem, { ItemType } from "./../CatalogItem";
+import CatalogItem from "../CatalogItem/CatalogItem";
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';
@@ -8,6 +8,7 @@ import { useMediaQuery } from "react-responsive";
 import supabase from "../../../config/supabseClient";
 import './chapter.scss';
 import 'swiper/css';
+import { CatalogItemProps } from "../Types/types";
 interface ChapterProps {
   title: string;
   titleTheme: string;
@@ -15,7 +16,7 @@ interface ChapterProps {
   tagSorting?: string;
 };
 const Chapter: React.FC<ChapterProps> = ({ title, titleTheme, databaseName, tagSorting }) => {
-  const [goods, setGoods] = useState<ItemType[]>([]);
+  const [goods, setGoods] = useState<CatalogItemProps[]>([]);
   const [loading, setLoading] = useState(true)
   const swiperRef = useRef<SwiperCore>();
   useEffect(() => {

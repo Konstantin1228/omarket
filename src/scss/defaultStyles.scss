@@ -1,9 +1,9 @@
-@import "./defaultVariables.scss";
+@import "defaultVariables";
 
 * {
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 16px;
     font-weight: 400;
 }
@@ -30,7 +30,6 @@ button {
 .orangeColor {
     color: $orange;
 }
-
 
 .button-submit,
 .button-submit-false {
@@ -101,8 +100,8 @@ input {
 }
 
 .input {
-    transition: all .3s;
-    border: 1px solid #DFDFDF;
+    transition: all 0.3s;
+    border: 1px solid #dfdfdf;
     border-radius: 14px;
     padding: 16px 24px;
     font-weight: 500;
@@ -116,13 +115,13 @@ input {
     &-error,
     &-text {
         @extend .input;
-        background: #FEF3F4;
-        border: 1px solid #ED1B23;
+        background: #fef3f4;
+        border: 1px solid #ed1b23;
     }
 
     &-text {
-        border: 1px solid #0D0D0D;
-        background-color: #FEF3F4;
+        border: 1px solid #0d0d0d;
+        background-color: #fef3f4;
     }
 
     &-password,
@@ -133,13 +132,13 @@ input {
     }
 
     &-passwordError {
-        border: 1px solid #ED1B23;
-        background: #FEF3F4;
+        border: 1px solid #ed1b23;
+        background: #fef3f4;
     }
 
     &:disabled {
         background-color: rgba(239, 239, 239, 0.3);
-        border: 1px solid #DFDFDF;
+        border: 1px solid #dfdfdf;
     }
 }
 
@@ -174,7 +173,7 @@ input {
     &__inner {
         border: none;
         box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.08);
-        color: #9C9C9C;
+        color: #9c9c9c;
         font-weight: 400;
         appearance: none;
         outline: none;
@@ -193,16 +192,15 @@ input {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         top: 40%;
         right: 6%;
         width: 7px;
         height: 7px;
-        border-top: 2px solid #CFCFCF;
-        border-right: 2px solid #CFCFCF;
-        transform: rotate(135deg)
+        border-top: 2px solid #cfcfcf;
+        border-right: 2px solid #cfcfcf;
+        transform: rotate(135deg);
     }
-
 }
 
 .reactSelect {
@@ -212,11 +210,11 @@ input {
         border: none !important;
         width: 98% !important;
         box-shadow: none !important;
-        border: 1px solid #DFDFDF !important;
+        border: 1px solid #dfdfdf !important;
 
         &--is-disabled {
             background-color: (rgba(239, 239, 239, 0.3)) !important;
-            border: 1px solid #DFDFDF !important;
+            border: 1px solid #dfdfdf !important;
         }
 
         &--menu-is-open {
@@ -277,9 +275,9 @@ input {
         border-radius: 14px !important;
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
-        border-top: 1px solid #DFDFDF !important;
+        border-top: 1px solid #dfdfdf !important;
         scrollbar-width: thin !important;
-        animation: scaleIn .2s ease-in-out !important;
+        animation: scaleIn 0.2s ease-in-out !important;
         width: 98% !important;
 
         &-list {
@@ -298,7 +296,7 @@ input {
             }
 
             &::-webkit-scrollbar-thumb {
-                background: #DFDFDF;
+                background: #dfdfdf;
                 border-radius: 12px;
             }
         }
@@ -307,7 +305,7 @@ input {
 
 .select-rotate {
     &__inner {
-        border: 2px solid #0D0D0D;
+        border: 2px solid #0d0d0d;
     }
 
     &::before {

@@ -236,12 +236,13 @@
 
     svg {
         path {
-            fill: white;
+            fill: $orange;
         }
     }
 
-    background-color: $orange;
-    color: white;
+    span {
+        color: $orange;
+    }
 }
 
 .header__center-element {

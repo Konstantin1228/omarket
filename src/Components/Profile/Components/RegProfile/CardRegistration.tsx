@@ -1,50 +1,18 @@
+import React, { useState } from 'react'
 import { FormControlLabel, Checkbox } from '@mui/material'
 import axios from 'axios'
 import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore'
-import React, { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { NumberFormatBase, PatternFormat } from 'react-number-format'
-import { db } from '../../../../firebase'
+import { PatternFormat } from 'react-number-format'
+import { db } from '../../../../config/firebase'
 import { useAppDispatch } from '../../../../hooks/hooks'
 import { addStatusToasts } from '../../../../redux/toasts/slice'
 import { setCanEditProfile } from '../../../../redux/user/slice'
-import { RegStage } from './RegProfile'
-interface BankCard {
-    bankCard: string
-    date: string
-    CVC: string
-}
-function CardExpiry(props: any) {
-    const format = (val: string) => {
-        if (val === "") return "";
-        let month = val.substring(0, 2);
-        let year = val.substring(2, 4);
-        if (month.length === 1 && Number(month[0]) > 1) {
-            month = `0${month[0]}`;
-        } else if (month.length === 2) {
-            if (Number(month) === 0) {
-                month = `01`;
-            } else if (Number(month) > 12) {
-                month = "12";
-            }
-        }
-        if (year.length === 1 && Number(year[0]) >= 0) {
-            year = `2`;
-        } else if (year.length === 2) {
-            if (Number(year) === 0) {
-                year = `20`;
-            } else if (Number(year) >= 29) {
-                year = "29";
-            }
-            else if (Number(year) <= 22) {
-                year = "22"
-            }
-        }
-        return `${month}/${year}`;
-    };
-    return <NumberFormatBase placeholder='ММ/ГГ' disabled={props.disable} className='input' {...props} format={format} />;
-}
-const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
+import Loader from '../../../Other/Loader/Loader'
+import { CardExpiry } from '../../FunctionsAndTypes/functions'
+import { BankCard, RegProfileProps } from '../../FunctionsAndTypes/types'
+
+const CardRegistration: React.FC<RegProfileProps> = ({ setStage, userData }) => {
     const dispatch = useAppDispatch()
     const [withoutBankCard, setWhithoutBankCard] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -126,14 +94,12 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
     }
 
     return (
-        <form className="auth" onSubmit={handleSubmit(onSubmit)}>
+        <>
             {
                 loading ?
-                    <div className="container__loader-absolute">
-                        <div className="lds-ring" ><div></div><div></div><div></div><div></div></div>
-                    </div>
+                    <Loader />
                     :
-                    <>
+                    <form className="auth" onSubmit={handleSubmit(onSubmit)}>
                         <div className="auth__title">
                             <div className="auth__title-arrow" onClick={() => setStage(1)}>❮</div>
                             <h1 className="auth__title-text">Карта</h1>
@@ -165,13 +131,14 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                     render={({ fieldState: { error } }) => (
                                         <div className='auth__form-parent'   >
                                             <CardExpiry
+                                                className="input"
                                                 onValueChange={(values: any) => {
                                                     setValue("date", values.formattedValue)
                                                     trigger("date")
                                                 }}
                                                 disabled={withoutBankCard}
                                             />
-                                            {error && <p className="error">{error.message || "Ошибка!"}</p>}
+                                            {error && <p className="error" style={{ width: "2rem", wordBreak: "break-all" }}>{error.message || "Ошибка!"}</p>}
                                         </div>
                                     )}
                                     control={control}
@@ -189,13 +156,12 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                                     name="CVC"
                                     render={({ fieldState: { error } }) => (
                                         <div className='auth__form-parent'>
-                                            {/* <div className='auth__form-parent' > */}
                                             <PatternFormat disabled={withoutBankCard} onValueChange={(e) => {
                                                 setValue("CVC", e.value)
                                                 trigger("CVC")
                                             }} placeholder='CVC'
                                                 className='input' format="###" />
-                                            {error && <p className="error" style={{ whiteSpace: "normal", bottom: -52 }}>{error.message || "Ошибка!"}</p>}
+                                            {error && <p className="error" style={{ whiteSpace: "normal", bottom: "-3.2rem" }}>{error.message || "Ошибка!"}</p>}
                                         </div>
                                     )}
                                     rules={{
@@ -209,14 +175,15 @@ const CardRegistration: React.FC<RegStage> = ({ setStage, userData }) => {
                             </div>
                             <FormControlLabel control={<Checkbox size='small' color='success' onClick={() => noBankCard()} />} label="Продолжить без карты" />
                             {withoutBankCard ?
-                                <button type='submit' style={{ marginTop: -15, width: 370 }} className={`button-submit`} onClick={() => registerWithoutBankCard()} >Продолжить</button>
+                                <button type='submit' style={{ marginTop: -15, width: "100%" }} className="button-submit" onClick={() => registerWithoutBankCard()} >Продолжить</button>
                                 :
-                                <button type="submit" style={{ marginTop: -15, width: 370 }} className={isValid ? `button-submit` : "button-submit-false"}>Продолжить</button>
+                                <button type="submit" style={{ marginTop: -15 }} className={isValid ? `button-submit` : "button-submit-false"}>Продолжить</button>
                             }
                         </div >
-                    </>
+                    </form >
             }
-        </form>
+        </>
+
     )
 }
 export default CardRegistration
