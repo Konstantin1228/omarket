@@ -1,0 +1,6 @@
+  run_test:
+    image: node:22-alpine3.19
+    before_script:
+        - apt-get update && apt-get install npm
+    script: 
+        - ng test
